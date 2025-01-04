@@ -1,0 +1,49 @@
+export const ENTITY_PROPERTY = ['name', 'type', 'age'];
+export const ENTITY_NAME = 'Animal';
+
+export type CreateAnimal = Partial<Animal>
+type DomesticAnimalType = 'Dog' | 'Cat' | 'Rabbit' | 'Bird' | 'Fish' | 'Horse' | 'Cow';
+
+interface Animal {
+    name: string;
+    type: DomesticAnimalType | string;
+    breed?: string;
+    description?: string;
+    age?: number;
+    lifespan?: number;
+    weight?: {
+        min: number;
+        max: number;
+    };
+    height?: {
+        min: number;
+        max: number;
+    };
+    colors?: string[];
+    gender?: 'Male' | 'Female';
+    neutered?: boolean;
+    footCount?: 2 | 4 | 0;
+    diet?: 'Carnivore' | 'Herbivore' | 'Omnivore';
+    favoriteFoods?: string[];
+    temperament?: ('Friendly' | 'Energetic' | 'Calm' | 'Aggressive')[];
+    trained?: boolean;
+    skills?: string[];
+    owner?: {
+        name: string;
+        contact?: string;
+    };
+    health?: {
+        vaccinated?: boolean;
+        knownIssues?: string[];
+        lastVetVisit?: string;
+    };
+    activities?: string[];
+    homeEnvironment?: 'Apartment' | 'House' | 'Farm' | 'Aquarium' | 'Aviary';
+    sounds?: string[];
+}
+
+export type AnimalCreated = {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+} & Animal;

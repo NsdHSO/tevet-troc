@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { registerDb } from '../db.config';
-import { Car } from '../database/entity/car.entity';
+import { registerDb } from '../db.config.js';
+import { animalPlugin } from '../entities/animal/index.js';
 
 export default async function (app: FastifyInstance) {
     app.register(import('@fastify/sensible'));
@@ -8,8 +8,7 @@ export default async function (app: FastifyInstance) {
     await app.register(import('@fastify/swagger-ui'), {
         routePrefix: '/documentation'
     });
-    await registerDb(app);
-
+    registerDb(app);
     app.ready(() => {
         console.log(app.printRoutes());
     });
