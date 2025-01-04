@@ -4,7 +4,10 @@
   "description": "This is Backend for tevet-troc project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:w": "tsc -p tsconfig.json --watch",
+    "start": "node build/index.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration": " npm run typeorm migration:run -- -d ./src/data-source.ts"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,9 @@
   },
   "homepage": "https://github.com/NsdHSO/tevet-troc#readme",
   "dependencies": {
+    "@fastify/sensible": "^6.0.2",
+    "@fastify/swagger": "^9.4.0",
+    "@fastify/swagger-ui": "^5.2.0",
     "@fastify/type-provider-typebox": "^5.1.0",
     "@sinclair/typebox": "^0.34.13",
     "concurrently": "^9.1.2",
