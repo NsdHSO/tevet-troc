@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(dirname(__filename), 'infrastructure');
 
 
-export async function animalPlugin(app: FastifyInstance) {
+export async function authPlugin(app: FastifyInstance) {
     app.register(fastifyAutoload, {
         dir: join(__dirname, 'services'),
         forceESM: true,
@@ -17,7 +17,7 @@ export async function animalPlugin(app: FastifyInstance) {
     app.register(fastifyAutoload, {
         dir: join(__dirname, 'http/routes'),  // Path to your v1 routes
         forceESM: true,  // If you're using ES modules
-        options: { prefix: '/animal' }
+        options: { prefix: '/auth' }
     });
 
 }
