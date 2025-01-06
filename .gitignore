@@ -8,6 +8,8 @@
 
 # misc
 .DS_Store
+.idea
+.env
 .env.production
 
 # debug

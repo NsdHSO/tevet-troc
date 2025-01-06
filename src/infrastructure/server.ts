@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { animalPlugin } from '../entities/animal';
+import { authPlugin } from '../entities/auth';
 
 export default async function (app: FastifyInstance) {
     app.register(import('@fastify/sensible'));
@@ -8,6 +9,7 @@ export default async function (app: FastifyInstance) {
         routePrefix: '/documentation'
     });
     await animalPlugin(app);
+    await authPlugin(app)
     app.ready(() => {
         console.log(app.printRoutes());
     });
