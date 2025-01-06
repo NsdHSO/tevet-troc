@@ -2,6 +2,7 @@
 import fp from 'fastify-plugin';
 import animalDao from '../dao/animalDao.js';
 import { animalApplicationService, IAnimalRepository } from '../../applications';
+import { Animal } from '../dao/animal.entity';
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -9,8 +10,13 @@ declare module 'fastify' {
     }
 }
 export default fp(async (fastify) => {
-    const animalRepository: IAnimalRepository = animalDao(fastify.orm);
-    const animalService = animalApplicationService(animalRepository);
-    fastify.decorate('animalService', animalService);
-    fastify.log.info('AnimalService registered');
+    try {
+        console.log('Registering animalService...');
+        const animalRepository: IAnimalRepository = animalDao(fastify.orm.getRepository(Animal));
+        const animalService = animalApplicationService(animalRepository);
+        fastify.decorate('animalService', animalService);
+        fastify.log.info('AnimalService registered');
+    } catch (error) {
+        console.error('Error registering animalService:', error);
+    }
 });

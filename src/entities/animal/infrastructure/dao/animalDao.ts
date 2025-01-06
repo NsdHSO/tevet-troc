@@ -1,13 +1,20 @@
-import { PluginDataSource } from 'typeorm-fastify-plugin';
 import { AnimalCreated, CreateAnimal, IAnimalRepository } from '../../applications';
+import { Animal } from './animal.entity';
+import { Repository } from 'typeorm';
 
-export default function (db: PluginDataSource): IAnimalRepository {
+export default function (db: Repository<Animal>): IAnimalRepository {
     return {
         findById(id: AnimalCreated['id']): Promise<AnimalCreated | undefined> {
             return Promise.resolve(undefined);
         },
-        create(animal: CreateAnimal): Promise<AnimalCreated> {
-            return Promise.resolve({} as AnimalCreated);
+        async create(animal: CreateAnimal) {
+            const animalEntity = db.create(animal);  // Create an instance of the Animal entity
+            return await db.save(animalEntity).then((e) => {
+                console.log('Was created');
+                return e;
+            }).catch(() => {
+                throw  new Error("iancu")
+            });
         }
     };
 }

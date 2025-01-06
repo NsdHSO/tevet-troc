@@ -2,17 +2,31 @@
   "name": "tevet-troc",
   "version": "1.0.0",
   "description": "This is Backend for tevet-troc project",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build:w": "tsc -p tsconfig.json --watch",
-    "start": "node build/index.js",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "migration": " npm run typeorm migration:run -- -d ./src/data-source.ts"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check:types": "tsc --noEmit",
+    "build": "esbuild `find src \\( -name '*.ts' \\)` --platform=node --outdir=build --resolve-extensions=.js",
+    "build:docker:prod": "docker build . -t my-fastify-app --build-arg APP_ENV=production",
+    "start": "node build",
+    "dev": "tsx watch src .env | pino-pretty --colorize",
+    "pretest": "npm run build",
+    "test": "vitest",
+    "test:watch": "vitest -w"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NsdHSO/tevet-troc.git"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "nodejs",
+    "fastify",
+    "typescript"
+  ],
   "author": "https://github.com/NsdHSO",
   "license": "ISC",
   "bugs": {
@@ -20,21 +34,36 @@
   },
   "homepage": "https://github.com/NsdHSO/tevet-troc#readme",
   "dependencies": {
+    "@fastify/autoload": "^6.0.3",
     "@fastify/sensible": "^6.0.2",
     "@fastify/swagger": "^9.4.0",
     "@fastify/swagger-ui": "^5.2.0",
     "@fastify/type-provider-typebox": "^5.1.0",
     "@sinclair/typebox": "^0.34.13",
+    "ajv": "^8.17.1",
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
+    "env-schema": "^6.0.0",
     "fastify": "^5.2.0",
+    "fastify-plugin": "^5.0.1",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
     "typeorm-fastify-plugin": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.3",
-    "typescript": "^5.7.2"
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "pino-pretty": "^13.0.0",
+    "prettier": "^3.4.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   }
 }

@@ -1,10 +1,10 @@
 export const ENTITY_PROPERTY = ['name', 'type', 'age'];
-export const ENTITY_NAME = 'Animal';
+export const ENTITY_NAME = 'IAnimal';
 
-export type CreateAnimal = Partial<Animal>
+export type CreateAnimal = Partial<IAnimal>
 type DomesticAnimalType = 'Dog' | 'Cat' | 'Rabbit' | 'Bird' | 'Fish' | 'Horse' | 'Cow';
 
-interface Animal {
+export interface IAnimal {
     name: string;
     type: DomesticAnimalType | string;
     breed?: string;
@@ -46,4 +46,4 @@ export type AnimalCreated = {
     id: number;
     createdAt: Date;
     updatedAt: Date;
-} & Animal;
+} & IAnimal;

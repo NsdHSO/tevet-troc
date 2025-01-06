@@ -3,18 +3,17 @@ import { FastifyInstance } from 'fastify';
 
 import { join } from 'path';
 import plugin from 'typeorm-fastify-plugin';
+import { Animal } from './entities/animal/infrastructure/dao/animal.entity';
 
 export async function registerDb(fastify: FastifyInstance) {
-
     fastify.register(plugin, {
         type: 'postgres',
         url: process.env.DB_URL,
         synchronize: process.env.NODE_ENV === 'dev',
         logging: process.env.NODE_ENV === 'dev',
-        migrations: [join(__dirname, 'migration', '*.ts')],
         subscribers: [],
         migrationsRun: process.env.NODE_ENV !== 'dev',
-        entities: [__dirname + '/../**/*.entity.js'],
+        entities: [Animal],
         logger: 'debug'
 
     }).after(() => {

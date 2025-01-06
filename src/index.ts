@@ -2,12 +2,15 @@ import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import Fastify from 'fastify';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import server from './infrastructure/server';
+import server from './infrastructure/server.js';
+import { registerDb } from './db.config';
 
 dotenv.config();
 
-async function startServer() {
+export async function startServer() {
     const fastify = Fastify().withTypeProvider<TypeBoxTypeProvider>();
+    await registerDb(fastify);
+
     fastify.register(server);
 
     try {
