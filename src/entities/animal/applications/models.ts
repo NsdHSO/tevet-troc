@@ -1,6 +1,3 @@
-export const ENTITY_PROPERTY = ['name', 'type', 'age'];
-export const ENTITY_NAME = 'IAnimal';
-
 export type CreateAnimal = Partial<IAnimal>
 type DomesticAnimalType = 'Dog' | 'Cat' | 'Rabbit' | 'Bird' | 'Fish' | 'Horse' | 'Cow';
 
