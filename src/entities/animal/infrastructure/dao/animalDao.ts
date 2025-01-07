@@ -1,8 +1,8 @@
 import { AnimalCreated, CreateAnimal, IAnimalRepository } from '../../applications';
-import { Animal } from './animal.entity';
+import { AnimalEntity } from './animal.entity';
 import { Repository } from 'typeorm';
 
-export default function (db: Repository<Animal>): IAnimalRepository {
+export default function (db: Repository<AnimalEntity>): IAnimalRepository {
     return {
         findById(id: AnimalCreated['id']): Promise<AnimalCreated | undefined> {
             return Promise.resolve(undefined);
@@ -13,7 +13,7 @@ export default function (db: Repository<Animal>): IAnimalRepository {
                 console.log('Was created');
                 return e;
             }).catch(() => {
-                throw  new Error("iancu")
+                throw  new Error("iancu Test")
             });
         }
     };
