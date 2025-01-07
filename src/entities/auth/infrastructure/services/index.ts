@@ -18,7 +18,7 @@ export default fp(
             const userService = userAuthApplicationService(userRepository);
             fastify.decorate('userAuthApplicationService', userService);
         } catch (error) {
-            console.error('Error registering auth service:', error);
+            fastify.log.error('Error registering auth service:', error);
         }
     }
 );

@@ -11,10 +11,10 @@ export default function (app: FastifyInstance) {
         try {
             const newUser = await app.userAuthApplicationService.register(req.body);
             app.log.info('Registered user', newUser);
-            reply.code(200).send(newUser);
+            reply.code(201).send(newUser);
 
         } catch (error: ErrorObject<string, number> | any) {
-            app.log.error('Registered user', error);
+            app.log.error('Registered when user is register', error);
             reply.code(error.code);
             return { registered: false , message: error.message };
         }
