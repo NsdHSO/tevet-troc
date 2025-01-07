@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Permission, Role } from '../../applications';
 
+
 @Entity('user')
 export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -29,6 +30,7 @@ export class UserEntity {
 
     @Column({ type: 'varchar', nullable: true })
     passwordSalt?: string;
+
     @Column({ type: 'boolean', default: false })
     twoFactorEnabled!: boolean;
 
@@ -58,6 +60,7 @@ export class UserEntity {
     @Column({
         type: 'enum',
         enum: Permission,
+        array: true,
         nullable: true,
     })
     permissions?: Permission[];
