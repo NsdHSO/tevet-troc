@@ -17,11 +17,10 @@ export async function registerDb(fastify: FastifyInstance) {
         logger: 'debug'
 
     }).after(() => {
-        console.log('Database plugin registered successfully.');
+        fastify.log.info('Database plugin registered successfully.');
     }).ready(async () => {
         try {
             fastify.log.info('Database connected successfully');
-            console.log();
         } catch (err) {
             fastify.log.info('Error connecting to the database:', err);
         }

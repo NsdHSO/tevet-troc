@@ -29,12 +29,20 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                     passwordSalt: salt
                 });
             } catch (error) {
-                console.log('Error creating user', user, error);
                 throw createError('User already exists', 409);
             }
         },
-        authenticate(email: LoginUser): Promise<CreatedUser | undefined> {
-            return Promise.resolve(undefined);
+        async authenticate(requestUser: LoginUser) {
+            const user = await userRepository.findByEmail(requestUser.email as string);
+            if (!user) {
+                throw createError('Wrong credentials provided', 401);
+            }
+            const { hash } = await generateHash((requestUser.password as string), user.passwordSalt);
+            if (hash !== user.passwordHash) {
+                throw createError('Wrong credentials provided', 404);
+            }
+
+            return { token: hash };
         },
         logout(): Promise<{ message: string }> {
             return Promise.resolve({ message: 'Not implementd' });

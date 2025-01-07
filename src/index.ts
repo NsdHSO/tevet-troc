@@ -8,7 +8,7 @@ import { registerDb } from './db.config';
 dotenv.config();
 
 export async function startServer() {
-    const fastify = Fastify().withTypeProvider<TypeBoxTypeProvider>();
+    const fastify = Fastify({logger:true}).withTypeProvider<TypeBoxTypeProvider>();
     await registerDb(fastify);
 
     fastify.register(server);
