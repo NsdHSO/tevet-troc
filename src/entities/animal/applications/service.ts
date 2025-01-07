@@ -3,7 +3,7 @@ import { AnimalCreated, CreateAnimal, IAnimal } from './models';
 
 export function animalApplicationService(animalRepository: IAnimalRepository) {
     return {
-        create(animal: CreateAnimal) {
+        async create(animal: CreateAnimal) {
 
             const defaultAnimal: IAnimal = {
                 name: '',
@@ -23,7 +23,7 @@ export function animalApplicationService(animalRepository: IAnimalRepository) {
                 temperament: ['Friendly'],
                 trained: false,
                 skills: [],
-                owner: { sdf: '', contact: '' },
+                owner: { name: '', contact: '' },
                 health: { vaccinated: false, knownIssues: [], lastVetVisit: '' },
                 activities: [],
                 homeEnvironment: 'Apartment', // Default to apartment
@@ -32,9 +32,11 @@ export function animalApplicationService(animalRepository: IAnimalRepository) {
 
             const mergedAnimal = { ...defaultAnimal, ...animal };
 
-            return animalRepository.create(mergedAnimal).catch(error => {
-                throw {newError: "Iancu"}
-            });
+            try {
+                return await animalRepository.create(mergedAnimal);
+            } catch (error) {
+                throw { newError: 'Iancu' };
+            }
         },
         findById(id: AnimalCreated['id']) {
             return animalRepository.findById(id);
