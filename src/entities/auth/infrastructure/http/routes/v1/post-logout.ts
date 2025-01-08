@@ -5,6 +5,7 @@ export default function logout(app: FastifyInstance) {
     app.post('/logout', {
         onRequest: [app.authenticate],
         schema: {
+            tags: ['auth'],
             headers: Header
         }
     }, async (req, reply) => {

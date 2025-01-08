@@ -5,6 +5,7 @@ import { ErrorObject } from '../../../../../../infrastructure/models/error';
 export default function authenticate(app: FastifyInstance) {
     app.post('/authenticate', {
         schema: {
+            tags: ['auth'],
             body: LoginUser
         },
     }, async (req: FastifyRequest<{ Body: LoginUserType }>, reply) => {
