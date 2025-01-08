@@ -1,5 +1,6 @@
 import { AnimalSchemas } from '../../schema';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import { Header } from '../../../../../auth/infrastructure/http/schema';
 
 export default async function getAnimalRoute(app: FastifyInstance) {
     app.get('/:animalId', {
@@ -7,7 +8,8 @@ export default async function getAnimalRoute(app: FastifyInstance) {
             response: {
                 201: AnimalSchemas.Bodies.Created201
             },
-            params: AnimalSchemas.Params.AnimalId
+            params: AnimalSchemas.Params.AnimalId,
+            headers:Header
         }
         ,
         onRequest: [app.authenticate]
