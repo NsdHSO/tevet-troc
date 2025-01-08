@@ -9,9 +9,8 @@ export default function authenticate(app: FastifyInstance) {
         },
     }, async (req: FastifyRequest<{ Body: LoginUserType }>, reply) => {
         try {
-            const user = await app.userAuthApplicationService.authenticate(req.body);
-            app.log.info(JSON.stringify(user) + 'Is logged in');
-            reply.code(200).send(app.jwt.sign({ user }));
+            req.user =  await app.userAuthApplicationService.authenticate(req.body) as any;;
+            reply.code(200).send({token: await req.generateToken()});
         } catch (error) {
             handleError(error, app, reply);
         }
@@ -19,7 +18,7 @@ export default function authenticate(app: FastifyInstance) {
 }
 
 const handleError = (error: ErrorObject<string, number> | any, app: FastifyInstance, reply: FastifyReply) => {
-    app.log.error('Auth when user trying login', error);
+    app.log.error('Auth when user trying login', JSON.stringify(error));
     if (error.code === 401) {
         app.log.error('User is not created', error);
     } else if (error.code === 404) {
