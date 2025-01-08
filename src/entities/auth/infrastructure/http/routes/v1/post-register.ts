@@ -5,6 +5,7 @@ import { ErrorObject } from '../../../../../../infrastructure/models/error';
 export default function (app: FastifyInstance) {
     app.post('/register', {
         schema: {
+            tags: ['auth'],
             body: UserCreate
         }
     }, async (req: FastifyRequest<{ Body: UserCreateType }>, reply) => {

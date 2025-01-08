@@ -17,7 +17,6 @@ export async function authPlugin(app: FastifyInstance) {
     app.register(fastifyAutoload, {
         dir: join(__dirname, 'http/routes'),  // Path to your v1 routes
         forceESM: true,  // If you're using ES modules
-        options: { prefix: '/auth' }
-    });
-
+        options: { prefix: '/auth'},
+    })
 }
