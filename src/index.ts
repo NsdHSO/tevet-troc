@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import server from './infrastructure/server.js';
 import { registerDb } from './db.config';
+import jwtPlugin from './entities/auth/infrastructure/services/jwt';
 
 dotenv.config();
 

@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "outFile": "./build",
+    "types": ["@fastify/jwt "],
     "paths": {
       "entities/*": ["infrastructure/entities/*"]
     }
