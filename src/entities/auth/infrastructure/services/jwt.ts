@@ -7,7 +7,8 @@ declare module 'fastify' {
         generateToken: any,
     }
     interface FastifyRequest {
-        generateToken: ()=> Promise<any>
+        generateToken: ()=> Promise<any>,
+        revokeToken: ()=>void;
     }
 }
 export default fp(async function (fastify, opts) {
@@ -29,8 +30,8 @@ export default fp(async function (fastify, opts) {
         }
     })
 
-    fastify.decorateRequest('revokeToken', function (req: any) { // [6]
-        revokedTokens.set(req.user.jti, true)
+    fastify.decorateRequest('revokeToken', function () { // [6]
+        revokedTokens.set(this.user.jti, true)
     })
 
     fastify.decorateRequest('generateToken', async function () { // [7]
