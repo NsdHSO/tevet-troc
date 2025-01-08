@@ -44,7 +44,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 throw createError('Wrong credentials provided', 404);
             }
 
-            return { token: (hash ===  user.passwordHash)as any };
+            return { id: user.id, username: user.username, email: user.email};
         },
         logout(): Promise<{ message: string }> {
             return Promise.resolve({ message: 'Not implementd' });
