@@ -1,5 +1,5 @@
 import { AnimalSchemas } from '../../schema';
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 
 export default async function getAnimalRoute(app: FastifyInstance) {
     app.get('/:animalId', {
@@ -9,5 +9,12 @@ export default async function getAnimalRoute(app: FastifyInstance) {
             },
             params: AnimalSchemas.Params.AnimalId
         }
-    }, async (req: any) => app.animalService.findById(req.params.animalId));
+        ,
+        onRequest: [app.authenticate]
+
+    }, async (req: FastifyRequest<{Params:{animalId:number}}>, resp) => {
+        console.log(app.authenticate(req, resp), req.user);
+        return app.animalService.findById(req.params.animalId);
+    });
+
 }

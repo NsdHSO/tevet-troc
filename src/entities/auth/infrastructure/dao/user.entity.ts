@@ -88,12 +88,10 @@ export class UserEntity {
     @Column({ type: 'boolean', default: false })
     isPhoneVerified?: boolean;
 
-    @CreateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     createdAt!: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({ type: 'timestamp', nullable: true })
     updatedAt!: Date;
-
-    @DeleteDateColumn()
-    deletedAt?: Date;
 }
+

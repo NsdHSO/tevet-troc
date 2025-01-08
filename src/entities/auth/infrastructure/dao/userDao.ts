@@ -5,7 +5,7 @@ import { CreatedUser, CreateUser, IUserRepository } from '../../applications';
 export default function (db: Repository<UserEntity>): IUserRepository {
     return {
         async findByEmail(email: string): Promise<UserEntity | null> {
-            return db.findOneBy({ email });
+            return await db.findOneBy({ email });
         },
         async create(user: CreateUser): Promise<CreatedUser | undefined> {
             const entityUser = db.create(user);

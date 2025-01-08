@@ -33,16 +33,18 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
             }
         },
         async authenticate(requestUser: LoginUser) {
+
             const user = await userRepository.findByEmail(requestUser.email as string);
             if (!user) {
                 throw createError('Wrong credentials provided', 401);
             }
             const { hash } = await generateHash((requestUser.password as string), user.passwordSalt);
-            if (hash !== user.passwordHash) {
+
+            if(hash !== user.passwordHash){
                 throw createError('Wrong credentials provided', 404);
             }
 
-            return { token: hash };
+            return { token: (hash ===  user.passwordHash)as any };
         },
         logout(): Promise<{ message: string }> {
             return Promise.resolve({ message: 'Not implementd' });
@@ -50,7 +52,6 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
         refresh(): Promise<string> {
             return Promise.resolve('Not implemented');
         }
-
     };
 }
 
@@ -86,8 +87,7 @@ function createPayloadForCreateUser(user: CreateUser): Omit<IUser, 'id'> {
         isActive: user.isActive ?? true, // Default to true if not provided
         isEmailVerified: user.isEmailVerified ?? false, // Default to false if not provided
         isPhoneVerified: user.isPhoneVerified ?? false, // Default to false if not provided
-        createdAt: new Date(), // Default to current date if not provided
-        updatedAt: new Date(), // Default to current date if not provided
-        deletedAt: new Date(), // Default to undefined if not provided
+        createdAt: new Date()
+
     };
 }
