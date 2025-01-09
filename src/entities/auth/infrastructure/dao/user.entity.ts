@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Permission, Role } from '../../applications';
 
 
@@ -7,34 +7,64 @@ export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id!: string;  // Add the definite assignment assertion (!)
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({
+        type: 'varchar',
+        length: 50
+    })
     firstName!: string;
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({
+        type: 'varchar',
+        length: 50
+    })
     lastName!: string;
 
-    @Column({ type: 'varchar', unique: true })
+    @Column({
+        type: 'varchar',
+        unique: true
+    })
     email!: string;
 
-    @Column({ type: 'varchar', nullable: true })
+    @Column({
+        type: 'varchar',
+        nullable: true
+    })
     username?: string;
 
-    @Column({ type: 'varchar', nullable: true })
+    @Column({
+        type: 'varchar',
+        nullable: true
+    })
     phoneNumber?: string;
 
-    @Column({ type: 'date', nullable: true })
+    @Column({
+        type: 'date',
+        nullable: true
+    })
     dateOfBirth?: Date;
 
-    @Column({ type: 'varchar', nullable: true })
+    @Column({
+        type: 'varchar',
+        nullable: true
+    })
     passwordHash?: string;
 
-    @Column({ type: 'varchar', nullable: true })
+    @Column({
+        type: 'varchar',
+        nullable: true
+    })
     passwordSalt?: string;
 
-    @Column({ type: 'boolean', default: false })
+    @Column({
+        type: 'boolean',
+        default: false
+    })
     twoFactorEnabled!: boolean;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({
+        type: 'timestamp',
+        nullable: true
+    })
     lastLoginAt?: Date;
 
     @Column({
@@ -79,19 +109,40 @@ export class UserEntity {
         };
     };
 
-    @Column({ type: 'boolean', default: true })
+    @Column({
+        type: 'boolean',
+        default: true
+    })
     isActive?: boolean;
 
-    @Column({ type: 'boolean', default: false })
+    @Column({
+        type: 'boolean',
+        default: false
+    })
     isEmailVerified?: boolean;
 
-    @Column({ type: 'boolean', default: false })
+    @Column({
+        type: 'boolean',
+        default: false
+    })
     isPhoneVerified?: boolean;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @CreateDateColumn({
+        type: 'timestamp',
+        nullable: true
+    })
     createdAt!: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', nullable: true })
+    @UpdateDateColumn({
+        type: 'timestamp',
+        nullable: true
+    })
     updatedAt!: Date;
+
+    @Column({
+        type: 'varchar',
+        nullable: true,
+    })
+    refreshToken?: string;
 }
 

@@ -1,8 +1,7 @@
 import 'reflect-metadata';
 import { FastifyInstance } from 'fastify';
 import plugin from 'typeorm-fastify-plugin';
-import { AnimalEntity } from './entities/animal/infrastructure/dao/animal.entity';
-import { UserEntity } from './entities/auth/infrastructure/dao/user.entity';
+import { join } from 'path';
 
 
 export async function registerDb(fastify: FastifyInstance) {
@@ -13,9 +12,8 @@ export async function registerDb(fastify: FastifyInstance) {
         logging: process.env.NODE_ENV === 'dev',
         subscribers: [],
         migrationsRun: process.env.NODE_ENV !== 'dev',
-        entities: [AnimalEntity, UserEntity],
+        entities: [join( '**', '*.entity.{ts,js}')],
         logger: 'debug'
-
     }).after(() => {
         fastify.log.info('Database plugin registered successfully.');
     }).ready(async () => {

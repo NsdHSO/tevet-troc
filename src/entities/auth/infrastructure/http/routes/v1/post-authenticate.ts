@@ -1,17 +1,18 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { LoginUser, LoginUserType } from '../../schema';
+import { LoginResponses, LoginUser, LoginUserType } from '../../schema';
 import { ErrorObject } from '../../../../../../infrastructure/models/error';
 
 export default function authenticate(app: FastifyInstance) {
     app.post('/authenticate', {
         schema: {
             tags: ['auth'],
-            body: LoginUser
+            body: LoginUser,
+            response: LoginResponses
         },
     }, async (req: FastifyRequest<{ Body: LoginUserType }>, reply) => {
         try {
-            req.user =  await app.userAuthApplicationService.authenticate(req.body) as any;;
-            reply.code(200).send({token: await req.generateToken()});
+            req.user = await app.userAuthApplicationService.authenticate(req.body) as any;
+            reply.code(200).send(await req.generateToken());
         } catch (error) {
             handleError(error, app, reply);
         }

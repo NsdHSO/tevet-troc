@@ -9,7 +9,8 @@ export default async function getAnimalRoute(app: FastifyInstance) {
                 201: AnimalSchemas.Bodies.Created201
             },
             params: AnimalSchemas.Params.AnimalId,
-            headers:Header
+            headers:Header,
+            tags: ['animal'],
         }
         ,
         onRequest: [app.authenticate]
