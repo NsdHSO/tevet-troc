@@ -1,6 +1,6 @@
 import { IUserRepository } from './repository';
 import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './models';
-import { generateHash } from '../util';
+import { generateHash, generateRefreshToken } from '../util';
 import { IUserHttp } from '../infrastructure/http/model';
 import { createError } from '../../../infrastructure/models/error';
 
@@ -40,11 +40,18 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
             }
             const { hash } = await generateHash((requestUser.password as string), user.passwordSalt);
 
-            if(hash !== user.passwordHash){
+            if (hash !== user.passwordHash) {
                 throw createError('Wrong credentials provided', 404);
             }
 
-            return { id: user.id, username: user.username, email: user.email};
+            await userRepository.save({ ...user, ...generateRefreshToken() });
+
+            return {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                refreshToken: user.refreshToken
+            };
         },
         logout(): Promise<{ message: string }> {
             return Promise.resolve({ message: 'Not implementd' });

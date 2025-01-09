@@ -18,6 +18,9 @@ export default function (db: Repository<UserEntity>): IUserRepository {
             } catch (error) {
                 return Promise.reject(error);
             }
+        },
+        async save(user: UserEntity): Promise<UserEntity | undefined> {
+            return await db.save(user);
         }
     };
 }

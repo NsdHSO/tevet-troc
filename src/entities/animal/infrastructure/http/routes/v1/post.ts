@@ -16,6 +16,7 @@ export default async function animalRoutes(app: FastifyInstance) {
                     examples: ['Dog', 'Cat', 'Rabbit', 'Bird', 'Fish', 'Horse', 'Cow'],
                 }),
             }),  // The schema to validate the incoming request body
+            tags: ['animal'],
         },
     }, async (req, reply) => {
         try {

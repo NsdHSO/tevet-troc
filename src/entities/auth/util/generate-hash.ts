@@ -1,15 +1,22 @@
-import * as crypto from 'node:crypto';
-import util from 'node:util';
+import { randomBytes ,pbkdf2Sync} from 'node:crypto';
 
-const pbkdf2 = util.promisify(crypto.pbkdf2);
 
 export async function generateHash(password: string, salt?: string) {
-    if (!salt) {
-        salt = crypto.randomBytes(16).toString('hex');
+    // Generate a new salt if not provided
+    const saltValue = salt || randomBytes(16).toString('hex');
+
+    // Define the number of iterations and key length
+    const iterations = 100000;
+    const keyLength = 64;
+
+    // Generate the hash using pbkdf2Sync
+    const hash = pbkdf2Sync(password, saltValue, iterations, keyLength, 'sha256').toString('hex');
+
+    return { salt: saltValue, hash };
+
+}
+export function generateRefreshToken() {
+    return {
+        refreshToken: randomBytes(64).toString('hex'),
     }
-
-    const hash = (await pbkdf2(password, salt, 1000, 64, 'sha256')).toString('hex');
-
-    return { salt, hash };
-
 }
