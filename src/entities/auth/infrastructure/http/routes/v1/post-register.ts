@@ -10,7 +10,11 @@ export default function (app: FastifyInstance) {
         }
     }, async (req: FastifyRequest<{ Body: UserCreateType }>, reply) => {
         try {
-            const newUser = await app.userAuthApplicationService.register(req.body);
+            const newUser = await app.userAuthApplicationService.register({
+                ...req
+                .body,
+                ...req.refreshToken()
+            });
             app.log.info('Registered user', newUser);
             reply.code(201).send(newUser);
 

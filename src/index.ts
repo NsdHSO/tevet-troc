@@ -4,14 +4,14 @@ import Fastify from 'fastify';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import server from './infrastructure/server.js';
 import { registerDb } from './db.config';
-import jwtPlugin from './entities/auth/infrastructure/services/jwt';
+import fastifyCookie from '@fastify/cookie';
 
 dotenv.config();
 
 export async function startServer() {
-    const fastify = Fastify({logger:true}).withTypeProvider<TypeBoxTypeProvider>();
+    const fastify = Fastify({ logger: true }).withTypeProvider<TypeBoxTypeProvider>();
     await registerDb(fastify);
-
+    fastify.register(fastifyCookie);
     fastify.register(server);
 
     try {

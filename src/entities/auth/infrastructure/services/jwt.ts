@@ -1,17 +1,14 @@
 import fp from 'fastify-plugin';
 import fastifyJwt, { Secret } from '@fastify/jwt';
-import { randomBytes } from 'node:crypto';
-import userDao from '../dao/userDao';
-import { UserEntity } from '../dao/user.entity';
 
 declare module 'fastify' {
     interface FastifyInstance {
-        authenticate: (req: FastifyRequest, repl: FastifyReply) => Promise<any>
-        generateToken: any,
+        authenticate: (req: FastifyRequest, repl: FastifyReply) => Promise<any>;
     }
 
     interface FastifyRequest {
-        generateToken: () => Promise<any>,
+        generateToken: (reply) => { accessToken: string };
+        refreshToken: () => { refreshToken: string };
         revokeToken: () => void;
     }
 }
@@ -38,7 +35,7 @@ export default fp(async function (fastify, opts) {
         revokedTokens.set(this.user.jti, true);
     });
 
-    fastify.decorateRequest('generateToken', async function () { // [7]
+    fastify.decorateRequest('generateToken', function (reply) { // [7]
         // Generate the access token
         const accessToken = fastify.jwt.sign(
             {
@@ -52,9 +49,29 @@ export default fp(async function (fastify, opts) {
             }
         );
 
+        reply.setCookie('refreshToken', this.user.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+        });
         return {
-            accessToken,
-            refreshToken :this.user.refreshToken,
+            accessToken
+        };
+    });
+
+
+    fastify.decorateRequest('refreshToken', function () {
+        const refreshToken = fastify.jwt.sign(
+            {
+                id: String(JSON.stringify(this.body))
+            },
+            {
+                jti: String(Date.now()),
+                expiresIn: process.env.JWT_SECRET_REFRESH_TOKEN_EXPIRES_IN,
+            });
+        return {
+            refreshToken
         };
     });
 });
