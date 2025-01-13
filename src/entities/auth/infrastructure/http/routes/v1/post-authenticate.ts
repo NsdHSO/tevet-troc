@@ -11,8 +11,8 @@ export default function authenticate(app: FastifyInstance) {
         },
     }, async (req: FastifyRequest<{ Body: LoginUserType }>, reply) => {
         try {
-            req.user = await app.userAuthApplicationService.authenticate(req.body) as any;
-            reply.code(200).send(await req.generateToken());
+            req.user = await app.userAuthApplicationService.authenticate({...req.body}) as any;
+            reply.code(200).send(req.generateToken(reply));
         } catch (error) {
             handleError(error, app, reply);
         }

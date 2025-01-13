@@ -4,6 +4,9 @@ dependencies:
   '@fastify/autoload':
     specifier: ^6.0.3
     version: 6.0.3
+  '@fastify/cookie':
+    specifier: ^11.0.2
+    version: 11.0.2
   '@fastify/jwt':
     specifier: ^9.0.2
     version: 9.0.2
@@ -854,6 +857,13 @@ packages:
 
   /@fastify/autoload@6.0.3:
     resolution: {integrity: sha512-/wM2pmI7jP2fGah3YuP14i9vuaijpD4gQYLiyd+eD7gUxpA3B4R6/0QIXQS2eJaYD9aIX4ZFRzPmrZsaetfcWw==}
+    dev: false
+
+  /@fastify/cookie@11.0.2:
+    resolution: {integrity: sha512-GWdwdGlgJxyvNv+QcKiGNevSspMQXncjMZ1J8IvuDQk0jvkzgWWZFNC2En3s+nHndZBGV8IbLwOI/sxCZw/mzA==}
+    dependencies:
+      cookie: 1.0.2
+      fastify-plugin: 5.0.1
     dev: false
 
   /@fastify/error@4.0.0:

@@ -38,8 +38,8 @@ export function animalApplicationService(animalRepository: IAnimalRepository) {
                 throw { newError: 'Iancu' };
             }
         },
-        findById(id: AnimalCreated['id']) {
-            return animalRepository.findById(id);
+        async findById(id: AnimalCreated['id']) {
+            return await animalRepository.findById(id);
         }
     };
 }

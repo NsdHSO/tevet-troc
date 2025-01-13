@@ -1,6 +1,6 @@
 import { IUserRepository } from './repository';
 import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './models';
-import { generateHash, generateRefreshToken } from '../util';
+import { generateHash } from '../util';
 import { IUserHttp } from '../infrastructure/http/model';
 import { createError } from '../../../infrastructure/models/error';
 
@@ -21,7 +21,6 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 hash,
                 salt
             } = await generateHash(user.password);
-
             try {
                 return await userRepository.create({
                     ...createPayloadForCreateUser(user),
@@ -44,8 +43,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 throw createError('Wrong credentials provided', 404);
             }
 
-            await userRepository.save({ ...user, ...generateRefreshToken() });
-
+            await userRepository.save({ ...user });
             return {
                 id: user.id,
                 username: user.username,
@@ -94,7 +92,7 @@ function createPayloadForCreateUser(user: CreateUser): Omit<IUser, 'id'> {
         isActive: user.isActive ?? true, // Default to true if not provided
         isEmailVerified: user.isEmailVerified ?? false, // Default to false if not provided
         isPhoneVerified: user.isPhoneVerified ?? false, // Default to false if not provided
-        createdAt: new Date()
-
+        createdAt: new Date(),
+        refreshToken: user.refreshToken ?? null
     };
 }
