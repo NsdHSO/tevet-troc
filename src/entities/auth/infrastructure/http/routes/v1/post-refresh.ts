@@ -3,7 +3,7 @@ import { Header } from '../../schema';
 
 export default function refresh(app: FastifyInstance) {
     app.post('/refresh', {
-        onRequest: [app.authenticate],
+        onRequest: [app.generateRefreshToken],
         schema: {
             tags: ['auth'],
             headers: Header
