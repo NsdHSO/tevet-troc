@@ -4,13 +4,13 @@ import fastifyJwt, { Secret } from '@fastify/jwt';
 declare module 'fastify' {
     interface FastifyInstance {
         authenticate: (req: FastifyRequest, repl: FastifyReply) => Promise<any>;
+        generateRefreshToken: (req: FastifyRequest, repl: FastifyReply) => void;
     }
 
     interface FastifyRequest {
         generateToken: (reply) => { accessToken: string };
         refreshToken: () => { refreshToken: string };
-        revokeToken: () => void
-        generateRefreshToken: (req: FastifyRequest, repl: FastifyReply) => void;
+        revokeToken: () => void;
 
     }
 }
@@ -57,6 +57,12 @@ export default fp(async function (fastify, opts) {
             path: '/',
             maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
         });
+        reply.setCookie('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+        });
         return {
             accessToken
         };
@@ -76,7 +82,7 @@ export default fp(async function (fastify, opts) {
             refreshToken
         };
     });
-    fastify.decorateRequest('generateRefreshToken', function (request, reply) {
+    fastify.decorate('generateRefreshToken', async function (request, reply) {
         const incomingRefreshToken = request.cookies['refreshToken'] || request.body.refreshToken;
 
         if (!incomingRefreshToken) {
@@ -84,9 +90,11 @@ export default fp(async function (fastify, opts) {
         }
         try {
 
-            const decodedRefreshToken = fastify.jwt.decode(incomingRefreshToken);
-
-            return reply.send({ message: decodedRefreshToken });
+            const decodedRefreshToken = await fastify.jwt.decode(incomingRefreshToken);
+            request.user = {
+                ...decodedRefreshToken['id'],
+                refreshToken: incomingRefreshToken
+            };
         } catch (error) {
             return reply.send({ message: error });
         }

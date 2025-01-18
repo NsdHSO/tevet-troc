@@ -5,7 +5,7 @@ export interface IUserHttp {
 
     authenticate(user: LoginUser): Promise<CreateUser | undefined>;
 
-    refresh(): Promise<string>;
+    refresh(user: LoginUser): Promise<{ accessToken: string, refreshToken: string }>;
 
     logout(): Promise<{ message: string }>;
 }

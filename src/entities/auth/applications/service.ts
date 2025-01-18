@@ -54,8 +54,8 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
         logout(): Promise<{ message: string }> {
             return Promise.resolve({ message: 'Not implementd' });
         },
-        refresh(): Promise<string> {
-            return Promise.resolve('Not implemented');
+        async refresh(user: LoginUser) {
+            return Promise.resolve({refreshToken:'fsdf', accessToken:'sfsdf'})
         }
     };
 }
