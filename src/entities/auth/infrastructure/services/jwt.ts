@@ -4,13 +4,14 @@ import fastifyJwt, { Secret } from '@fastify/jwt';
 declare module 'fastify' {
     interface FastifyInstance {
         authenticate: (req: FastifyRequest, repl: FastifyReply) => Promise<any>;
-        generateRefreshToken: (req: FastifyRequest, repl: FastifyReply) => void;
     }
 
     interface FastifyRequest {
         generateToken: (reply) => { accessToken: string };
         refreshToken: () => { refreshToken: string };
-        revokeToken: () => void;
+        revokeToken: () => void
+        generateRefreshToken: (req: FastifyRequest, repl: FastifyReply) => void;
+
     }
 }
 export default fp(async function (fastify, opts) {
@@ -75,7 +76,7 @@ export default fp(async function (fastify, opts) {
             refreshToken
         };
     });
-    fastify.decorate('generateRefreshToken', function (request, reply) {
+    fastify.decorateRequest('generateRefreshToken', function (request, reply) {
         const incomingRefreshToken = request.cookies['refreshToken'] || request.body.refreshToken;
 
         if (!incomingRefreshToken) {
@@ -84,7 +85,7 @@ export default fp(async function (fastify, opts) {
         try {
 
             const decodedRefreshToken = fastify.jwt.decode(incomingRefreshToken);
-            console.log(decodedRefreshToken);
+
             return reply.send({ message: decodedRefreshToken });
         } catch (error) {
             return reply.send({ message: error });
