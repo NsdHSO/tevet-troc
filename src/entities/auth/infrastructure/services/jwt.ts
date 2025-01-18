@@ -4,6 +4,7 @@ import fastifyJwt, { Secret } from '@fastify/jwt';
 declare module 'fastify' {
     interface FastifyInstance {
         authenticate: (req: FastifyRequest, repl: FastifyReply) => Promise<any>;
+        generateRefreshToken: (req: FastifyRequest, repl: FastifyReply) => void;
     }
 
     interface FastifyRequest {
@@ -68,10 +69,25 @@ export default fp(async function (fastify, opts) {
             },
             {
                 jti: String(Date.now()),
-                expiresIn: process.env.JWT_SECRET_REFRESH_TOKEN_EXPIRES_IN,
+                expiresIn: process.env.JWT_SECRET_DEFAULT_TOKEN_EXPIRES_IN,
             });
         return {
             refreshToken
         };
+    });
+    fastify.decorate('generateRefreshToken', function (request, reply) {
+        const incomingRefreshToken = request.cookies['refreshToken'] || request.body.refreshToken;
+
+        if (!incomingRefreshToken) {
+            return reply.send({ message: 'Refresh token not found' });
+        }
+        try {
+
+            const decodedRefreshToken = fastify.jwt.decode(incomingRefreshToken);
+            console.log(decodedRefreshToken);
+            return reply.send({ message: decodedRefreshToken });
+        } catch (error) {
+            return reply.send({ message: error });
+        }
     });
 });
