@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreatedUser, CreateUser, IUserRepository } from '../../applications';
 
@@ -21,6 +21,9 @@ export default function (db: Repository<UserEntity>): IUserRepository {
         },
         async save(user: UserEntity): Promise<UserEntity | undefined> {
             return await db.save(user);
+        },
+        async update(user): Promise<UpdateResult> {
+            return await db.update({ email: user.email }, {});
         }
     };
 }
