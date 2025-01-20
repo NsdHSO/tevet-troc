@@ -3,6 +3,7 @@ import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './m
 import { generateHash } from '../util';
 import { IUserHttp } from '../infrastructure/http/model';
 import { createError } from '../../../infrastructure/models/error';
+import { UserEntity } from '../infrastructure/dao/user.entity';
 
 export function userAuthApplicationService(userRepository: IUserRepository): IUserHttp {
     return {
@@ -55,7 +56,12 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
             return Promise.resolve({ message: 'Not implementd' });
         },
         async refresh(user: LoginUser) {
-            return Promise.resolve({refreshToken:'fsdf', accessToken:'sfsdf'})
+                try{
+                    const userDao =await userRepository.findByEmail(user.email as string)
+                    await userRepository.update(userDao as any)
+                }catch(error){
+                    throw createError("Cannot read of null reading ('email')", 501)
+                }
         }
     };
 }

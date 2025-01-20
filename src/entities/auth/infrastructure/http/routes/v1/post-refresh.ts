@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { Header } from '../../schema';
+import { handleError } from '../../../errors/handling';
 
 export default function refresh(app: FastifyInstance) {
     app.post('/refresh', {
@@ -9,6 +10,11 @@ export default function refresh(app: FastifyInstance) {
             headers: Header
         }
     }, async (req, reply) => {
-        return reply.send(req.generateToken(reply));
+        try {
+            await app.userAuthApplicationService.refresh(req.user);
+            return reply.send(req.generateToken(reply));
+        } catch (error) {
+            return handleError(error, app, reply);
+        }
     });
 }

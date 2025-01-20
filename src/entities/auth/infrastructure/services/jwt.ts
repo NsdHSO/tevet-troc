@@ -92,7 +92,7 @@ export default fp(async function (fastify, opts) {
 
             const decodedRefreshToken = await fastify.jwt.decode(incomingRefreshToken);
             request.user = {
-                ...decodedRefreshToken['id'],
+                ...JSON.parse(decodedRefreshToken['id']),
                 refreshToken: incomingRefreshToken
             };
         } catch (error) {
