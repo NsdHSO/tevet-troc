@@ -143,6 +143,6 @@ export class UserEntity {
         type: 'varchar',
         nullable: true,
     })
-    refreshToken?: string;
+    refreshToken?: string | null;
 }
 

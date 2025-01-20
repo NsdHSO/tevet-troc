@@ -10,7 +10,7 @@ declare module 'fastify' {
     interface FastifyRequest {
         generateToken: (reply) => { accessToken: string };
         refreshToken: () => { refreshToken: string };
-        revokeToken: () => void;
+        revokeToken: (reply) => void;
 
     }
 }
@@ -33,8 +33,22 @@ export default fp(async function (fastify, opts) {
         }
     });
 
-    fastify.decorateRequest('revokeToken', function () { // [6]
+    fastify.decorateRequest('revokeToken', function (reply) { // [6]
         revokedTokens.set(this.user.jti, true);
+
+        reply.setCookie('refreshToken', '', { // Set an empty string as the value
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            maxAge: 0, // Immediately expire the cookie
+        });
+
+        reply.setCookie('accessToken', '', { // Set an empty string as the value
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            maxAge: 0, // Immediately expire the cookie
+        });
     });
 
     fastify.decorateRequest('generateToken', function (reply) { // [7]

@@ -3,7 +3,6 @@ import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './m
 import { generateHash } from '../util';
 import { IUserHttp } from '../infrastructure/http/model';
 import { createError } from '../../../infrastructure/models/error';
-import { UserEntity } from '../infrastructure/dao/user.entity';
 
 export function userAuthApplicationService(userRepository: IUserRepository): IUserHttp {
     return {
@@ -32,7 +31,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 throw createError('User already exists', 409);
             }
         },
-        async authenticate(requestUser: LoginUser) {
+        async authenticate(requestUser: LoginUser, refreshToken: string) {
 
             const user = await userRepository.findByEmail(requestUser.email as string);
             if (!user) {
@@ -44,6 +43,10 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 throw createError('Wrong credentials provided', 404);
             }
 
+            if (!user.refreshToken) {
+                user.refreshToken = refreshToken;
+            }
+
             await userRepository.save({ ...user });
             return {
                 id: user.id,
@@ -52,17 +55,25 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 refreshToken: user.refreshToken
             };
         },
-        logout(): Promise<{ message: string }> {
-            return Promise.resolve({ message: 'Not implementd' });
+        async logout(email: string): Promise<{ message: string }> {
+            try {
+                const userDao = await userRepository.findByEmail(email);
+                userDao.refreshToken = null;
+                await userRepository.save(userDao);
+                return { message: 'User was logout' };
+            } catch (error) {
+                throw createError('Cannot read of null reading (\'email\')', 501);
+            }
         },
         async refresh(user: LoginUser) {
-                try{
-                    const userDao =await userRepository.findByEmail(user.email as string)
-                    await userRepository.update(userDao as any)
-                }catch(error){
-                    throw createError("Cannot read of null reading ('email')", 501)
-                }
+            try {
+                const userDao = await userRepository.findByEmail(user.email as string);
+                await userRepository.update(userDao as any);
+            } catch (error) {
+                throw createError('Cannot read of null reading (\'email\')', 501);
+            }
         }
+
     };
 }
 
