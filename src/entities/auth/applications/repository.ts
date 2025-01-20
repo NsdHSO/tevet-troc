@@ -8,4 +8,5 @@ export interface IUserRepository {
     findByEmail(email: string): Promise<UserEntity | null>;
     save(user: UserEntity): Promise<UserEntity | undefined>;
     update(user:UserEntity): Promise<UpdateResult>;
+    updateRefreshToken(nullS: null): Promise<UpdateResult>;
 }

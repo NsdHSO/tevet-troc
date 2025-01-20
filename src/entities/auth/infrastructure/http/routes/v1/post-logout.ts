@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { Header } from '../../schema';
+import { handleError } from '../../../errors/handling';
 
 export default function logout(app: FastifyInstance) {
     app.post('/logout', {
@@ -9,8 +10,12 @@ export default function logout(app: FastifyInstance) {
             headers: Header
         }
     }, async (req, reply) => {
-        req.revokeToken();
-        reply.code(204);
+        try{
+            req.revokeToken(reply);
+            const revokeRefreshTokenFromDB = app.userAuthApplicationService.logout(req.user.email)
+        }catch (error) {
+            return handleError(error, app, reply);
+        }
 
     });
 }
