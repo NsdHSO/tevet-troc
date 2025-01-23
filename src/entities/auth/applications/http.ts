@@ -1,5 +1,5 @@
-import { CreatedUser, CreateUser, LoginUser } from '../../../applications';
-import { ErrorObject } from '../../../../../infrastructure/models/error';
+import { ErrorObject } from '../../../infrastructure/models/error';
+import { CreatedUser, CreateUser, LoginUser } from './models';
 
 export interface IUserHttp {
     register(user: CreateUser): Promise<CreatedUser | undefined>;

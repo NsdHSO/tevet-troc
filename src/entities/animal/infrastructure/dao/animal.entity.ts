@@ -1,9 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, } from 'typeorm';
+import { BaseEntityWithUpdateAndCreationDate } from '../../../../utils/dao/base-entity-with-update-and-creation-date';
+import { UserDID } from '../../../auth/infrastructure/dao/userId';
 
 @Entity('animal')
-export class AnimalEntity {
+export class AnimalEntity extends BaseEntityWithUpdateAndCreationDate {
     @PrimaryGeneratedColumn()
     id!: number;
+
+    @Column(() => UserDID)
+    user!: UserDID;
 
     @Column({
         type: 'varchar',
@@ -140,10 +145,4 @@ export class AnimalEntity {
         nullable: true
     })
     sounds?: string[];
-
-    @CreateDateColumn()
-    createdAt!: Date;
-
-    @UpdateDateColumn()
-    updatedAt!: Date;
 }

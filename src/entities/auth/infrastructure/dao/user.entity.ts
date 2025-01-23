@@ -1,11 +1,20 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { customAlphabet } from 'nanoid';
+import { BaseEntityWithUpdateAndCreationDate } from '../../../../utils/dao/base-entity-with-update-and-creation-date';
 import { Permission, Role } from '../../applications';
 
+class UserWithDid extends BaseEntityWithUpdateAndCreationDate {
+    @Column({
+        unique: true,
+        type: 'int',
+    })
+    uic!: string;
 
-@Entity('user')
-export class UserEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;  // Add the definite assignment assertion (!)
+    @Column({
+        unique: true,
+        type: 'varchar',
+    })
+    alias!: string;
 
     @Column({
         type: 'varchar',
@@ -24,6 +33,12 @@ export class UserEntity {
         unique: true
     })
     email!: string;
+}
+
+@Entity('user')
+export class UserEntity extends UserWithDid {
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;  // Add the definite assignment assertion (!)
 
     @Column({
         type: 'varchar',
@@ -127,22 +142,16 @@ export class UserEntity {
     })
     isPhoneVerified?: boolean;
 
-    @CreateDateColumn({
-        type: 'timestamp',
-        nullable: true
-    })
-    createdAt!: Date;
-
-    @UpdateDateColumn({
-        type: 'timestamp',
-        nullable: true
-    })
-    updatedAt!: Date;
-
     @Column({
         type: 'varchar',
         nullable: true,
     })
     refreshToken?: string | null;
+
+    @BeforeInsert()
+    generateId() {
+        const nanoid = customAlphabet('0123456789', 8);
+        this.uic = nanoid(); // Generates an 8-character string
+    }
 }
 

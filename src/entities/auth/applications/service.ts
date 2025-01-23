@@ -1,8 +1,10 @@
 import { IUserRepository } from './repository';
 import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './models';
 import { generateHash } from '../util';
-import { IUserHttp } from '../infrastructure/http/model';
+import { IUserHttp } from './http';
 import { createError } from '../../../infrastructure/models/error';
+import { generateAlias } from '../../../utils/functions';
+import { HttpCodeW } from '../../../infrastructure/enums/http-code';
 
 export function userAuthApplicationService(userRepository: IUserRepository): IUserHttp {
     return {
@@ -14,7 +16,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
             const existingUser = await userRepository.findByEmail(user.email);
             if (existingUser) {
                 const err = new Error('User already exists');
-                (err as any)['statusCode'] = 409;
+                (err as any)['statusCode'] = HttpCodeW.Conflict;
                 throw err;
             }
             const {
@@ -25,10 +27,10 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 return await userRepository.create({
                     ...createPayloadForCreateUser(user),
                     passwordHash: hash,
-                    passwordSalt: salt
+                    passwordSalt: salt,
                 });
             } catch (error) {
-                throw createError('User already exists', 409);
+                throw createError('User can\'t be saved', HttpCodeW.Conflict);
             }
         },
         async authenticate(requestUser: LoginUser, refreshToken: string) {
@@ -52,7 +54,8 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 id: user.id,
                 username: user.username,
                 email: user.email,
-                refreshToken: user.refreshToken
+                refreshToken: user.refreshToken,
+                uic: user.uic
             };
         },
         async logout(email: string): Promise<{ message: string }> {
@@ -62,7 +65,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 await userRepository.save(userDao);
                 return { message: 'User was logout' };
             } catch (error) {
-                throw createError('Cannot read of null reading (\'email\')', 501);
+                throw createError('Cannot read of null reading (\'email\')', HttpCodeW.NotImplemented);
             }
         },
         async refresh(user: LoginUser) {
@@ -70,7 +73,7 @@ export function userAuthApplicationService(userRepository: IUserRepository): IUs
                 const userDao = await userRepository.findByEmail(user.email as string);
                 await userRepository.update(userDao as any);
             } catch (error) {
-                throw createError('Cannot read of null reading (\'email\')', 501);
+                throw createError('Cannot read of null reading (\'email\')', HttpCodeW.NotImplemented);
             }
         }
 
@@ -110,6 +113,7 @@ function createPayloadForCreateUser(user: CreateUser): Omit<IUser, 'id'> {
         isEmailVerified: user.isEmailVerified ?? false, // Default to false if not provided
         isPhoneVerified: user.isPhoneVerified ?? false, // Default to false if not provided
         createdAt: new Date(),
-        refreshToken: user.refreshToken ?? null
+        refreshToken: user.refreshToken ?? null,
+        alias: user.alias ?? generateAlias()
     };
 }

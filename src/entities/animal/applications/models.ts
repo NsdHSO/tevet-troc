@@ -16,6 +16,10 @@ export interface IAnimal {
         min: number;
         max: number;
     };
+    user:{
+        uic: string;
+        email:string
+    }
     colors?: string[];
     gender?: 'Male' | 'Female';
     neutered?: boolean;

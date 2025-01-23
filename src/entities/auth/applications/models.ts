@@ -2,7 +2,7 @@
 export type ThemePreference = 'light' | 'dark' | 'system';
 export type CreateUser = Partial<IUser>;
 export type CreatedUser = Pick<IUser, 'email' | 'username' | 'roles'>
-export type LoginUser = Partial<Pick<IUser, 'email' | 'username' | 'password'>>
+export type LoginUser = Partial<Pick<IUser, 'email' | 'username' | 'password'| 'uic'>>
 
 export enum Role {
     ADMIN = 'admin',
@@ -53,7 +53,8 @@ export interface IUser {
     username?: string;
     phoneNumber?: string;
     dateOfBirth?: Date;
-
+    uic: string
+    alias: string
     // Authentication-related fields
     password?: string;
     twoFactorEnabled?: boolean;

@@ -1,11 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import { Type } from '@sinclair/typebox';
+import { AuthBearerHeader } from '../../../../../auth/infrastructure/http/schema';
+import { HttpCodeW } from '../../../../../../infrastructure/enums/http-code';
 
 export default async function animalRoutes(app: FastifyInstance) {
     app.post('/', {
         schema: {
             response: {
-                404: Type.Object({
+                [HttpCodeW.NotFound]: Type.Object({
                     message: Type.String(),
                     code: Type.String(),
                 })
@@ -16,29 +18,38 @@ export default async function animalRoutes(app: FastifyInstance) {
                     examples: ['Dog', 'Cat', 'Rabbit', 'Bird', 'Fish', 'Horse', 'Cow'],
                 }),
             }),  // The schema to validate the incoming request body
+            headers: AuthBearerHeader,
             tags: ['animal'],
         },
+        onRequest: [app.authenticate]
     }, async (req, reply) => {
         try {
             const animalData = req.body;  // The data coming in from the request
-            const newAnimal = await app.animalService.create(animalData as { name: string, type: string });  // Call the service method to create the animal
+            const newAnimal = await app.animalService.create(animalData as { name: string, type: string }, {
+                uic: req
+                    .user.uic,
+                email: req.user.email,
+            });  // Call the service method to create the animal
 
-            return reply.status(201).send(newAnimal);  // Return the created animal with a 201 status code
+            return reply.status(HttpCodeW.Created).send(newAnimal);  // Return the created animal with a 201 status code
         } catch (err: any) {
             app.log.error(err);
-            reply.code(404).send(err.message);
+            reply.code(HttpCodeW.NotFound).send(err.message);
 
         }
     });
 
     app.setErrorHandler((err, req, res) => {
         if (err.validation) {
-            const { validation, validationContext } = err;
+            const {
+                validation,
+                validationContext
+            } = err;
             app.log.warn({ validationError: validation });
-            res.code(400).send(validation);
-        }else{
+            res.code(HttpCodeW.BadRequest).send(validation);
+        } else {
             app.log.error(err);
-            res.status(500).send(err);
+            res.status(HttpCodeW.InternalServerError).send(err);
         }
     });
 }

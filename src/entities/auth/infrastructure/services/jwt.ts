@@ -1,5 +1,7 @@
 import fp from 'fastify-plugin';
 import fastifyJwt, { Secret } from '@fastify/jwt';
+import { createError } from '../../../../infrastructure/models/error';
+import { LoginUser } from '../../applications';
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -12,6 +14,12 @@ declare module 'fastify' {
         refreshToken: () => { refreshToken: string };
         revokeToken: (reply) => void;
 
+    }
+}
+
+declare module '@fastify/jwt' {
+    interface FastifyJWT {
+        user: LoginUser;
     }
 }
 export default fp(async function (fastify, opts) {
@@ -58,6 +66,7 @@ export default fp(async function (fastify, opts) {
                 id: String(this.user.id),
                 username: this.user.username,
                 email: this.user.email,
+                uic: this.user.uic,
             },
             {
                 jti: String(Date.now()),
@@ -86,29 +95,37 @@ export default fp(async function (fastify, opts) {
     fastify.decorateRequest('refreshToken', function () {
         const refreshToken = fastify.jwt.sign(
             {
-                id: String(JSON.stringify(this.body))
+                id: String(JSON.stringify(this.body)),
             },
             {
                 jti: String(Date.now()),
-                expiresIn: process.env.JWT_SECRET_DEFAULT_TOKEN_EXPIRES_IN,
+                expiresIn: process.env.REFRESH_SECRET_DEFAULT_TOKEN_EXPIRES_IN,
             });
         return {
             refreshToken
         };
     });
     fastify.decorate('generateRefreshToken', async function (request, reply) {
-        const incomingRefreshToken = request.cookies['refreshToken'] || request.body.refreshToken;
-
+        const incomingRefreshToken = request.cookies?.refreshToken || request.body?.refreshToken;
+        const incommingAccessToken = request.cookies?.accessToken;
+        if (!incommingAccessToken) {
+            return reply.send({ message: 'Access token not found' }).status(403);
+        }
         if (!incomingRefreshToken) {
-            return reply.send({ message: 'Refresh token not found' });
+            return reply.send({ message: 'Refresh token not found' }).status(403);
         }
         try {
-
-            const decodedRefreshToken = await fastify.jwt.decode(incomingRefreshToken);
-            request.user = {
-                ...JSON.parse(decodedRefreshToken['id']),
-                refreshToken: incomingRefreshToken
-            };
+            const decodedRefreshToken = fastify.jwt.decode(incomingRefreshToken);
+            const decodedAccessToken = fastify.jwt.decode(incommingAccessToken);
+            if (!revokedTokens.has(decodedRefreshToken['jti'])) {
+                request.user = {
+                    ...JSON.parse(decodedRefreshToken['id']),
+                    refreshToken: incomingRefreshToken,
+                    uic: decodedAccessToken.uic
+                };
+            } else {
+                throw createError('Refresh token was revoked', 404);
+            }
         } catch (error) {
             return reply.send({ message: error });
         }

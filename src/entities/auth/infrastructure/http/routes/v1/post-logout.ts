@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { Header } from '../../schema';
+import { AuthBearerHeader } from '../../schema';
 import { handleError } from '../../../errors/handling';
 
 export default function logout(app: FastifyInstance) {
@@ -7,7 +7,7 @@ export default function logout(app: FastifyInstance) {
         onRequest: [app.authenticate],
         schema: {
             tags: ['auth'],
-            headers: Header
+            headers: AuthBearerHeader
         }
     }, async (req, reply) => {
         try{

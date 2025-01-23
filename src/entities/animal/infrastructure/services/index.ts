@@ -3,10 +3,11 @@ import fp from 'fastify-plugin';
 import animalDao from '../dao/animalDao';
 import { animalApplicationService, IAnimalRepository } from '../../applications';
 import { AnimalEntity } from '../dao/animal.entity';
+import { IAnimalHttp } from '../../applications/http';
 
 declare module 'fastify' {
     interface FastifyInstance {
-        animalService: IAnimalRepository;
+        animalService: IAnimalHttp;
     }
 }
 export default fp(async (fastify) => {
