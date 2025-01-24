@@ -19,9 +19,6 @@
     "type": "git",
     "url": "git+https://github.com/NsdHSO/tevet-troc.git"
   },
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "keywords": [
     "nodejs",
     "fastify",
