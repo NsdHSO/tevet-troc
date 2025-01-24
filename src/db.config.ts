@@ -13,7 +13,7 @@ export async function registerDb(fastify: FastifyInstance) {
         subscribers: [],
         migrationsRun: process.env.NODE_ENV !== 'dev',
         entities: [join( '**', '*.entity.{ts,js}')],
-        logger: 'debug'
+        logger: 'advanced-console'
     }).after(() => {
         fastify.log.info('Database plugin registered successfully.');
     }).ready(async () => {
@@ -24,3 +24,4 @@ export async function registerDb(fastify: FastifyInstance) {
         }
     });
 }
+

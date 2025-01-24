@@ -1,9 +1,8 @@
 import { IAnimalRepository } from './repository';
 import { AnimalCreated, CreateAnimal, IAnimal } from './models';
 import { IAnimalHttp } from './http';
-import { createError } from '../../../infrastructure/models/error';
+import { httpResponseBuilder } from '../../../infrastructure/models/error';
 import { LoginUser } from '../../auth/applications';
-import { HttpCodeW } from '../../../infrastructure/enums/http-code';
 
 export function animalApplicationService(animalRepository: IAnimalRepository): IAnimalHttp {
     return {
@@ -13,9 +12,9 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
             const mergedAnimal = { ...defaultAnimal, ...animal };
 
             try {
-                return await animalRepository.create(mergedAnimal);
+                return httpResponseBuilder.Created(await animalRepository.create(mergedAnimal));
             } catch (error) {
-                throw createError(`Failed to save the entity. Please try again later.`, HttpCodeW.InternalServerError);
+                throw httpResponseBuilder.InternalServerError('Failed to save the entity. Please try again later.');
             }
         },
         async findById(id: AnimalCreated['id']) {
@@ -23,11 +22,26 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
                 const foundElement = await animalRepository.findById(id);
 
                 if (!foundElement) {
-                    return createError(`The requested entity was not found.`, HttpCodeW.NotFound);
+                    return httpResponseBuilder.NotFound('The requested entity was not found.');
                 }
                 return foundElement;
             } catch (error) {
-                return  createError('The requested entity was not found.', HttpCodeW.NotFound);
+                return httpResponseBuilder.NotFound('The requested entity was not found.');
+            }
+        },
+        async findAll(userUic: LoginUser['uic'], query) {
+            try {
+                const allAnimals = await animalRepository.findAllByUserUic(userUic, { query: query.query });
+                if (allAnimals.length < 0) {
+                    return httpResponseBuilder.NoContent('Not Content');
+                } else {
+                    return httpResponseBuilder.OK(allAnimals);
+                }
+            } catch (error) {
+                if (error.message.includes('was not found in')) {
+                    return httpResponseBuilder.BadRequest(error.message);
+                }
+                return httpResponseBuilder.BadRequest('Something go wrong');
             }
         }
     };
@@ -71,7 +85,7 @@ function getDefaultAnimal(userInfo: LoginUser): IAnimal {
         homeEnvironment: 'Apartment', // Default to apartment
         sounds: [],
         user: {
-            uic: userInfo.uic as string,
+            uic: userInfo.uic as number,
             email: userInfo.email as string,
         }
     };

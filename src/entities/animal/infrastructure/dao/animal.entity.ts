@@ -2,13 +2,13 @@ import { Column, Entity, PrimaryGeneratedColumn, } from 'typeorm';
 import { BaseEntityWithUpdateAndCreationDate } from '../../../../utils/dao/base-entity-with-update-and-creation-date';
 import { UserDID } from '../../../auth/infrastructure/dao/userId';
 
-@Entity('animal')
+@Entity('animalST')
 export class AnimalEntity extends BaseEntityWithUpdateAndCreationDate {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column(() => UserDID)
-    user!: UserDID;
+    @Column(() => UserDID )
+    user!: UserDID ;
 
     @Column({
         type: 'varchar',
@@ -33,6 +33,7 @@ export class AnimalEntity extends BaseEntityWithUpdateAndCreationDate {
         type: 'text',
         nullable: true
     })
+
     description?: string;
 
     @Column({

@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { AuthBearerHeader } from '../../schema';
 import { handleError } from '../../../errors/handling';
+import { httpResponseBuilder } from '../../../../../../infrastructure/models/error';
 
 export default function refresh(app: FastifyInstance) {
     app.post('/refresh', {
@@ -12,7 +13,7 @@ export default function refresh(app: FastifyInstance) {
     }, async (req, reply) => {
         try {
             await app.userAuthApplicationService.refresh(req.user);
-            return reply.send(req.generateToken(reply));
+            return httpResponseBuilder.OK(req.generateToken(reply))
         } catch (error) {
             return handleError(error, app, reply);
         }

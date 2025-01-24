@@ -53,7 +53,7 @@ export interface IUser {
     username?: string;
     phoneNumber?: string;
     dateOfBirth?: Date;
-    uic: string
+    uic: number
     alias: string
     // Authentication-related fields
     password?: string;

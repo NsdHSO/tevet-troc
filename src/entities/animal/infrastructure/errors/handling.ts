@@ -5,11 +5,11 @@ import { HttpCodeW } from '../../../../infrastructure/enums/http-code';
 export const handleError = (error: ErrorObject<string, number> | any, app: FastifyInstance, reply: FastifyReply) => {
     app.log.error('Animal Handle', JSON.stringify(error));
     if (error.code === HttpCodeW.NotFound) {
-        app.log.error('Animal is not created', error);
+        app.log.error('Animal Found', error);
         reply.code(HttpCodeW.NotFound);
-    } else if (error.code === HttpCodeW.InternalServerError) {
+    } else if (error.code === HttpCodeW.BadRequest) {
         app.log.error(error.message, error);
-        reply.code(HttpCodeW.InternalServerError);
+        reply.code(HttpCodeW.BadRequest);
     }
     return {
         registered: false,

@@ -2,14 +2,10 @@ import { Column } from 'typeorm';
 
 export class UserDID{
     @Column({
-        unique: true,
         type: 'int',
     })
-    uic!: string;
+    uic?: number;
 
-    @Column({
-        type: 'varchar',
-        unique: true
-    })
-    email!: string;
+    @Column({type:'varchar'})
+    email?: string;
 }

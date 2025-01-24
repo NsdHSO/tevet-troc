@@ -1,6 +1,6 @@
 import { Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { CreatedUser, CreateUser, IUserRepository } from '../../applications/http';
+import { CreatedUser, CreateUser, IUserRepository } from '../../applications';
 
 export default function (db: Repository<UserEntity>): IUserRepository {
     return {

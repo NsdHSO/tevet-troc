@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import fastifyJwt, { Secret } from '@fastify/jwt';
-import { createError } from '../../../../infrastructure/models/error';
+import { createError, httpResponseBuilder } from '../../../../infrastructure/models/error';
 import { LoginUser } from '../../applications';
 
 declare module 'fastify' {
@@ -124,7 +124,7 @@ export default fp(async function (fastify, opts) {
                     uic: decodedAccessToken.uic
                 };
             } else {
-                throw createError('Refresh token was revoked', 404);
+                throw httpResponseBuilder.NotFound('Refresh token was revoked');
             }
         } catch (error) {
             return reply.send({ message: error });

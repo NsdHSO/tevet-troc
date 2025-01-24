@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { UserCreate, UserCreateType } from '../../schema';
-import { ErrorObject } from '../../../../../../infrastructure/models/error';
+import { ErrorObject, httpResponseBuilder } from '../../../../../../infrastructure/models/error';
 import { HttpCodeW } from '../../../../../../infrastructure/enums/http-code';
 
 export default function (app: FastifyInstance) {
@@ -17,7 +17,7 @@ export default function (app: FastifyInstance) {
                 ...req.refreshToken()
             });
             app.log.info('Registered user', newUser);
-            reply.code(HttpCodeW.Created).send(newUser);
+            return httpResponseBuilder.OK(newUser)
 
         } catch (error: ErrorObject<string, number> | any) {
             app.log.error('Registered when user is register', error);
