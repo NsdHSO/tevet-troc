@@ -1,8 +1,8 @@
 import { IAnimalRepository } from './repository';
 import { AnimalCreated, CreateAnimal, IAnimal } from './models';
 import { IAnimalHttp } from './http';
-import { httpResponseBuilder } from '../../../infrastructure/models/error';
 import { LoginUser } from '../../auth/applications';
+import { httpResponseBuilder } from '../../../infrastructure/models/httResponseBuilder';
 
 export function animalApplicationService(animalRepository: IAnimalRepository): IAnimalHttp {
     return {
@@ -31,7 +31,10 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
         },
         async findAll(userUic: LoginUser['uic'], query) {
             try {
-                const allAnimals = await animalRepository.findAllByUserUic(userUic, { query: query.query });
+                const allAnimals = await animalRepository.findAllByUserUic(userUic, {
+                    query: query.query,
+                    filterBy: query.filterBy
+                });
                 if (allAnimals.length < 0) {
                     return httpResponseBuilder.NoContent('Not Content');
                 } else {

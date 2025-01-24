@@ -1,9 +1,9 @@
-import { AnimalSchema, TypeAnimal } from '../infrastructure/http/schema/animal/bodies';
+import { AnimalSchema, AnimalClassification } from '../infrastructure/http/schema/animal/bodies';
 
 export type IAnimal = typeof AnimalSchema.Static;
 
 export type CreateAnimal = Partial<IAnimal>
-type DomesticAnimalType = typeof TypeAnimal.static
+type DomesticAnimalType = typeof AnimalClassification.static
 
 
 export type AnimalCreated = {

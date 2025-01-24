@@ -1,7 +1,8 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { UserCreate, UserCreateType } from '../../schema';
-import { ErrorObject, httpResponseBuilder } from '../../../../../../infrastructure/models/error';
+import { ErrorObject } from '../../../../../../infrastructure/models/error';
 import { HttpCodeW } from '../../../../../../infrastructure/enums/http-code';
+import { httpResponseBuilder } from '../../../../../../infrastructure/models/httResponseBuilder';
 
 export default function (app: FastifyInstance) {
     app.post('/register', {

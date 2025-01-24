@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { Type } from '@sinclair/typebox';
 import { AuthBearerHeader } from '../../../../../auth/infrastructure/http/schema';
 import { HttpCodeW } from '../../../../../../infrastructure/enums/http-code';
+import { CreateAnimal } from '../../schema/animal/bodies';
 
 export default async function animalRoutes(app: FastifyInstance) {
     app.post('/', {
@@ -12,12 +13,7 @@ export default async function animalRoutes(app: FastifyInstance) {
                     code: Type.String(),
                 })
             },
-            body: Type.Object({
-                name: Type.String(),
-                type: Type.String({
-                    examples: ['Dog', 'Cat', 'Rabbit', 'Bird', 'Fish', 'Horse', 'Cow'],
-                }),
-            }),  // The schema to validate the incoming request body
+            body: CreateAnimal,
             headers: AuthBearerHeader,
             tags: ['animal'],
         },

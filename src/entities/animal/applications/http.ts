@@ -9,5 +9,7 @@ export interface IAnimalHttp {
 
     findById(id: AnimalCreated['id']): Promise<AnimalCreated | ErrorObject<string, number> | undefined>;
 
-    findAll(userID: LoginUser['uic'], props:{query:Array<keyof AnimalEntity>}): Promise<ErrorObject<AnimalEntity[], HttpCodeW.OK> | ErrorObject<string, HttpCodeW.NotFound | HttpCodeW.NoContent>>;
+    findAll(userID: LoginUser['uic'], props: {
+        query: Array<keyof AnimalEntity>, filterBy: { [K in keyof AnimalEntity]?: any }; // Object with keys as AnimalEntity properties and values as any type
+    }): Promise<ErrorObject<AnimalEntity[], HttpCodeW.OK> | ErrorObject<string, HttpCodeW.NotFound | HttpCodeW.NoContent>>;
 }

@@ -14,8 +14,8 @@ export default function (db: Repository<AnimalEntity>): IAnimalRepository {
         },
         async findAllByUserUic(uic: LoginUser['uic'], query) {
             return await db.find({
-                select: query.query ,
-                where: { user: { uic: uic } }
+                select: query.query,
+                where: { user: { uic: uic }, ...query.filterBy }
             });
         }
     };

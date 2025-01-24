@@ -12,4 +12,9 @@ export const FilterByAnimal = Type.Object({
         examples:["age, bread"],
         description: "Comma-separated list of fields without a trailing comma"
     })),
+    filterBy: Type.Optional(Type.String({
+        pattern: "^(?!,)([^,]+,)*[^,]+$", // Does not start or end with a comma
+        examples:["age=2, bread=something"],
+        description: "key=value"
+    })),
 });

@@ -1,7 +1,8 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { LoginResponses, LoginUser, LoginUserType } from '../../schema';
 import { handleError } from '../../../errors/handling';
-import { httpResponseBuilder } from '../../../../../../infrastructure/models/error';
+
+import { httpResponseBuilder } from '../../../../../../infrastructure/models/httResponseBuilder';
 
 export default function authenticate(app: FastifyInstance) {
     app.post('/authenticate', {

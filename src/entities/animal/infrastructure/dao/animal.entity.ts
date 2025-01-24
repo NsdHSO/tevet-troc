@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, } from 'typeorm';
 import { BaseEntityWithUpdateAndCreationDate } from '../../../../utils/dao/base-entity-with-update-and-creation-date';
 import { UserDID } from '../../../auth/infrastructure/dao/userId';
 
-@Entity('animalST')
+@Entity('animal')
 export class AnimalEntity extends BaseEntityWithUpdateAndCreationDate {
     @PrimaryGeneratedColumn()
     id!: number;

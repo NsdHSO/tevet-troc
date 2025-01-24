@@ -2,9 +2,10 @@ import { IUserRepository } from './repository';
 import { CreatedUser, CreateUser, IUser, LoginUser, Permission, Role } from './models';
 import { generateHash } from '../util';
 import { IUserHttp } from './http';
-import { createError, ErrorObject, httpResponseBuilder } from '../../../infrastructure/models/error';
+import { createError, ErrorObject } from '../../../infrastructure/models/error';
 import { generateAlias } from '../../../utils/functions';
 import { HttpCodeW } from '../../../infrastructure/enums/http-code';
+import { httpResponseBuilder } from '../../../infrastructure/models/httResponseBuilder';
 
 export function userAuthApplicationService(userRepository: IUserRepository): IUserHttp {
     return {

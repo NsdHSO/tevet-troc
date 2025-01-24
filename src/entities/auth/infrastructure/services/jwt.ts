@@ -1,7 +1,8 @@
 import fp from 'fastify-plugin';
 import fastifyJwt, { Secret } from '@fastify/jwt';
-import { createError, httpResponseBuilder } from '../../../../infrastructure/models/error';
+import { createError } from '../../../../infrastructure/models/error';
 import { LoginUser } from '../../applications';
+import { httpResponseBuilder } from '../../../../infrastructure/models/httResponseBuilder';
 
 declare module 'fastify' {
     interface FastifyInstance {
