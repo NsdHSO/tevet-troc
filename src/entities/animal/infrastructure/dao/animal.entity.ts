@@ -4,7 +4,7 @@ import { UserDID } from '../../../auth/infrastructure/dao/userId';
 
 @Entity('animal')
 export class AnimalEntity extends BaseEntityWithUpdateAndCreationDate {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id!: number;
 
     @Column(() => UserDID )

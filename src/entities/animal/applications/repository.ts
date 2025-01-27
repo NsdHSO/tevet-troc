@@ -11,4 +11,9 @@ export interface IAnimalRepository {
         query: Array<keyof AnimalEntity>,
         filterBy: { [K in keyof AnimalEntity]?: any }
     }): Promise<AnimalEntity[]>;
+
+    hardFiltering(userUic: LoginUser['uic'], props: {
+        query: Array<keyof AnimalEntity>,
+        filterBy: { [K in keyof AnimalEntity]?: any }
+    }): Promise<AnimalEntity[]>;
 }

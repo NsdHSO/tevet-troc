@@ -3,6 +3,7 @@ import { AnimalCreated, CreateAnimal, IAnimal } from './models';
 import { IAnimalHttp } from './http';
 import { LoginUser } from '../../auth/applications';
 import { httpResponseBuilder } from '../../../infrastructure/models/httResponseBuilder';
+import { AnimalEntity } from '../infrastructure/dao/animal.entity';
 
 export function animalApplicationService(animalRepository: IAnimalRepository): IAnimalHttp {
     return {
@@ -37,18 +38,43 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
                 });
                 if (allAnimals.length < 0) {
                     return httpResponseBuilder.NoContent('Not Content');
-                } else {
-                    return httpResponseBuilder.OK(allAnimals);
                 }
+                return httpResponseBuilder.OK(allAnimals);
+
             } catch (error) {
                 if (error.message.includes('was not found in')) {
-                    return httpResponseBuilder.BadRequest(error.message);
+                    return httpResponseBuilder.BadRequest(error.message as string);
                 }
                 return httpResponseBuilder.BadRequest('Something go wrong');
             }
         }
+        ,
+        async hardFiltering(userUic: LoginUser['uic'], props: {
+            query: Array<keyof AnimalEntity>;
+            filterBy: { [K in keyof AnimalEntity]?: any }
+        }) {
+            const allAnimals = [
+                ...await animalRepository.findAllByUserUic(userUic, {
+                    query: props.query,
+                    filterBy: props.filterBy
+                })
+            ];
+
+            const length = allAnimals.length;
+            for (let i = 0; i < length - 1; i++) {
+                for (let j = 0; j < length - i - 1; j++) {
+                    if (allAnimals[j].id >= allAnimals[j + 1].id) {
+                        let temp = allAnimals[j];
+                        allAnimals[j] = allAnimals[j + 1];
+                        allAnimals[j + 1] = temp;
+                    }
+                }
+            }
+            return httpResponseBuilder.OK(allAnimals);
+        }
     };
 }
+
 
 function getDefaultAnimal(userInfo: LoginUser): IAnimal {
     return {

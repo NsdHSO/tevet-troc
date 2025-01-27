@@ -18,5 +18,13 @@ export default function (db: Repository<AnimalEntity>): IAnimalRepository {
                 where: { user: { uic: uic }, ...query.filterBy }
             });
         }
+,
+        async hardFiltering(uic: LoginUser['uic'], query) {
+            return await db.find({
+                select: query.query,
+                where: { user: { uic: uic }, ...query.filterBy },
+
+            });
+        }
     };
 }

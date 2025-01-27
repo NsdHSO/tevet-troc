@@ -12,4 +12,9 @@ export interface IAnimalHttp {
     findAll(userID: LoginUser['uic'], props: {
         query: Array<keyof AnimalEntity>, filterBy: { [K in keyof AnimalEntity]?: any }; // Object with keys as AnimalEntity properties and values as any type
     }): Promise<ErrorObject<AnimalEntity[], HttpCodeW.OK> | ErrorObject<string, HttpCodeW.NotFound | HttpCodeW.NoContent>>;
+
+    hardFiltering(userUic: LoginUser['uic'], props: {
+        query: Array<keyof AnimalEntity>,
+        filterBy: { [K in keyof AnimalEntity]?: any }
+    }): Promise<ErrorObject<AnimalEntity[], HttpCodeW.OK> | ErrorObject<string, HttpCodeW.NotFound | HttpCodeW.NoContent>>;
 }
