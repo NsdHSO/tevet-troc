@@ -66,15 +66,18 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
     };
 }
 
-function quickSort<T>(arr: T) {
-    if ( arr.length <= 1) {
+function quickSort<T extends { id: number }>(arr: T[]): T[] {
+    // Base case: arrays with 0 or 1 element are already sorted
+    if (arr.length <= 1) {
         return arr;
     }
 
+    // Choose the pivot (last element in the array)
     const pivot = arr[arr.length - 1];
-    const left = [];
-    const right = [];
+    const left: T[] = [];
+    const right: T[] = [];
 
+    // Partition the array (include all elements except pivot)
     for (let i = 0; i < arr.length - 1; i++) {
         if (arr[i].id > pivot.id) {
             left.push(arr[i]);
@@ -83,8 +86,10 @@ function quickSort<T>(arr: T) {
         }
     }
 
-    return [...quickSort(left), pivot, quickSort(right)];
+    // Recursively sort left and right arrays and combine with pivot
+    return [...quickSort(left), pivot, ...quickSort(right)];
 }
+
 function bubbleSort<T>(arr: T) {
     const length = arr.length;
     for (let i = 0; i < length - 1; i++) {
