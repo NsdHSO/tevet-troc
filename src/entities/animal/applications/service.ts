@@ -59,23 +59,46 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
                     filterBy: props.filterBy
                 })
             ];
-
-            const length = allAnimals.length;
-            for (let i = 0; i < length - 1; i++) {
-                for (let j = 0; j < length - i - 1; j++) {
-                    if (allAnimals[j].id >= allAnimals[j + 1].id) {
-                        let temp = allAnimals[j];
-                        allAnimals[j] = allAnimals[j + 1];
-                        allAnimals[j + 1] = temp;
-                    }
-                }
-            }
-            return httpResponseBuilder.OK(allAnimals);
+//            bubbleSort(allAnimals)
+            return httpResponseBuilder.OK(quickSort(allAnimals));
+//            return httpResponseBuilder.OK(allAnimals);
         }
     };
 }
 
+function quickSort<T>(arr: T) {
+    if ( arr.length <= 1) {
+        return arr;
+    }
 
+    const pivot = arr[arr.length - 1];
+    const left = [];
+    const right = [];
+
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i].id > pivot.id) {
+            left.push(arr[i]);
+        } else {
+            right.push(arr[i]);
+        }
+    }
+
+    return [...quickSort(left), pivot, quickSort(right)];
+}
+function bubbleSort<T>(arr: T) {
+    const length = arr.length;
+    for (let i = 0; i < length - 1; i++) {
+        for (let j = 0; j < length - i - 1; j++) {
+            if (arr[j].id >= arr[j + 1].id) {
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+
+}
 function getDefaultAnimal(userInfo: LoginUser): IAnimal {
     return {
         name: '',

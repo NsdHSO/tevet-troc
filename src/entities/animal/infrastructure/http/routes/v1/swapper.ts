@@ -15,7 +15,6 @@ export default function (fastify: FastifyInstance ){
             headers: AuthBearerHeader,
             tags: ['animal'],
             querystring: FilterByAnimal,
-            response: GetAll
         }
         ,
         onRequest: [fastify.authenticate]
@@ -38,7 +37,7 @@ export default function (fastify: FastifyInstance ){
 
             return answerDAO;
         } catch (error) {
-            return handleError(error, app, reply);
+            return handleError(error, fastify, reply);
         }
     })
 }
