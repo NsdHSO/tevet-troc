@@ -59,8 +59,31 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
                     filterBy: props.filterBy
                 })
             ];
-//            bubbleSort(allAnimals)
-            return httpResponseBuilder.OK(quickSort(allAnimals));
+
+            let a = [
+                {
+                    name: 2,
+                    age: 1
+                }, {
+                    name: "23",
+                    age: 10
+                }, {
+                    name: 54,
+                    age: 12
+                }, {
+                    name: 2,
+                    age: 15
+                }, {
+                    name: 2,
+                    age: 39
+                },                {
+                    name: 2,
+                    age: 2
+                }
+
+            ];
+            console.log(insertionSort(a));
+            return httpResponseBuilder.OK(insertionSort<AnimalEntity[]>(allAnimals));
 //            return httpResponseBuilder.OK(allAnimals);
         }
     };
@@ -101,9 +124,22 @@ function bubbleSort<T>(arr: T) {
             }
         }
     }
-
-
 }
+
+function insertionSort<T>(arr: T) {
+    for (let i = 1; i < arr.length; i++) {
+        let current = arr[i];
+        let j = i - 1;
+        while (j >= 0 && arr[j].age > current.age) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = current;
+    }
+
+    return arr;
+}
+
 function getDefaultAnimal(userInfo: LoginUser): IAnimal {
     return {
         name: '',
