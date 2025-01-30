@@ -63,24 +63,27 @@ export function animalApplicationService(animalRepository: IAnimalRepository): I
             let a = [
                 {
                     name: 2,
-                    age: 1
+                    age: 2
                 }, {
                     name: "23",
-                    age: 10
+                    age:4
                 }, {
                     name: 54,
-                    age: 12
+                    age: 5
                 }, {
                     name: 2,
-                    age: 15
+                    age: 24322
                 }, {
                     name: 2,
-                    age: 39
+                    age: 6
                 },                {
                     name: 2,
-                    age: 2
+                    age: 1
                 }
-
+,        {
+                    name: 2,
+                    age: 3
+                }
             ];
             console.log(insertionSort(a));
             return httpResponseBuilder.OK(insertionSort<AnimalEntity[]>(allAnimals));
@@ -130,14 +133,31 @@ function insertionSort<T>(arr: T) {
     for (let i = 1; i < arr.length; i++) {
         let current = arr[i];
         let j = i - 1;
-        while (j >= 0 && arr[j].age > current.age) {
-            arr[j + 1] = arr[j];
-            j = j - 1;
+        while (j >= 0 && arr[j].age > current.age){
+            arr[j+1]= arr[j];
+            j  = j-1
         }
-        arr[j + 1] = current;
+
+        arr[j+1]= current
     }
 
     return arr;
+}
+
+
+function binarySearch<T,E>(arr: T,target: E, left=0,right = arr.length - 1) {
+    if (arr.length< 2){
+        return false;
+    }
+    const middle = Math.floor((left+right)/2);
+    if (arr[middle]=== target){
+        return true
+    }
+    else if (arr[middle]> target){
+        return binarySearch(arr,target,left, middle-1);
+    }else{
+        return binarySearch(arr,target,middle+1, right);
+    }
 }
 
 function getDefaultAnimal(userInfo: LoginUser): IAnimal {
