@@ -1,0 +1,20 @@
+{
+  "name": "<%= variable %>",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/<%= variable %>/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/<%= variable %>",
+        "tsConfig": "libs/<%= variable %>/tsconfig.lib.json",
+        "packageJson": "libs/<%= variable %>/package.json",
+        "main": "libs/<%= variable %>/src/index.ts.template",
+        "assets": ["libs/<%= variable %>/*.md"]
+      }
+    }
+  }
+}

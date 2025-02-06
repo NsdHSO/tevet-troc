@@ -1,0 +1,17 @@
+{
+  "name": "tevet-troc-nx-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": ["tevet-troc-nx"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
+      "options": {
+        "jestConfig": "apps/tevet-troc-nx-e2e/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "dependsOn": ["tevet-troc-nx:build"]
+    }
+  }
+}

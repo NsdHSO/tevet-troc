@@ -1,0 +1,41 @@
+{
+  "name": "entity",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tooling/entity/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tooling/entity",
+        "main": "tooling/entity/src/index.ts",
+        "tsConfig": "tooling/entity/tsconfig.lib.json",
+        "assets": [
+          "tooling/entity/*.md",
+          {
+            "input": "./tooling/entity/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./tooling/entity/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./tooling/entity",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./tooling/entity",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}

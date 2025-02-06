@@ -1,0 +1,6 @@
+import { I<%= name %>Http, I<%= name %>Repository } from './index';
+export function <%= variable %>ApplicationService(<%= variable %>Repository: I<%= name %>Repository): I<%= name %>Http{
+  return{
+
+  }
+}
