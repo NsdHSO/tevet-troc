@@ -18,12 +18,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tevet/http-response": ["libs/http-response/src/index.ts"],
+      "@tevet/http-response": [
+        "libs/http-response/src/index.ts"
+      ],
       "@tevet/utils": [
         "libs/utils/src/index.ts"
-      ],
-      "@tevet/iancu": [
-        "libs/iancu/src/index.ts"
       ]
     }
   },

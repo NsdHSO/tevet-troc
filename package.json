@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve tevet-troc-nx",
-    "create:resource": "npx nx g @tevet/entity:resources"
+    "create:resource": "npx nx g @tevet/generator:resources"
   },
   "private": true,
   "dependencies": {
