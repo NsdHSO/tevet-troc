@@ -7,14 +7,14 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { IndexGeneratorSchema } from './schema';
-
+const base = 'libs/bus/'
 export async function indexGenerator(
   tree: Tree,
   options: IndexGeneratorSchema
 ) {
   const formattedName = names(options.name).className;
 
-  const projectRoot = `libs/${options.name}`;
+  const projectRoot = `${base}${options.name}`;
   addProjectConfiguration(tree, formattedName, {
     root: projectRoot,
     projectType: 'library',
@@ -32,7 +32,7 @@ export async function indexGenerator(
 
 async function addedLibraryIntoTsBase(tree: Tree, schema: { name: string }) {
   const libraryName = schema.name;
-  const libraryPath = `libs/${libraryName}/src/index.ts`;
+  const libraryPath = `${base}${libraryName}/src/index.ts`;
   const importPath = `@tevet/${libraryName}`;
 
   // Update tsconfig.base.json to include the new path
