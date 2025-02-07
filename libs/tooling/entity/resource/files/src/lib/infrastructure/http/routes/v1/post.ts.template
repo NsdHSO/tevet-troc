@@ -1,0 +1,22 @@
+import { FastifyInstance, FastifyRequest } from 'fastify';
+import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
+import {<%= name %>Response}from '../../schema'
+
+export default function (app: FastifyInstance) {
+    app.post('/', {
+        schema: {
+            tags: ['<%= variable %>'],
+            response: <%= name %>Response
+        }
+    }, async (req: FastifyRequest, reply) => {
+        try {
+            app.log.info('Registered <%= name %>');
+            return httpResponseBuilder.NotImplemented("Was generated")
+
+        } catch (error: ResponseObject<string, number> | any) {
+            app.log.error('Registered when <%= name %> is register', error);
+            reply.code(error.code);
+            return httpResponseBuilder.BadRequest( error.message )
+        }
+    });
+}
