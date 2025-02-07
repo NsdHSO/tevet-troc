@@ -1,9 +1,0 @@
-import { Type } from '@sinclair/typebox';
-import { HttpCodeW } from '@tevet/http-response';
-
-// Define the Header schema
-export const <%= name %>Response = Type.Object({
-   [HttpCodeW.OK]: Type.Object({
-
-      })
-});

@@ -1,5 +1,5 @@
 {
-  "name": "@tevet/generator",
+  "name": "@tevet-troc/generator",
   "version": "0.0.1",
   "private": true,
   "type": "module",

@@ -7,15 +7,31 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { IndexGeneratorSchema } from './schema';
-const base = 'libs/bus/'
+
+const base = 'libs/bus/';
+
+function toCamelCase(str) {
+  return str
+    .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+    .replace(/^([A-Z])/, (_, letter) => letter.toLowerCase()); // Ensure first letter is lowercase
+
+}
+
+function toKebabCase(str) {
+  if (str.includes('-')) {
+    return str; // Already in kebab-case
+  }
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 export async function indexGenerator(
   tree: Tree,
   options: IndexGeneratorSchema
 ) {
   const formattedName = names(options.name).className;
 
-  const projectRoot = `${base}${options.name}`;
-  addProjectConfiguration(tree, formattedName, {
+  const projectRoot = `${base}${toKebabCase(options.name)}`;
+  addProjectConfiguration(tree, toKebabCase(formattedName), {
     root: projectRoot,
     projectType: 'library',
     sourceRoot: `${projectRoot}/src`,
@@ -24,16 +40,17 @@ export async function indexGenerator(
   generateFiles(tree, path.join(__dirname, 'files'), projectRoot, {
     ...options,
     name: formattedName,
-    variable: options.name
+    variableCamelCase: toCamelCase(options.name),
+    variable: toKebabCase(options.name)
   });
   await formatFiles(tree);
-  await addedLibraryIntoTsBase(tree, { name: options.name });
+  await addedLibraryIntoTsBase(tree, { name: toKebabCase(options.name) });
 }
 
 async function addedLibraryIntoTsBase(tree: Tree, schema: { name: string }) {
   const libraryName = schema.name;
   const libraryPath = `${base}${libraryName}/src/index.ts`;
-  const importPath = `@tevet/${libraryName}`;
+  const importPath = `@tevet-troc/${libraryName}`;
 
   // Update tsconfig.base.json to include the new path
   updateJson(tree, 'tsconfig.base.json', (json) => {
@@ -45,7 +62,8 @@ async function addedLibraryIntoTsBase(tree: Tree, schema: { name: string }) {
     return json;
   });
 
-  return () => {};
+  return () => {
+  };
 }
 
 export default indexGenerator;

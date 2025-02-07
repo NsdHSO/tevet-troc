@@ -14,7 +14,7 @@
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
-  "nxCloudId": "67a2eed1645dd93365fc729d",
+  "nxCloudId": "67a47d4d24ad2c66d68b9631",
   "targetDefaults": {
     "@nx/esbuild:esbuild": {
       "cache": true,
@@ -39,7 +39,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/tevet-troc-nx-e2e/**/*"]
+      "exclude": ["apps/tevet-troc-e2e/**/*"]
     }
   ]
 }

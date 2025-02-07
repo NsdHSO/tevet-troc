@@ -1,8 +1,8 @@
 {
-  "name": "@tevet/<%= variable %>",
+  "name": "@tevet-troc/<%= variable %>",
   "version": "0.0.1",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {

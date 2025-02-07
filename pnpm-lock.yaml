@@ -49,6 +49,9 @@ dependencies:
   pg:
     specifier: ^8.13.1
     version: 8.13.1
+  reflect-metadata:
+    specifier: ^0.2.2
+    version: 0.2.2
   typeorm:
     specifier: ^0.3.20
     version: 0.3.20(pg@8.13.1)(ts-node@10.9.1)
@@ -2244,7 +2247,7 @@ packages:
     hasBin: true
     dependencies:
       nx: 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)
-      tslib: 2.8.1
+      tslib: 2.3.0
     transitivePeerDependencies:
       - '@swc-node/register'
       - '@swc/core'
@@ -2274,7 +2277,7 @@ packages:
       nx: 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)
       semver: 7.7.1
       tmp: 0.2.3
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs-parser: 21.1.1
     dev: false
 
@@ -2291,7 +2294,7 @@ packages:
       nx: 20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)
       semver: 7.7.1
       tmp: 0.2.3
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs-parser: 21.1.1
     dev: false
 
@@ -2307,7 +2310,7 @@ packages:
       nx: 20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)
       semver: 7.7.1
       tmp: 0.2.3
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs-parser: 21.1.1
 
   /@nx/esbuild@20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(esbuild@0.19.2)(nx@20.4.0)(typescript@5.7.2):
@@ -2387,7 +2390,7 @@ packages:
       '@nx/linter': 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(eslint@9.8.0)(nx@20.4.0)
       eslint: 9.8.0
       semver: 7.7.1
-      tslib: 2.8.1
+      tslib: 2.3.0
       typescript: 5.4.5
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -2444,7 +2447,7 @@ packages:
       minimatch: 9.0.3
       resolve.exports: 1.1.0
       semver: 7.7.1
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs-parser: 21.1.1
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -2532,7 +2535,7 @@ packages:
       source-map-support: 0.5.19
       ts-node: 10.9.1(@swc/core@1.5.7)(@types/node@18.16.9)(typescript@5.4.5)
       tsconfig-paths: 4.2.0
-      tslib: 2.8.1
+      tslib: 2.3.0
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -2582,7 +2585,7 @@ packages:
       source-map-support: 0.5.19
       ts-node: 10.9.1(@swc/core@1.5.7)(@types/node@18.16.9)(typescript@5.7.2)
       tsconfig-paths: 4.2.0
-      tslib: 2.8.1
+      tslib: 2.3.0
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -2866,7 +2869,7 @@ packages:
       '@nx/eslint': 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(eslint@9.8.0)(nx@20.4.0)
       '@nx/jest': 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(nx@20.4.0)(ts-node@10.9.1)(typescript@5.7.2)
       '@nx/js': 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(nx@20.4.0)(typescript@5.7.2)
-      tslib: 2.8.1
+      tslib: 2.3.0
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -2892,7 +2895,7 @@ packages:
       '@nx/eslint': 20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(eslint@9.8.0)(nx@20.4.0)
       '@nx/jest': 20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(nx@20.4.0)(ts-node@10.9.1)(typescript@5.7.2)
       '@nx/js': 20.4.0(@swc-node/register@1.9.1)(@swc/core@1.5.7)(@types/node@18.16.9)(nx@20.4.0)(typescript@5.7.2)
-      tslib: 2.8.1
+      tslib: 2.3.0
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -2919,7 +2922,7 @@ packages:
       chalk: 4.1.2
       enquirer: 2.3.6
       nx: 19.8.4(@swc-node/register@1.9.1)(@swc/core@1.5.7)
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs-parser: 21.1.1
     transitivePeerDependencies:
       - '@swc-node/register'
@@ -3871,7 +3874,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001697
-      electron-to-chromium: 1.5.92
+      electron-to-chromium: 1.5.93
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -4240,8 +4243,8 @@ packages:
     dependencies:
       jake: 10.9.2
 
-  /electron-to-chromium@1.5.92:
-    resolution: {integrity: sha512-BeHgmNobs05N1HMmMZ7YIuHfYBGlq/UmvlsTgg+fsbFs9xVMj+xJHFg19GN04+9Q+r8Xnh9LXqaYIyEWElnNgQ==}
+  /electron-to-chromium@1.5.93:
+    resolution: {integrity: sha512-M+29jTcfNNoR9NV7la4SwUqzWAxEwnc7ThA5e1m6LRSotmpfpCpLcIfgtSCVL+MllNLgAyM/5ru86iMRemPzDQ==}
 
   /emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -4496,7 +4499,7 @@ packages:
     resolution: {integrity: sha512-u+SQgsubraE6zItfVA0tBuCBhfU9ogSRnsvygI7wht9TS510oLkBRXBsqopeUG/GBOIQyKZO9wjTqIu/sf5zFA==}
     engines: {node: '>=0.10.0'}
     dependencies:
-      mime-db: 1.52.0
+      mime-db: 1.53.0
     dev: true
 
   /ext-name@5.0.0:
@@ -4582,7 +4585,7 @@ packages:
       abstract-logging: 2.0.1
       avvio: 9.1.0
       fast-json-stringify: 6.0.1
-      find-my-way: 9.1.0
+      find-my-way: 9.2.0
       light-my-request: 6.5.1
       pino: 9.6.0
       process-warning: 4.0.1
@@ -4658,8 +4661,8 @@ packages:
     dependencies:
       to-regex-range: 5.0.1
 
-  /find-my-way@9.1.0:
-    resolution: {integrity: sha512-Y5jIsuYR4BwWDYYQ2A/RWWE6gD8a0FMgtU+HOq1WKku+Cwdz8M1v8wcAmRXXM1/iqtoqg06v+LjAxMYbCjViMw==}
+  /find-my-way@9.2.0:
+    resolution: {integrity: sha512-d3uCir8Hmg7W1Ywp8nKf2lJJYU9Nwinvo+1D39Dn09nz65UKXIxUh7j7K8zeWhxqe1WrkS7FJyON/Q/3lPoc6w==}
     engines: {node: '>=14'}
     dependencies:
       fast-deep-equal: 3.1.3
@@ -5712,6 +5715,11 @@ packages:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
 
+  /mime-db@1.53.0:
+    resolution: {integrity: sha512-oHlN/w+3MQ3rba9rqFr6V/ypF10LSkdwUysQL7GkXoTgIWeV+tcXGA852TBxH+gsh8UWoyhR1hKcoMJTuWflpg==}
+    engines: {node: '>= 0.6'}
+    dev: true
+
   /mime-types@2.1.35:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
     engines: {node: '>= 0.6'}
@@ -5888,7 +5896,7 @@ packages:
       tar-stream: 2.2.0
       tmp: 0.2.3
       tsconfig-paths: 4.2.0
-      tslib: 2.8.1
+      tslib: 2.3.0
       yargs: 17.7.2
       yargs-parser: 21.1.1
     optionalDependencies:

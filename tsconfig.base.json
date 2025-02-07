@@ -18,10 +18,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tevet/http-response": [
+      "@tevet-troc/http-response": [
         "libs/http-response/src/index.ts"
       ],
-      "@tevet/utils": [
+      "@tevet-troc/utils": [
         "libs/utils/src/index.ts"
       ]
     }

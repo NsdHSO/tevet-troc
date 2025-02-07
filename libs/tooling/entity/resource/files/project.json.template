@@ -1,7 +1,7 @@
 {
   "name": "<%= variable %>",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/<%= variable %>/src",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/bus/<%= variable %>/lib/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,11 +9,11 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/<%= variable %>",
-        "tsConfig": "libs/<%= variable %>/tsconfig.lib.json",
-        "packageJson": "libs/<%= variable %>/package.json",
-        "main": "libs/<%= variable %>/src/index.ts.template",
-        "assets": ["libs/<%= variable %>/*.md"]
+        "outputPath": "dist/bus/libs/<%= variable %>",
+        "tsConfig": "libs/bus/<%= variable %>/tsconfig.lib.json",
+        "packageJson": "libs/bus/<%= variable %>/package.json",
+        "main": "libs/bus/<%= variable %>/lib/src/index.ts",
+        "assets": ["libs/bus/<%= variable %>/*.md"]
       }
     }
   }

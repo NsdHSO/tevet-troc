@@ -1,8 +1,8 @@
 {
-  "name": "@tevet/http-response",
+  "name": "@tevet-troc/http-response",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {

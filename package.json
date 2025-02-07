@@ -1,12 +1,11 @@
 {
-  "name": "@tevet/source",
+  "name": "@tevet-troc/source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve tevet-troc-nx",
-    "create:resource": "npx nx g @tevet/generator:resources"
-  },
-  "private": true,
+    "start": "nx serve tevet-troc",
+    "create:resource": "npx nx g @tevet-troc/generator:resources"
+  },  "private": true,
   "dependencies": {
     "@fastify/autoload": "~6.0.3",
     "@fastify/cookie": "^11.0.2",
@@ -24,6 +23,7 @@
     "fastify-plugin": "~5.0.1",
     "nanoid": "^5.0.9",
     "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
     "typeorm-fastify-plugin": "^3.0.0"
   },
