@@ -11,7 +11,6 @@
       "options": {
         "outputPath": "dist/bus/libs/<%= variable %>",
         "tsConfig": "libs/bus/<%= variable %>/tsconfig.lib.json",
-        "packageJson": "libs/bus/<%= variable %>/package.json",
         "main": "libs/bus/<%= variable %>/lib/src/index.ts",
         "assets": ["libs/bus/<%= variable %>/*.md"]
       }
