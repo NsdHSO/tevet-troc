@@ -5,7 +5,7 @@ import {<%= name %>Response}from '../../schema'
 export default function (app: FastifyInstance) {
     app.post('/', {
         schema: {
-            tags: ['<%= variable %>'],
+            tags: [{name: '<%= variable %>'}],
             response: <%= name %>Response
         }
     }, async (req: FastifyRequest, reply) => {
