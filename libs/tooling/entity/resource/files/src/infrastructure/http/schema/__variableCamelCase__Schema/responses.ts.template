@@ -3,7 +3,5 @@ import { HttpCodeW } from '@tevet-troc/http-response';
 
 // Define the Header schema
 export const <%= name %>Response = Type.Object({
-   [HttpCodeW.OK]: Type.Object({
-
-      })
+     [HttpCodeW.OK]: Type.Object({name:Type.String()}),
 });

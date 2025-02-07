@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
-import {<%= name %>Response}from '../../schema'
+import {<%= variableCamelCase %>Schemas}from '../../schema'
 
 export default function (app: FastifyInstance) {
     app.post('/', {
         schema: {
-            tags: [{name: '<%= variable %>'}],
-            response: <%= name %>Response
+            tags: ['<%= variable %>'],
+            response: <%= variableCamelCase %>Schemas.Response
         }
     }, async (req: FastifyRequest, reply) => {
         try {

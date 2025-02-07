@@ -1,5 +1,4 @@
 import {
-  addProjectConfiguration,
   formatFiles,
   generateFiles,
   names,
@@ -8,7 +7,7 @@ import {
 import * as path from 'path';
 import { IndexGeneratorSchema } from './schema';
 
-const base = 'libs/bus/';
+const base = 'apps/tevet-troc/src/app/entities/bus/';
 
 function toCamelCase(str) {
   return str
@@ -31,12 +30,6 @@ export async function indexGenerator(
   const formattedName = names(options.name).className;
 
   const projectRoot = `${base}${toKebabCase(options.name)}`;
-  addProjectConfiguration(tree, toKebabCase(formattedName), {
-    root: projectRoot,
-    projectType: 'library',
-    sourceRoot: `${projectRoot}/src`,
-    targets: {},
-  });
   generateFiles(tree, path.join(__dirname, 'files'), projectRoot, {
     ...options,
     name: formattedName,
@@ -44,7 +37,6 @@ export async function indexGenerator(
     variable: toKebabCase(options.name)
   });
   await formatFiles(tree);
-  await addedLibraryIntoTsBase(tree, { name: toKebabCase(options.name) });
 }
 
 async function addedLibraryIntoTsBase(tree: Tree, schema: { name: string }) {
