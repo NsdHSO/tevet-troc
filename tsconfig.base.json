@@ -18,12 +18,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": "./tevet-troc",
     "paths": {
-      "@tevet-troc/agent": [
-        "package/bus/agent/src/index.ts"
-      ],
-      "@tevet-troc/delete": [
-        "package/delete/src/index.ts"
-      ],
       "@tevet-troc/http-response": [
         "package/http-response/src/index.ts"
       ],
