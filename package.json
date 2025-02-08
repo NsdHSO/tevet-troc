@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "nx reset && nx run-many --target=build --all",
-    "start": "nx reset && nx run-many --target=serve --all"
+    "start": "nx reset && nx run-many --target=serve --all",
+    "generate": "nx generate @tevet-troc/entity:library"
   },
   "private": true,
   "dependencies": {
@@ -13,6 +14,7 @@
     "@nestjs/core": "11.0.8",
     "@nestjs/platform-fastify": "11.0.8",
     "@nestjs/swagger": "^11.0.3",
+    "@nx/devkit": "^20.4.1",
     "axios": "^1.6.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
@@ -31,10 +33,12 @@
     "@nx/js": "20.4.1",
     "@nx/nest": "20.4.1",
     "@nx/node": "20.4.1",
+    "@nx/plugin": "20.4.1",
     "@nx/web": "20.4.1",
     "@nx/webpack": "20.4.1",
     "@nx/workspace": "20.4.1",
     "@swc-node/register": "~1.9.1",
+    "@swc/cli": "~0.3.12",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@types/jest": "^29.5.12",

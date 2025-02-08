@@ -10,13 +10,30 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": "./tevet-troc",
     "paths": {
-      "@tevet-troc/http-response": ["package/http-response/src/index.ts"]
+      "@tevet-troc/agent": [
+        "package/bus/agent/src/index.ts"
+      ],
+      "@tevet-troc/delete": [
+        "package/delete/src/index.ts"
+      ],
+      "@tevet-troc/http-response": [
+        "package/http-response/src/index.ts"
+      ],
+      "@tevet-troc/tools": [
+        "package/tools/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
