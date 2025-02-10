@@ -3,11 +3,12 @@ import { FastifyInstance } from 'fastify';
 import <%= variableCamelCase %>Dao from '../dao/<%= variableCamelCase %>Dao';
 import { <%= name %>Entity } from '../dao/<%= variableCamelCase %>.entity';
 import { I<%= name %>Http, <%= variableCamelCase %>ApplicationService } from '../../applications';
+import { DataSource } from 'typeorm';
 
 declare module 'fastify' {
     interface FastifyInstance {
         <%= variableCamelCase %>ApplicationService: I<%= name %>Http;
-        orm: any;
+        orm: DataSource;
     }
 }
 export default fp(

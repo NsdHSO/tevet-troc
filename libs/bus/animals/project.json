@@ -1,0 +1,33 @@
+{
+  "name": "Animals",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/bus/Animals/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/bus/Animals",
+        "tsConfig": "libs/bus/Animals/tsconfig.lib.json",
+        "packageJson": "libs/bus/Animals/package.json",
+        "main": "libs/bus/Animals/src/index.ts",
+        "assets": ["libs/bus/Animals/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}
