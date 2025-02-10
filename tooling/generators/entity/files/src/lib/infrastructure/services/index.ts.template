@@ -18,7 +18,7 @@ export default fp(
             const <%= variableCamelCase %>Service = <%= variableCamelCase %>ApplicationService(<%= variableCamelCase %>Repository);
             fastify.decorate('<%= variableCamelCase %>ApplicationService', <%= variableCamelCase %>Service);
         } catch (error) {
-            fastify.log.error('Error registering <%= variableCamelCase %> service:', error);
+            fastify.log.error(`Error registering <%= variableCamelCase %> service: ${error}`, );
         }
     }
 );

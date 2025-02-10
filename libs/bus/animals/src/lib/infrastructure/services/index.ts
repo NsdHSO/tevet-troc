@@ -17,8 +17,9 @@ export default fp(async (fastify: FastifyInstance) => {
       fastify.orm.getRepository(AnimalsEntity)
     );
     const animalsService = animalsApplicationService(animalsRepository);
+    console.log(animalsService);
     fastify.decorate('animalsApplicationService', animalsService);
   } catch (error) {
-    fastify.log.error('Error registering animals service:', error);
+    fastify.log.error(`Error registering animals service: ${error}`);
   }
 });
