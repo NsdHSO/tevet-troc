@@ -1,0 +1,10 @@
+import { Repository } from 'typeorm';
+import { <%= name %>Entity } from './<%= variableCamelCase %>.entity';
+import { I<%= name %>Repository } from '../../applications';
+
+export default function (db: Repository<<%= name %>Entity>): I<%= name %>Repository {
+    return {
+
+    };
+}
+

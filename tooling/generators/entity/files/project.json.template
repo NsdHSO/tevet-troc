@@ -1,0 +1,33 @@
+{
+  "name": "<%= name %>",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/bus/<%= name %>/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/bus/<%= name %>",
+        "tsConfig": "libs/bus/<%= name %>/tsconfig.lib.json",
+        "packageJson": "libs/bus/<%= name %>/package.json",
+        "main": "libs/bus/<%= name %>/src/index.ts",
+        "assets": ["libs/bus/<%= name %>/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

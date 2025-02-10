@@ -1,0 +1,23 @@
+import fp from 'fastify-plugin';
+import { FastifyInstance } from 'fastify';
+import <%= variableCamelCase %>Dao from '../dao/<%= variableCamelCase %>Dao';
+import { <%= name %>Entity } from '../dao/<%= variableCamelCase %>.entity';
+import { I<%= name %>Http, <%= variableCamelCase %>ApplicationService } from '../../applications';
+
+declare module 'fastify' {
+    interface FastifyInstance {
+        <%= variableCamelCase %>ApplicationService: I<%= name %>Http;
+        orm: any;
+    }
+}
+export default fp(
+    async (fastify: FastifyInstance) => {
+        try {
+            const <%= variableCamelCase %>Repository = <%= variableCamelCase %>Dao(fastify.orm.getRepository(<%= name %>Entity));
+            const <%= variableCamelCase %>Service = <%= variableCamelCase %>ApplicationService(<%= variableCamelCase %>Repository);
+            fastify.decorate('<%= variableCamelCase %>ApplicationService', <%= variableCamelCase %>Service);
+        } catch (error) {
+            fastify.log.error('Error registering <%= variableCamelCase %> service:', error);
+        }
+    }
+);

@@ -1,0 +1,6 @@
+import { Type } from '@sinclair/typebox';
+
+// Define the Header schema
+export const <%= name %>Header = Type.Object({
+
+});

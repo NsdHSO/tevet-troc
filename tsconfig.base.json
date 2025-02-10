@@ -16,13 +16,16 @@
     ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "./tevet-troc",
+    "baseUrl": ".",
     "paths": {
       "@tevet-troc/http-response": [
-        "package/http-response/src/index.ts"
+        "libs/http-response/src/index.ts"
       ],
-      "@tevet-troc/tools": [
-        "package/tools/src/index.ts"
+      "@tevet-troc/tooling": [
+        "tooling/src/index.ts"
+      ],
+      "@tevet-troc/parandulea": [
+        "libs/bus/parandulea/src/index.ts"
       ]
     }
   },

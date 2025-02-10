@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "entity": {
+      "factory": "./generators/entity/tooling",
+      "schema": "./generators/entity/schema.json",
+      "description": "entity generator"
+    }
+  }
+}

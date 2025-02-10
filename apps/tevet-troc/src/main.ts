@@ -1,47 +1,33 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
 
-import { ConsoleLogger, Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import fastifyCookie from '@fastify/cookie';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import * as dotenv from 'dotenv';
+import Fastify from 'fastify';
+import 'reflect-metadata';
+import { app } from './app/app';
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter({
-      logger: {
-        name: "tevet-troc",
-        msgPrefix:'Tevet'
-      },
+dotenv.config();
 
-    })
-  );
+export async function startServer() {
+  const fastify = Fastify({ logger: true }).withTypeProvider<TypeBoxTypeProvider>();
+  fastify.register(fastifyCookie);
+  fastify.register(app);
 
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT_MAIN || 3102;
+  try {
+    const { PORT = '19200' } = process.env;
+    await fastify.listen({ port: parseInt(PORT) });
+  } catch (error) {
+    fastify.log.error(error);
+    process.exit(1);
+  }
 
-  const config = new DocumentBuilder()
-    .setTitle('Tevet troc')
-    .setDescription('The Tevet API description')
-    .setVersion('1.0')
-    .addTag('tevet')
-    .addBearerAuth()
-    .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, documentFactory);
-  await app.listen(port);
-
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
 }
 
-bootstrap();
+startServer()
+  .then(() => {
+    console.log(`Server started successfully at ${process.env.PORT}`);
+  })
+  .catch((err) => {
+    console.error('Error starting server:', err);
+    process.exit(1);
+  });
