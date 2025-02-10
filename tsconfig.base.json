@@ -17,7 +17,8 @@
     "paths": {
       "@tevet-troc/animals": ["libs/bus/animals/src/index.ts"],
       "@tevet-troc/http-response": ["libs/http-response/src/index.ts"],
-      "@tevet-troc/tooling": ["tooling/src/index.ts"]
+      "@tevet-troc/tooling": ["tooling/src/index.ts"],
+      "@tevet-troc/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
