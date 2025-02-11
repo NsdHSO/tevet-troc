@@ -7,7 +7,7 @@ export default function (app: FastifyInstance) {
     '/',
     {
       schema: {
-        response: animalSchemas.Response,
+        response: animalSchemas.Response.AnimalResponse,
       },
     },
     async (req: FastifyRequest, reply) => {

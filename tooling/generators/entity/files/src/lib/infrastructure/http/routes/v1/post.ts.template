@@ -5,7 +5,7 @@ import {<%= variableCamelCase %>Schemas}from '../../schema'
 export default function (app: FastifyInstance) {
     app.post('/', {
         schema: {
-            response: <%= variableCamelCase %>Schemas.Response
+            response: <%= variableCamelCase %>Schemas.Response.<%= name %>Response
         }
     }, async (req: FastifyRequest, reply) => {
         try {
