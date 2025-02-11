@@ -1,5 +1,5 @@
 {
-  "name": "@tevet-troc/<%= name %>",
+  "name": "@tevet-troc/<%= path %>",
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",

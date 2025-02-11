@@ -16,6 +16,7 @@ export default fp(async (fastify: FastifyInstance) => {
     const animalsRepository = animalsDao(
       fastify.orm.getRepository(AnimalsEntity)
     );
+
     const animalsService = animalsApplicationService(animalsRepository);
     console.log(animalsService);
     fastify.decorate('animalsApplicationService', animalsService);

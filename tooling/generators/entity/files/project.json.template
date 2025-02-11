@@ -1,7 +1,7 @@
 {
-  "name": "<%= name %>",
+  "name": "<%= variable %>",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/bus/<%= name %>/src",
+  "sourceRoot": "libs/bus/<%= variable %>/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -17,11 +17,11 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/bus/<%= name %>",
-        "tsConfig": "libs/bus/<%= name %>/tsconfig.lib.json",
-        "packageJson": "libs/bus/<%= name %>/package.json",
-        "main": "libs/bus/<%= name %>/src/index.ts",
-        "assets": ["libs/bus/<%= name %>/*.md"]
+        "outputPath": "dist/libs/bus/<%= variable %>",
+        "tsConfig": "libs/bus/<%= variable %>/tsconfig.lib.json",
+        "packageJson": "libs/bus/<%= variable %>/package.json",
+        "main": "libs/bus/<%= variable %>/src/index.ts",
+        "assets": ["libs/bus/<%= variable %>/*.md"]
       }
     },
     "nx-release-publish": {

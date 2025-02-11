@@ -5,6 +5,11 @@ import { animalsSchemas } from '../../schema';
 export default function (app: FastifyInstance) {
   app.post(
     '/',
+    {
+      schema: {
+        response: animalsSchemas.Response.AnimalsResponse
+      }
+    },
     async (req: FastifyRequest, reply) => {
       try {
         app.log.info('Registered Animals');
