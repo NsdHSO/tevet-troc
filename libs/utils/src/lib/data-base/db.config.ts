@@ -11,7 +11,7 @@ export async function registerDb(fastify: FastifyInstance) {
     logging: process.env.NODE_ENV === 'dev',
     subscribers: [],
     migrationsRun: process.env.NODE_ENV !== 'dev',
-    logger: 'advanced-console',
+    logger: 'simple-console',
   });
   console.log('DB Registered');
 }

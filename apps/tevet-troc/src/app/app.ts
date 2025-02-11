@@ -1,5 +1,6 @@
 import { AnimalsPlugin } from '@tevet-troc/animals';
 import { FastifyInstance } from 'fastify';
+import { registerDb } from '@tevet-troc/utils';
 /* eslint-disable-next-line */
 export interface AppOptions {}
 
@@ -20,6 +21,8 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await fastify.register(import('@fastify/swagger-ui'), {
     routePrefix: '/documentation',
   });
+  await fastify.register(registerDb)
+
   await AnimalsPlugin.AnimalsPlugin.animalsPlugin(fastify);
 
   fastify.ready(() => {
