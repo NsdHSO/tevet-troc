@@ -1,4 +1,4 @@
-# Animals
+# Animal
 
 This library was generated with [Nx](https://nx.dev).
 
@@ -7,7 +7,7 @@ This library was generated with [Nx](https://nx.dev).
 This library is an automatically generated Fastify plugin that integrates into the existing backend structure.
 When you run the entity generator, it performs the following tasks:
 
-✅ **Creates a new Nx library** under `libs/bus/Animals/`
+✅ **Creates a new Nx library** under `libs/bus/animal/`
 ✅ **Adds project configuration** to the workspace
 ✅ **Generates base files**, including `index.ts`, `README.md`, and necessary folder structures
 ✅ **Updates TypeScript paths** in `tsconfig.base.json`
@@ -21,7 +21,7 @@ When you run the entity generator, it performs the following tasks:
 When an entity is created, the following structure is generated:
 
 ```md
-libs/bus/Animals/
+libs/bus/animal/
 ├── src/
 │ ├── index.ts # Exports the plugin
 │ ├── lib/

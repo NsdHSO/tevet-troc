@@ -31,6 +31,19 @@ export default [
           ],
         },
       ],
+      '@typescript-eslint/explicit-function-return-type': 'warn',  // Example
+      '@typescript-eslint/no-explicit-any': 'off', // Example
+      semi: ['error', 'always'], // You can override rules here too
+      'eol-last': ['error', 'always'], // Enforce newline at end of file
+      'no-extra-semi': 'error',
+    },
+  },
+  {
+    files: ['**/*.js', '**/*.jsx'], // Target specific file types
+    rules: {
+      // Override or add JavaScript-specific rules if needed
+      semi: ['error', 'always'], // You can override rules here too
+      'eol-last': ['error', 'always'], // Enforce newline at end of file
     },
   },
   {

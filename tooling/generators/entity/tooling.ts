@@ -21,11 +21,16 @@ function toCamelCase(str: string): string {
 }
 
 function toKebabCase(str: string): string {
-  return str.includes('-') ? str : str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  return str.includes('-')
+    ? str
+    : str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 // Main generator function
-export async function indexGenerator(tree: Tree, options: EntityGeneratorSchema) {
+export async function indexGenerator(
+  tree: Tree,
+  options: EntityGeneratorSchema
+) {
   const formattedName = names(options.name).className;
   const projectRoot = `${BASE_PATH}/${options.name}`;
   const localOptions = generateLocalOptions(formattedName, options);
@@ -52,17 +57,23 @@ export async function indexGenerator(tree: Tree, options: EntityGeneratorSchema)
 }
 
 // Helper functions
-function generateLocalOptions(formattedName: string, options: EntityGeneratorSchema) {
+function generateLocalOptions(
+  formattedName: string,
+  options: EntityGeneratorSchema
+) {
   return {
     ...options,
     variableCamelCase: toCamelCase(formattedName),
     variable: options.name,
     path: toKebabCase(formattedName),
-    name: formattedName
+    name: formattedName,
   };
 }
 
-async function addLibraryToTsConfig(tree: Tree, { variable }: { variable: string }) {
+async function addLibraryToTsConfig(
+  tree: Tree,
+  { variable }: { variable: string }
+) {
   const libraryPath = `${BASE_PATH}/${variable}/src/index.ts`;
   const importPath = `@tevet-troc/${variable}`;
 
@@ -78,15 +89,24 @@ async function addLibraryToTsConfig(tree: Tree, { variable }: { variable: string
 }
 
 // Add new plugin to app.ts
-async function updateAppFile(tree: Tree, { name }: { name: string }) {
+async function updateAppFile(
+  tree: Tree,
+  { name, variable }: { name: string; variable: string }
+) {
   if (!tree.exists(APP_FILE_PATH)) {
-    console.warn(`⚠️ Could not find ${APP_FILE_PATH}, skipping app.ts modification.`);
+    console.warn(
+      `⚠️ Could not find ${APP_FILE_PATH}, skipping app.ts modification.`
+    );
     return;
   }
 
   let fileContent = tree.read(APP_FILE_PATH, 'utf-8') as string;
-  const pluginImport = `import { ${name}Plugin } from '@tevet-troc/${toKebabCase(name)}';\n`;
-  const pluginRegistration = `  await ${name}Plugin.${name}Plugin.${toCamelCase(name)}Plugin(fastify);\n`;
+  const pluginImport = `import { ${variable}Plugin } from '@tevet-troc/${toKebabCase(
+    name
+  )}';\n`;
+  const pluginRegistration = `  await ${variable}Plugin.${name}Plugin.${toCamelCase(
+    name
+  )}Plugin(fastify);\n`;
 
   // Ensure import exists
   if (!fileContent.includes(pluginImport.trim())) {
