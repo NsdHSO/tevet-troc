@@ -46,6 +46,12 @@ export async function indexGenerator(
   // Generate project files
   generateFiles(tree, path.join(__dirname, 'files'), projectRoot, localOptions);
 
+  // Move the entity file to models/src/lib/
+  moveEntityToModels(tree, localOptions);
+
+  // Update models/src/index.ts to include the entity export
+  updateModelsIndexFile(tree, localOptions);
+
   // Update tsconfig.base.json
   await addLibraryToTsConfig(tree, localOptions);
 
@@ -120,6 +126,47 @@ async function updateAppFile(
   }
 
   tree.write(APP_FILE_PATH, fileContent);
+}
+
+function moveEntityToModels(
+  tree: Tree,
+  { variableCamelCase, variable }: { variableCamelCase: string; variable: string }
+): void {
+  const sourcePath = `libs/bus/${variable}/src/lib/infrastructure/dao/${variableCamelCase}.entity.ts`;
+  const destinationPath = `models/src/lib/entities/${variableCamelCase}.entity.ts`;
+
+  if (tree.exists(sourcePath)) {
+    const content = tree.read(sourcePath, 'utf-8') as string;
+
+    // Write the file to the new location
+    tree.write(destinationPath, content);
+
+    // Delete the original entity file
+    tree.delete(sourcePath);
+  } else {
+    console.warn(`⚠️ Entity file not found: ${sourcePath}`);
+  }
+}
+
+function updateModelsIndexFile(
+  tree: Tree,
+  { variableCamelCase }: { variableCamelCase: string }
+): void {
+  const indexPath = 'models/src/index.ts';
+  const entityExport = `export * from './lib/entities/${variableCamelCase}.entity';\n`;
+
+  if (tree.exists(indexPath)) {
+    let content = tree.read(indexPath, 'utf-8') as string;
+
+    // Avoid duplicate exports
+    if (!content.includes(entityExport.trim())) {
+      content += entityExport;
+      tree.write(indexPath, content);
+    }
+  } else {
+    // Create index.ts if it doesn't exist
+    tree.write(indexPath, entityExport);
+  }
 }
 
 export default indexGenerator;

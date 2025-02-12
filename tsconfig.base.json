@@ -11,12 +11,14 @@
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2020", "dom"],
+    "types": ["node"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@tevet-troc/animal": ["libs/bus/animal/src/index.ts"],
       "@tevet-troc/http-response": ["libs/http-response/src/index.ts"],
+      "@tevet-troc/models": ["libs/models/src/index.ts"],
       "@tevet-troc/tooling": ["tooling/src/index.ts"],
       "@tevet-troc/utils": ["libs/utils/src/index.ts"]
     }

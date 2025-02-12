@@ -1,1 +1,1 @@
-export * from './lib/data-base/db.config'
+export * from './lib/data-base/db.config';

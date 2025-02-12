@@ -25,7 +25,7 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await fastify.register(import('@fastify/swagger-ui'), {
     routePrefix: '/documentation',
   });
-  await fastify.register(registerDb);
+  await registerDb(fastify);
   await animalPlugin.AnimalPlugin.animalPlugin(fastify);
 
   fastify.ready(() => {

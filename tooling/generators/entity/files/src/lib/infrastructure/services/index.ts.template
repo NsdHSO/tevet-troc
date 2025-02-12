@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import <%= variableCamelCase %>Dao from '../dao/<%= variableCamelCase %>Dao';
-import { <%= name %>Entity } from '../dao/<%= variableCamelCase %>.entity';
+import { <%= name %>Entity } from '@tevet-troc/models';
 import { I<%= name %>Http, <%= variableCamelCase %>ApplicationService } from '../../applications';
 import { DataSource } from 'typeorm';
 
