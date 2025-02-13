@@ -17,9 +17,9 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
       },
       tags: [
         {
-          name: 'auth',
-          description: 'Authentication-related routes',
-        }, // Define the 'auth' parent tag
+          name: 'Hospital',
+          description: 'Hospital routes',
+        }, // Define the 'hospital' parent tag
       ],
     },
   });
