@@ -1,4 +1,3 @@
-import { AnimalsEntity } from '@tevet-troc/models';
 import 'reflect-metadata';
 import { FastifyInstance } from 'fastify';
 import plugin from 'typeorm-fastify-plugin';
@@ -13,7 +12,7 @@ export async function registerDb(fastify: FastifyInstance) {
       logging: process.env.NODE_ENV === 'dev',
       subscribers: [],
       migrationsRun: process.env.NODE_ENV !== 'dev',
-      entities: [AnimalsEntity],
+      entities: [],
       logger: 'debug',
     })
     .after(() => {
