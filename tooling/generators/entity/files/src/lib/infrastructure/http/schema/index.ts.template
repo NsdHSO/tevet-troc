@@ -1,1 +1,1 @@
-export { default as <%= variableCamelCase %>Schemas} from './<%= variableCamelCase %>Schema'
+export { default as <%= variableCamelCase %>Schemas} from './<%= variableCamelCase %>Schema';

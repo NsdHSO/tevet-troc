@@ -1,1 +1,1 @@
-export { default as <%= variable %>Plugin } from './lib'
+export { default as <%= variable %>Plugin } from './lib';

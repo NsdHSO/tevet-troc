@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { registerDb } from '@tevet-troc/utils';
+import { httpResponseBuilder } from '@tevet-troc/http-response';
 
 /* eslint-disable-next-line */
 export interface AppOptions {}

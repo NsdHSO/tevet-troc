@@ -1,4 +1,4 @@
-import * as <%= name %>Plugin from './<%= variable %>'
+import * as <%= name %>Plugin from './<%= variable %>';
 
 export default {
     <%= name %>Plugin
