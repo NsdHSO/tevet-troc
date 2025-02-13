@@ -1,4 +1,3 @@
-import { animalPlugin } from '@tevet-troc/animal';
 import { FastifyInstance } from 'fastify';
 import { registerDb } from '@tevet-troc/utils';
 
@@ -26,7 +25,6 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
     routePrefix: '/documentation',
   });
   await registerDb(fastify);
-  await animalPlugin.AnimalPlugin.animalPlugin(fastify);
 
   fastify.ready(() => {
     console.log(fastify.printRoutes());

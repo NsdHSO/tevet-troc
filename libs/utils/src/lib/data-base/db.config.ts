@@ -1,7 +1,7 @@
+import { AnimalEntity } from '@tevet-troc/models';
 import 'reflect-metadata';
 import { FastifyInstance } from 'fastify';
 import plugin from 'typeorm-fastify-plugin';
-import { AnimalEntity } from '@tevet-troc/models';
 
 export async function registerDb(fastify: FastifyInstance) {
   fastify.log.info('Registering database...');

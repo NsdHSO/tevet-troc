@@ -58,10 +58,44 @@ export async function indexGenerator(
   // Add the new plugin import and registration to app.ts
   await updateAppFile(tree, localOptions);
 
+  // Update the database config file to include the new entity
+  updateDbConfig(tree, localOptions.name);
+
   // Format files
   await formatFiles(tree);
 }
 
+function updateDbConfig(tree: Tree, entityName: string) : void{
+  const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
+
+  if (!tree.exists(dbConfigPath)) {
+    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
+    return;
+  }
+
+  let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
+  const entityImport = `import { ${entityName}Entity } from '@tevet-troc/models';\n`;
+
+  // Ensure import exists
+  if (!fileContent.includes(entityImport.trim())) {
+    fileContent = entityImport + fileContent;
+  }
+
+  // Regex to find the entities array inside `registerDb`
+  const entitiesRegex = /entities:\s*\[([\s\S]*?)\]/;
+  const match = fileContent.match(entitiesRegex);
+
+  if (match) {
+    const existingEntities = match[1].trim();
+    const newEntities = existingEntities
+      ? `${existingEntities}, ${entityName}Entity`
+      : `${entityName}Entity`;
+
+    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
+  }
+
+  tree.write(dbConfigPath, fileContent);
+}
 // Helper functions
 function generateLocalOptions(
   formattedName: string,
@@ -133,7 +167,7 @@ function moveEntityToModels(
   { variableCamelCase, variable }: { variableCamelCase: string; variable: string }
 ): void {
   const sourcePath = `libs/bus/${variable}/src/lib/infrastructure/dao/${variableCamelCase}.entity.ts`;
-  const destinationPath = `models/src/lib/entities/${variableCamelCase}.entity.ts`;
+  const destinationPath = `libs/models/src/lib/entities/${variableCamelCase}.entity.ts`;
 
   if (tree.exists(sourcePath)) {
     const content = tree.read(sourcePath, 'utf-8') as string;
@@ -152,7 +186,7 @@ function updateModelsIndexFile(
   tree: Tree,
   { variableCamelCase }: { variableCamelCase: string }
 ): void {
-  const indexPath = 'models/src/index.ts';
+  const indexPath = 'libs/models/src/index.ts';
   const entityExport = `export * from './lib/entities/${variableCamelCase}.entity';\n`;
 
   if (tree.exists(indexPath)) {
