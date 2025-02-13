@@ -52,6 +52,53 @@ function generateLocalOptions(
     name: formattedName,
   };
 }
+function updateDbConfig(tree: Tree, entityName: string): void {
+  const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
+
+  if (!tree.exists(dbConfigPath)) {
+    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
+    return;
+  }
+
+  let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
+
+  // 1. Get existing imports
+  const importRegex = /import\s*{\s*([^}]+)\s*}\s*from\s*'@tevet-troc\/models';/g;
+  let existingImports: string[] = [];
+  let match;
+  while ((match = importRegex.exec(fileContent))) {
+    existingImports.push(...match[1].split(',').map(s => s.trim()));
+  }
+
+  // 2. Add the new entity and sort
+  existingImports.push(entityName + 'Entity'); // Add the entity with 'Entity' suffix
+  existingImports.sort();
+
+  // 3. Reconstruct the import statement
+  const newImportStatement = existingImports.length > 0
+    ? `import { ${existingImports.join(', ')} } from '@tevet-troc/models';\n`
+    : "";
+
+  // 4. Remove old imports and add the new one (important to prevent duplicates)
+  fileContent = fileContent.replace(importRegex, ""); // Remove all existing imports
+  fileContent = newImportStatement + fileContent; // Add the combined import at the top
+
+  // Regex to find the entities array inside `registerDb`
+  const entitiesRegex = /entities:\s*\[([\s\S]*?)\]/;
+  const entitiesMatch = fileContent.match(entitiesRegex);
+
+  if (entitiesMatch) {
+    const existingEntities = entitiesMatch[1].trim();
+    const allEntities = existingEntities.split(',').map(entity => entity.trim());
+    if(!allEntities.includes(entityName + 'Entity')){
+      allEntities.push(entityName + 'Entity');
+    }
+    const newEntities = allEntities.sort().join(', ');
+    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
+  }
+
+  tree.write(dbConfigPath, fileContent);
+}
 
 export async function dataBaseEntityGenerator(
   tree: Tree,
@@ -60,11 +107,32 @@ export async function dataBaseEntityGenerator(
   const formattedName = names(options.name).className;
 
   const localOptions = generateLocalOptions(formattedName, options);
-  const projectRoot = `libs/models/src/entities/${localOptions.path}.entity.ts`;
+  const projectRoot = `libs/models/src/lib/entities/${localOptions.path}.entity.ts`;
 
-  generateFiles(tree, path.join(__dirname, 'files'), projectRoot, localOptions);
-  updateModelsIndexFile(tree, localOptions);
-  await formatFiles(tree);
+  if (!tree.exists(projectRoot)) {
+    // Generate files from the 'files' directory, but place them directly in the target directory.
+    generateFiles(
+      tree,
+      path.join(__dirname, 'files/src'), // Path to your templates
+      'libs/models/src/lib/entities', // Target directory -  <-- Changed this!
+      localOptions
+    );
+    // Rename the file after generation:
+    tree.rename(
+      `libs/models/src/lib/entities/${localOptions.variableCamelCase}.entity.ts.template`,
+      projectRoot
+    );
+
+
+    updateModelsIndexFile(tree, localOptions);
+    updateDbConfig(tree, localOptions.name);
+
+    await formatFiles(tree);
+  } else {
+    console.warn(`File already exists: ${projectRoot}. Skipping generation.`);
+  }
 }
+
+
 
 export default dataBaseEntityGenerator;
