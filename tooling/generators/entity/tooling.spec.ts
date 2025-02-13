@@ -1,8 +1,8 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nx/devkit';
 
-import { entityGenerator } from './tooling';
 import { EntityGeneratorSchema } from './schema';
+import indexGenerator from './tooling';
 
 describe('entity generator', () => {
   let tree: Tree;
@@ -13,7 +13,7 @@ describe('entity generator', () => {
   });
 
   it('should run successfully', async () => {
-    await entityGenerator(tree, options);
+    await indexGenerator(tree, options);
     const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });

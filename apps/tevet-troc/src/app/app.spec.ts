@@ -1,7 +1,7 @@
 import Fastify, { FastifyInstance } from 'fastify';
 import { app } from './app';
 
-describe('GET /', () => {
+describe('GET /home', () => {
   let server: FastifyInstance;
 
   beforeEach(() => {
@@ -12,9 +12,9 @@ describe('GET /', () => {
   it('should respond with a message', async () => {
     const response = await server.inject({
       method: 'GET',
-      url: '/',
+      url: '/home',
     });
-
-    expect(response.json()).toEqual({ message: 'Hello API' });
+    console.log(response.json());
+    expect(response.json()).toEqual({ message: 'This is a home page, what are you doing here?' });
   });
 });

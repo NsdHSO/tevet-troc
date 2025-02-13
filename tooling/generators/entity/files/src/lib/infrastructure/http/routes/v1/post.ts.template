@@ -10,7 +10,7 @@ export default function (app: FastifyInstance) {
     }, async (req: FastifyRequest, reply) => {
         try {
             app.log.info('Registered <%= name %>');
-            return httpResponseBuilder.NotImplemented({message: 'Not Implemented'})
+            return httpResponseBuilder.NotImplemented({payload: 'Not Implemented'})
 
         } catch (error: ResponseObject<string, number> | any) {
             app.log.error('Registered when <%= name %> is register', error);

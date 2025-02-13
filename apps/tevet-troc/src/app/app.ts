@@ -1,3 +1,4 @@
+import { homePlugin } from '@tevet-troc/home';
 import { FastifyInstance } from 'fastify';
 import { registerDb } from '@tevet-troc/utils';
 import { httpResponseBuilder } from '@tevet-troc/http-response';
@@ -6,6 +7,7 @@ import { httpResponseBuilder } from '@tevet-troc/http-response';
 export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
+  await homePlugin.HomePlugin.homePlugin(fastify);
   await registerDb(fastify);
   fastify.register(import('@fastify/sensible'));
   await fastify.register(import('@fastify/swagger'), {
