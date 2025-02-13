@@ -1,9 +1,14 @@
 {
   "generators": {
-    "entity": {
-      "factory": "./generators/entity/tooling",
-      "schema": "./generators/entity/schema.json",
-      "description": "entity generator"
+    "resource": {
+      "factory": "./generators/resource/tooling",
+      "schema": "./generators/resource/schema.json",
+      "description": "resource generator"
+    },
+    "data-base-entity": {
+      "factory": "./generators/data-base-entity/data-base-entity",
+      "schema": "./generators/data-base-entity/schema.json",
+      "description": "data-base-entity generator"
     }
   }
 }
