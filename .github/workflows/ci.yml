@@ -15,23 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-
-      - run: corepack enable pnpm
-      - run: echo "$PATH" # Debug: Check the PATH *after* corepack enable
-
-      - name: Add pnpm to PATH
-        run: echo "$HOME/.pnpm-store/v6/bin" >> $GITHUB_PATH  # Or find the correct path if different
-
-      - run: echo "$PATH" # Debug: Check the PATH *after* adding pnpm
-
-      - run: pnpm install --frozen-lockfile
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
 
       - uses: nrwl/nx-set-shas@v4
 
