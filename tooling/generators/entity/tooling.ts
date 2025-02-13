@@ -65,37 +65,6 @@ export async function indexGenerator(
   await formatFiles(tree);
 }
 
-function updateDbConfig(tree: Tree, entityName: string) : void{
-  const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
-
-  if (!tree.exists(dbConfigPath)) {
-    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
-    return;
-  }
-
-  let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
-  const entityImport = `import { ${entityName}Entity } from '@tevet-troc/models';\n`;
-
-  // Ensure import exists
-  if (!fileContent.includes(entityImport.trim())) {
-    fileContent = entityImport + fileContent;
-  }
-
-  // Regex to find the entities array inside `registerDb`
-  const entitiesRegex = /entities:\s*\[([\s\S]*?)\]/;
-  const match = fileContent.match(entitiesRegex);
-
-  if (match) {
-    const existingEntities = match[1].trim();
-    const newEntities = existingEntities
-      ? `${existingEntities}, ${entityName}Entity`
-      : `${entityName}Entity`;
-
-    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
-  }
-
-  tree.write(dbConfigPath, fileContent);
-}
 // Helper functions
 function generateLocalOptions(
   formattedName: string,
@@ -203,4 +172,36 @@ function updateModelsIndexFile(
   }
 }
 
+
+function updateDbConfig(tree: Tree, entityName: string) : void{
+  const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
+
+  if (!tree.exists(dbConfigPath)) {
+    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
+    return;
+  }
+
+  let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
+  const entityImport = `import { ${entityName}Entity } from '@tevet-troc/models';\n`;
+
+  // Ensure import exists
+  if (!fileContent.includes(entityImport.trim())) {
+    fileContent = entityImport + fileContent;
+  }
+
+  // Regex to find the entities array inside `registerDb`
+  const entitiesRegex = /entities:\s*\[([\s\S]*?)\]/;
+  const match = fileContent.match(entitiesRegex);
+
+  if (match) {
+    const existingEntities = match[1].trim();
+    const newEntities = existingEntities
+      ? `${existingEntities}, ${entityName}Entity`
+      : `${entityName}Entity`;
+
+    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
+  }
+
+  tree.write(dbConfigPath, fileContent);
+}
 export default indexGenerator;

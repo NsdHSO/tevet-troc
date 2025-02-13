@@ -1,3 +1,4 @@
+import { animalsPlugin } from '@tevet-troc/animals';
 import { FastifyInstance } from 'fastify';
 import { registerDb } from '@tevet-troc/utils';
 
@@ -5,6 +6,7 @@ import { registerDb } from '@tevet-troc/utils';
 export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
+  await registerDb(fastify);
   fastify.register(import('@fastify/sensible'));
   await fastify.register(import('@fastify/swagger'), {
     swagger: {
@@ -24,7 +26,7 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await fastify.register(import('@fastify/swagger-ui'), {
     routePrefix: '/documentation',
   });
-  await registerDb(fastify);
+  await animalsPlugin.AnimalsPlugin.animalsPlugin(fastify);
 
   fastify.ready(() => {
     console.log(fastify.printRoutes());
