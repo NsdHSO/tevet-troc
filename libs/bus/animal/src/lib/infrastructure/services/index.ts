@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import animalDao from '../dao/animalDao';
-import { AnimalEntity } from '../dao/animal.entity';
+import { AnimalEntity } from '@tevet-troc/models';
 import { IAnimalHttp, animalApplicationService } from '../../applications';
 import { DataSource } from 'typeorm';
 
