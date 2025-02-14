@@ -4,7 +4,7 @@ import { StaffRole } from '../../enums';
 
 @Entity()
 export class StaffEntity extends BaseEntity{
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

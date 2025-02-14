@@ -1,0 +1,33 @@
+{
+  "name": "hospital",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/bus/hospital/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/bus/hospital",
+        "tsConfig": "libs/bus/hospital/tsconfig.lib.json",
+        "packageJson": "libs/bus/hospital/package.json",
+        "main": "libs/bus/hospital/src/index.ts",
+        "assets": ["libs/bus/hospital/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { BaseEntity } from '../base.entity';
 
 @Entity()
 export class DepartmentEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

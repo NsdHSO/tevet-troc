@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@tevet-troc/home": ["libs/bus/home/src/index.ts"],
+      "@tevet-troc/hospital": ["libs/bus/hospital/src/index.ts"],
       "@tevet-troc/http-response": ["libs/http-response/src/index.ts"],
       "@tevet-troc/models": ["libs/models/src/index.ts"],
       "@tevet-troc/tooling": ["tooling/src/index.ts"],

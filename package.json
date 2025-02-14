@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx reset && nx serve tevet-troc",
-    "resource": "nx reset && nx generate @tevet-troc/tooling:entity",
+    "resource": "nx reset && nx generate @tevet-troc/tooling:resource",
     "entity": "nx reset && nx generate @tevet-troc/tooling:data-base-entity",
     "test:all": "nx reset && nx run-many -t test"
   },

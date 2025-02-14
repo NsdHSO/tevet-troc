@@ -1,3 +1,4 @@
+import { hospitalPlugin } from '@tevet-troc/hospital';
 import { homePlugin } from '@tevet-troc/home';
 import { FastifyInstance } from 'fastify';
 import { registerDb } from '@tevet-troc/utils';
@@ -27,6 +28,7 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await fastify.register(import('@fastify/swagger-ui'), {
     routePrefix: '/documentation',
   });
+  await hospitalPlugin.HospitalPlugin.hospitalPlugin(fastify);
 
   fastify.ready(() => {
     console.log(fastify.printRoutes());

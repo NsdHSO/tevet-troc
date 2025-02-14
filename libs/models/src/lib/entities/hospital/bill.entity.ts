@@ -4,7 +4,7 @@ import { PaymentStatus } from '../../enums';
 
 @Entity()
 export class BillEntity extends BaseEntity{
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

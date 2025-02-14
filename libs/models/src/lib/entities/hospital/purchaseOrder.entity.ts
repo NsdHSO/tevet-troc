@@ -4,7 +4,7 @@ import { OrderStatus } from '../../enums';
 
 @Entity()
 export class PurchaseOrderEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

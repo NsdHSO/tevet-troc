@@ -3,7 +3,7 @@ import { BaseEntity } from '../base.entity';
 
 @Entity()
 export class StaffScheduleEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

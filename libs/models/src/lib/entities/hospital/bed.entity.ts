@@ -4,7 +4,7 @@ import { BedType } from '../../enums';
 
 @Entity()
 export class BedEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

@@ -4,7 +4,7 @@ import { GuardArea, GuardShift } from '../../enums';
 
 @Entity()
 export class GuardEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()

@@ -7,8 +7,8 @@ import { BaseEntity } from '../base.entity';
 
 @Entity()
 export class HospitalEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: number;
 
   @Column({ unique: true })
   name: string;

@@ -4,7 +4,7 @@ import { Amenities } from '../../enums';
 
 @Entity()
 export class AmenityEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({

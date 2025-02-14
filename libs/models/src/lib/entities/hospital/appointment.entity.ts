@@ -4,7 +4,7 @@ import { AppointmentStatus } from '../../enums';
 
 @Entity()
 export class AppointmentEntity extends BaseEntity{
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
