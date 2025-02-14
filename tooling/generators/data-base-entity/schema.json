@@ -12,6 +12,15 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "x-prompt": "Do you want to have a wrapper of this entity"
     }
   },
   "required": ["name"]

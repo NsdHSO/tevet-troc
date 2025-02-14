@@ -1,17 +1,14 @@
-import {
-  addProjectConfiguration,
-  formatFiles,
-  generateFiles, names,
-  Tree,
-} from '@nx/devkit';
+import { formatFiles, generateFiles, names, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { DataBaseEntityGeneratorSchema } from './schema';
 import { EntityGeneratorSchema } from '../resource/schema';
+
 function toKebabCase(str: string): string {
   return str.includes('-')
     ? str
     : str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
+
 // Utility functions
 function toCamelCase(str: string): string {
   return str
@@ -21,10 +18,15 @@ function toCamelCase(str: string): string {
 
 function updateModelsIndexFile(
   tree: Tree,
-  { variableCamelCase }: { variableCamelCase: string }
+  {
+    variableCamelCase,
+    directory,
+  }: { variableCamelCase: string; directory: string }
 ): void {
   const indexPath = 'libs/models/src/index.ts';
-  const entityExport = `export * from './lib/entities/${variableCamelCase}.entity';\n`;
+  const entityExport = directory
+    ? `export * from './lib/entities/${directory}/${variableCamelCase}.entity';\n`
+    : `export * from './lib/entities/${variableCamelCase}.entity';\n`;
 
   if (tree.exists(indexPath)) {
     let content = tree.read(indexPath, 'utf-8') as string;
@@ -39,6 +41,7 @@ function updateModelsIndexFile(
     tree.write(indexPath, entityExport);
   }
 }
+
 // Helper functions
 function generateLocalOptions(
   formattedName: string,
@@ -52,22 +55,26 @@ function generateLocalOptions(
     name: formattedName,
   };
 }
+
 function updateDbConfig(tree: Tree, entityName: string): void {
   const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
 
   if (!tree.exists(dbConfigPath)) {
-    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
+    console.warn(
+      `⚠️ ${dbConfigPath} not found, skipping database config update.`
+    );
     return;
   }
 
   let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
 
   // 1. Get existing imports
-  const importRegex = /import\s*{\s*([^}]+)\s*}\s*from\s*'@tevet-troc\/models';/g;
-  let existingImports: string[] = [];
+  const importRegex =
+    /import\s*{\s*([^}]+)\s*}\s*from\s*'@tevet-troc\/models';/g;
+  const existingImports: string[] = [];
   let match;
   while ((match = importRegex.exec(fileContent))) {
-    existingImports.push(...match[1].split(',').map(s => s.trim()));
+    existingImports.push(...match[1].split(',').map((s) => s.trim()));
   }
 
   // 2. Add the new entity and sort
@@ -75,12 +82,13 @@ function updateDbConfig(tree: Tree, entityName: string): void {
   existingImports.sort();
 
   // 3. Reconstruct the import statement
-  const newImportStatement = existingImports.length > 0
-    ? `import { ${existingImports.join(', ')} } from '@tevet-troc/models';\n`
-    : "";
+  const newImportStatement =
+    existingImports.length > 0
+      ? `import { ${existingImports.join(', ')} } from '@tevet-troc/models';\n`
+      : '';
 
   // 4. Remove old imports and add the new one (important to prevent duplicates)
-  fileContent = fileContent.replace(importRegex, ""); // Remove all existing imports
+  fileContent = fileContent.replace(importRegex, ''); // Remove all existing imports
   fileContent = newImportStatement + fileContent; // Add the combined import at the top
 
   // Regex to find the entities array inside `registerDb`
@@ -89,12 +97,17 @@ function updateDbConfig(tree: Tree, entityName: string): void {
 
   if (entitiesMatch) {
     const existingEntities = entitiesMatch[1].trim();
-    const allEntities = existingEntities.split(',').map(entity => entity.trim());
-    if(!allEntities.includes(entityName + 'Entity')){
+    const allEntities = existingEntities
+      .split(',')
+      .map((entity) => entity.trim());
+    if (!allEntities.includes(entityName + 'Entity')) {
       allEntities.push(entityName + 'Entity');
     }
     const newEntities = allEntities.sort().join(', ');
-    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
+    fileContent = fileContent.replace(
+      entitiesRegex,
+      `entities: [${newEntities}]`
+    );
   }
 
   tree.write(dbConfigPath, fileContent);
@@ -108,21 +121,34 @@ export async function dataBaseEntityGenerator(
 
   const localOptions = generateLocalOptions(formattedName, options);
   const projectRoot = `libs/models/src/lib/entities/${localOptions.path}.entity.ts`;
-
+  console.log(localOptions);
   if (!tree.exists(projectRoot)) {
     // Generate files from the 'files' directory, but place them directly in the target directory.
-    generateFiles(
-      tree,
-      path.join(__dirname, 'files/src'), // Path to your templates
-      'libs/models/src/lib/entities', // Target directory -  <-- Changed this!
-      localOptions
-    );
-    // Rename the file after generation:
-    tree.rename(
-      `libs/models/src/lib/entities/${localOptions.variableCamelCase}.entity.ts.template`,
-      projectRoot
-    );
-
+    if (options.directory) {
+      generateFiles(
+        tree,
+        path.join(__dirname, 'files/src'),
+        `libs/models/src/lib/entities/${options.directory}`,
+        localOptions
+      );
+      // Rename the file after generation:
+      tree.rename(
+        `libs/models/src/lib/entities/${options.directory}/${localOptions.variableCamelCase}.entity.ts.template`,
+        projectRoot
+      );
+    } else {
+      generateFiles(
+        tree,
+        path.join(__dirname, 'files/src'),
+        'libs/models/src/lib/entities',
+        localOptions
+      );
+      // Rename the file after generation:
+      tree.rename(
+        `libs/models/src/lib/entities/${localOptions.variableCamelCase}.entity.ts.template`,
+        projectRoot
+      );
+    }
 
     updateModelsIndexFile(tree, localOptions);
     updateDbConfig(tree, localOptions.name);
@@ -132,7 +158,5 @@ export async function dataBaseEntityGenerator(
     console.warn(`File already exists: ${projectRoot}. Skipping generation.`);
   }
 }
-
-
 
 export default dataBaseEntityGenerator;

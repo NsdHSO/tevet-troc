@@ -8,7 +8,6 @@ export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await homePlugin.HomePlugin.homePlugin(fastify);
-  await registerDb(fastify);
   fastify.register(import('@fastify/sensible'));
   await fastify.register(import('@fastify/swagger'), {
     swagger: {
