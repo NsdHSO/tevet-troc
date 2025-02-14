@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import { hospitalSchemas } from '../../schema';
+import { HospitalBodyType } from '../../schema/hospitalSchema/bodies';
 
 export default function (app: FastifyInstance) {
   app.post(
@@ -8,16 +9,22 @@ export default function (app: FastifyInstance) {
     {
       schema: {
         response: hospitalSchemas.Response.HospitalResponse,
+        body: hospitalSchemas.Bodies.HospitalSchema,
       },
     },
-    async (req: FastifyRequest, reply) => {
+    async (req: FastifyRequest<{ Body: HospitalBodyType }>, reply) => {
       try {
         app.log.info('Registered Hospital');
-        httpResponseBuilder.OK(app.hospitalApplicationService.create());
+        return httpResponseBuilder.OK(
+          await app.hospitalApplicationService.create(req.body)
+        );
       } catch (error: ResponseObject<string, number> | any) {
-        app.log.error('Registered when Hospital is register', error);
+        app.log.error(
+          `Error when Register Hospital is register ${JSON.stringify(error)}`
+
+        );
         reply.code(error.code);
-        return httpResponseBuilder.BadRequest(error.message);
+        return error;
       }
     }
   );

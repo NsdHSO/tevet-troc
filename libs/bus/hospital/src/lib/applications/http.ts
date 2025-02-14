@@ -1,3 +1,5 @@
+import { HospitalBodyType } from '../infrastructure/http/schema/hospitalSchema/bodies';
+
 export interface IHospitalHttp {
-  create: any
+  create: (payload: Partial<HospitalBodyType>) => Promise<string>;
 }
