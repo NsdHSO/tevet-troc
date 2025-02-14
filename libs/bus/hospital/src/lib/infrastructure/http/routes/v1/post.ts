@@ -13,7 +13,7 @@ export default function (app: FastifyInstance) {
     async (req: FastifyRequest, reply) => {
       try {
         app.log.info('Registered Hospital');
-        httpResponseBuilder.OK(app.hospitalApplicationService.create())
+        httpResponseBuilder.OK(app.hospitalApplicationService.create());
       } catch (error: ResponseObject<string, number> | any) {
         app.log.error('Registered when Hospital is register', error);
         reply.code(error.code);
