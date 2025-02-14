@@ -35,7 +35,6 @@ export async function indexGenerator(
   const projectRoot = `${BASE_PATH}/${options.name}`;
   const localOptions = generateLocalOptions(formattedName, options);
 
-  // Add project configuration
   addProjectConfiguration(tree, formattedName, {
     root: projectRoot,
     projectType: 'library',
@@ -43,7 +42,6 @@ export async function indexGenerator(
     targets: {},
   });
 
-  // Generate project files
   generateFiles(tree, path.join(__dirname, 'files'), projectRoot, localOptions);
 
   // Move the entity file to models/src/lib/
