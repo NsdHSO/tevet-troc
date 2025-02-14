@@ -58,9 +58,6 @@ dependencies:
   typeorm:
     specifier: ^0.3.20
     version: 0.3.20(pg@8.13.1)(ts-node@10.9.1)
-  typeorm-fastify-plugin:
-    specifier: ^3.0.0
-    version: 3.0.0(pg@8.13.1)(ts-node@10.9.1)
 
 devDependencies:
   '@eslint/js':
@@ -8784,33 +8781,6 @@ packages:
 
   /type@2.7.3:
     resolution: {integrity: sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==}
-
-  /typeorm-fastify-plugin@3.0.0(pg@8.13.1)(ts-node@10.9.1):
-    resolution: {integrity: sha512-je7GZN+TeDHKSU5mi1GjBrFVmRVNmGId1IvBXZmK/S2dbotXLnHRhfmZRCirw2yPpE1wIQsDV87dMhSQYLcy2Q==}
-    engines: {node: '>=20.0.0'}
-    dependencies:
-      fastify-plugin: 5.0.1
-      typeorm: 0.3.20(pg@8.13.1)(ts-node@10.9.1)
-    transitivePeerDependencies:
-      - '@google-cloud/spanner'
-      - '@sap/hana-client'
-      - better-sqlite3
-      - hdb-pool
-      - ioredis
-      - mongodb
-      - mssql
-      - mysql2
-      - oracledb
-      - pg
-      - pg-native
-      - pg-query-stream
-      - redis
-      - sql.js
-      - sqlite3
-      - supports-color
-      - ts-node
-      - typeorm-aurora-data-api-driver
-    dev: false
 
   /typeorm@0.3.20(pg@8.13.1)(ts-node@10.9.1):
     resolution: {integrity: sha512-sJ0T08dV5eoZroaq9uPKBoNcGslHBR4E4y+EBHs//SiGbblGe7IeduP/IH4ddCcj0qp3PHwDwGnuvqEAnKlq/Q==}

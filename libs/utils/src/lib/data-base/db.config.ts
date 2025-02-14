@@ -22,7 +22,6 @@ import {
 
 import 'reflect-metadata';
 import { FastifyInstance } from 'fastify';
-import plugin from 'typeorm-fastify-plugin';
 import { DataSource } from 'typeorm';
 
 const dataSource = new DataSource({
