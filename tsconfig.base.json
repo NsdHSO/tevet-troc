@@ -20,6 +20,7 @@
       "@tevet-troc/hospital": ["libs/bus/hospital/src/index.ts"],
       "@tevet-troc/http-response": ["libs/http-response/src/index.ts"],
       "@tevet-troc/models": ["libs/models/src/index.ts"],
+      "@tevet-troc/swagger": ["libs/swagger/src/index.ts"],
       "@tevet-troc/tooling": ["tooling/src/index.ts"],
       "@tevet-troc/utils": ["libs/utils/src/index.ts"]
     }
