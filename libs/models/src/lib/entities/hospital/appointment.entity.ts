@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 import { AppointmentStatus } from '../../enums';
 
-@Entity()
+@Entity('appointment')
 export class AppointmentEntity extends BaseEntity{
   @PrimaryGeneratedColumn('uuid')
   id: number;

@@ -8,9 +8,9 @@ export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
   fastify.register(import('@fastify/sensible'));
+  await swaggerPlugin.SwaggerPlugin.swaggerPlugin(fastify);
   await homePlugin.HomePlugin.homePlugin(fastify);
   await hospitalPlugin.HospitalPlugin.hospitalPlugin(fastify);
-  await swaggerPlugin.SwaggerPlugin.swaggerPlugin(fastify);
 
   fastify.ready(() => {
     console.log(fastify.printRoutes());

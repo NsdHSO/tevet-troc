@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 import { GuardArea, GuardShift } from '../../enums';
 
-@Entity()
+@Entity('guard')
 export class GuardEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;

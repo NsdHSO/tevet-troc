@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 
-@Entity()
+@Entity('hospital')
 export class HospitalEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: number;

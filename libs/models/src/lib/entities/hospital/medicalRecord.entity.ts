@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
-@Entity()
+
+@Entity('medical_record')
 export class MedicalRecordEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
