@@ -2,6 +2,26 @@ import { IHospitalHttp, IHospitalRepository } from './index';
 import { HospitalBodyType } from '../infrastructure/http/schema/hospitalSchema/bodies';
 import { HospitalEntity } from '@tevet-troc/models';
 
+function getAllHospital(
+  repository: IHospitalRepository,
+  filterBy: {
+    query: Array<keyof Omit<HospitalEntity, 'id'>>;
+    filterBy: { [K in keyof Omit<HospitalEntity, 'id'>]?: any };
+  }
+) {
+  return repository.getAll(filterBy);
+}
+
+export function hospitalApplicationService(
+  hospitalRepository: IHospitalRepository
+): IHospitalHttp {
+  return {
+    create: (payload) => createHospital(hospitalRepository, payload),
+    update: (payload) => updateHospital(hospitalRepository, payload),
+    getAll: (filterBy) => getAllHospital(hospitalRepository, filterBy),
+  };
+}
+
 /**
  * Created Logic to send to repository
  * @param hospitalRepository
@@ -10,16 +30,20 @@ import { HospitalEntity } from '@tevet-troc/models';
 function createHospital(
   hospitalRepository: IHospitalRepository,
   payload: Partial<HospitalBodyType>
-) {
+): Promise<string> {
   return hospitalRepository.create(createPayloadToSavedHospital(payload));
 }
 
-export function hospitalApplicationService(
-  hospitalRepository: IHospitalRepository
-): IHospitalHttp {
-  return {
-    create: (payload) => createHospital(hospitalRepository, payload),
-  };
+/**
+ *
+ * @param hospitalRepository
+ * @param payload
+ */
+function updateHospital(
+  hospitalRepository: IHospitalRepository,
+  payload: Partial<HospitalBodyType>
+): Promise<string> {
+  return hospitalRepository.update(payload);
 }
 
 function createPayloadToSavedHospital(

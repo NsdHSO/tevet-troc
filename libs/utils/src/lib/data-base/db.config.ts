@@ -54,7 +54,7 @@ const dataSource = new DataSource({
     SupplierEntity,
     TreatmentEntity,
   ],
-  logger: 'advanced-console',
+  logger: 'debug',
 });
 
 export async function registerDb(fastify: FastifyInstance) {

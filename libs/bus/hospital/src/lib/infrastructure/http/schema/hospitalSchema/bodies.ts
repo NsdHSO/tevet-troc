@@ -2,8 +2,8 @@ import { Type, Static } from '@sinclair/typebox';
 
 // Define Hospital Schema
 export const HospitalSchema = Type.Object({
-  name: Type.String(),
-  address: Type.String(),
+  name: Type.Optional(Type.String()),
+  address: Type.Optional(Type.String()),
   phone: Type.Optional(Type.String()),
   website: Type.Optional(Type.String({ format: 'uri' })), // Ensures valid URL format
   description: Type.Optional(Type.String()),

@@ -1,0 +1,47 @@
+import { FastifyInstance, FastifyRequest } from 'fastify';
+import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
+import { hospitalSchemas } from '../../schema';
+import { HospitalEntity } from '@tevet-troc/models';
+import { parseFilterParams } from '@tevet-troc/utils';
+import { FilterTypeHospital } from '../../schema/hospitalSchema/params';
+
+export default function (app: FastifyInstance) {
+  app.get(
+    '/',
+    {
+      schema: {
+        response: hospitalSchemas.Response.HospitalAllResponse,
+        querystring: hospitalSchemas.Params.FilterByHospital,
+      }
+    },
+    async (
+      req: FastifyRequest<{
+        Querystring:FilterTypeHospital;
+      }>,
+      reply
+    ) => {
+      try {
+        app.log.info('Register Get all Hospital');
+        const { fields, filterBy } = req.query;
+        const filterByParsed =
+          parseFilterParams<keyof Omit<Partial<HospitalEntity>, 'id'>>(
+            filterBy
+          );
+        return httpResponseBuilder.OK(
+          await app.hospitalApplicationService.getAll({
+            query: fields?.split(',') as Array<
+              keyof Omit<HospitalEntity, 'id'>
+            >,
+            filterBy: filterByParsed,
+          })
+        );
+      } catch (error: ResponseObject<string, number> | any) {
+        app.log.error(
+          `Error when Updated Hospital is register ${JSON.stringify(error)}`
+        );
+        reply.code(error.code);
+        return error;
+      }
+    }
+  );
+}
