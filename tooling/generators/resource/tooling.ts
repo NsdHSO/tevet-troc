@@ -8,6 +8,7 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { EntityGeneratorSchema } from './schema';
+import dataBaseEntityGenerator from '../data-base-entity/data-base-entity';
 
 // Constants
 const BASE_PATH = 'libs/bus';
@@ -44,21 +45,25 @@ export async function indexGenerator(
 
   generateFiles(tree, path.join(__dirname, 'files'), projectRoot, localOptions);
 
-  // Move the entity file to models/src/lib/
-  moveEntityToModels(tree, localOptions);
-
-  // Update models/src/index.ts to include the entity export
-  updateModelsIndexFile(tree, localOptions);
-
   // Update tsconfig.base.json
   await addLibraryToTsConfig(tree, localOptions);
 
   // Add the new plugin import and registration to app.ts
   await updateAppFile(tree, localOptions);
+  //
+  //  // Update the database config file to include the new entity
+  //  updateDbConfig(tree, localOptions.name);
 
-  // Update the database config file to include the new entity
-  updateDbConfig(tree, localOptions.name);
+  //  // Move the entity file to models/src/lib/
+  //  moveEntityToModels(tree, localOptions);
+  //
+  //  // Update models/src/index.ts to include the entity export
+  //  updateModelsIndexFile(tree, localOptions);
 
+  await dataBaseEntityGenerator(tree, {
+    directory: '',
+    name: localOptions.variableCamelCase,
+  });
   // Format files
   await formatFiles(tree);
 }
@@ -131,7 +136,10 @@ async function updateAppFile(
 
 function moveEntityToModels(
   tree: Tree,
-  { variableCamelCase, variable }: { variableCamelCase: string; variable: string }
+  {
+    variableCamelCase,
+    variable,
+  }: { variableCamelCase: string; variable: string }
 ): void {
   const sourcePath = `libs/bus/${variable}/src/lib/infrastructure/dao/${variableCamelCase}.entity.ts`;
   const destinationPath = `libs/models/src/lib/entities/${variableCamelCase}.entity.ts`;
@@ -170,12 +178,13 @@ function updateModelsIndexFile(
   }
 }
 
-
-function updateDbConfig(tree: Tree, entityName: string) : void{
+function updateDbConfig(tree: Tree, entityName: string): void {
   const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
 
   if (!tree.exists(dbConfigPath)) {
-    console.warn(`⚠️ ${dbConfigPath} not found, skipping database config update.`);
+    console.warn(
+      `⚠️ ${dbConfigPath} not found, skipping database config update.`
+    );
     return;
   }
 
@@ -197,9 +206,13 @@ function updateDbConfig(tree: Tree, entityName: string) : void{
       ? `${existingEntities}, ${entityName}Entity`
       : `${entityName}Entity`;
 
-    fileContent = fileContent.replace(entitiesRegex, `entities: [${newEntities}]`);
+    fileContent = fileContent.replace(
+      entitiesRegex,
+      `entities: [${newEntities}]`
+    );
   }
 
   tree.write(dbConfigPath, fileContent);
 }
+
 export default indexGenerator;

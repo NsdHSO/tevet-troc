@@ -1,25 +1,5 @@
-import {
-  AdmissionEntity,
-  AmbulanceEntity,
-  AmenityEntity,
-  AppointmentEntity,
-  BedEntity,
-  BillEntity,
-  DepartmentEntity,
-  GuardEntity,
-  HospitalEntity,
-  InventoryEntity,
-  MedicalRecordEntity,
-  PatientDoctorEntity,
-  PatientEntity,
-  PrescriptionEntity,
-  PurchaseOrderEntity,
-  RoomEntity,
-  StaffEntity,
-  StaffScheduleEntity,
-  SupplierEntity,
-  TreatmentEntity,
-} from '@tevet-troc/models';
+import { AdmissionEntity, AmbulanceEntity, AmenityEntity, AppointmentEntity, BedEntity, BillEntity, DepartmentEntity, GuardEntity, HospitalEntity, InventoryEntity, MedicalRecordEntity, PatientDoctorEntity, PatientEntity, PrescriptionEntity, PurchaseOrderEntity, RoomEntity, StaffEntity, StaffScheduleEntity, SupplierEntity, TreatmentEntity } from '@tevet-troc/models';
+
 
 import 'reflect-metadata';
 import { FastifyInstance } from 'fastify';
@@ -32,28 +12,7 @@ const dataSource = new DataSource({
   logging: process.env.NODE_ENV === 'dev',
   subscribers: [],
   migrationsRun: process.env.NODE_ENV !== 'dev',
-  entities: [
-    AdmissionEntity,
-    AmbulanceEntity,
-    AmenityEntity,
-    AppointmentEntity,
-    BedEntity,
-    BillEntity,
-    DepartmentEntity,
-    GuardEntity,
-    HospitalEntity,
-    InventoryEntity,
-    MedicalRecordEntity,
-    PatientDoctorEntity,
-    PatientEntity,
-    PrescriptionEntity,
-    PurchaseOrderEntity,
-    RoomEntity,
-    StaffEntity,
-    StaffScheduleEntity,
-    SupplierEntity,
-    TreatmentEntity,
-  ],
+  entities: [AdmissionEntity, AmbulanceEntity, AmenityEntity, AppointmentEntity, BedEntity, BillEntity, DepartmentEntity, GuardEntity, HospitalEntity, InventoryEntity, MedicalRecordEntity, PatientDoctorEntity, PatientEntity, PrescriptionEntity, PurchaseOrderEntity, RoomEntity, StaffEntity, StaffScheduleEntity, SupplierEntity, TreatmentEntity],
   logger: 'debug',
 });
 

@@ -16,7 +16,7 @@ function toCamelCase(str: string): string {
     .replace(/^([A-Z])/, (_, letter) => letter.toLowerCase()); // Ensure first letter is lowercase
 }
 
-function updateModelsIndexFile(
+function updateModelsIndexFileInDataBase(
   tree: Tree,
   {
     variableCamelCase,
@@ -150,7 +150,7 @@ export async function dataBaseEntityGenerator(
       );
     }
 
-    updateModelsIndexFile(tree, localOptions);
+    updateModelsIndexFileInDataBase(tree,localOptions);
     updateDbConfig(tree, localOptions.name);
 
     await formatFiles(tree);
