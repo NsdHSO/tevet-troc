@@ -21,7 +21,7 @@ export default function (app: FastifyInstance) {
       reply
     ) => {
       try {
-        app.log.info('Register Get all Hospital');
+        app.log.info(`Register Get all Hospital ${req.query}`);
         const { fields, filterBy } = req.query;
         const filterByParsed =
           parseFilterParams<keyof Omit<Partial<HospitalEntity>, 'id'>>(
