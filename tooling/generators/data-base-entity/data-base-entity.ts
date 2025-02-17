@@ -121,7 +121,6 @@ export async function dataBaseEntityGenerator(
 
   const localOptions = generateLocalOptions(formattedName, options);
   const projectRoot = `libs/models/src/lib/entities/${localOptions.path}.entity.ts`;
-  console.log(localOptions);
   if (!tree.exists(projectRoot)) {
     // Generate files from the 'files' directory, but place them directly in the target directory.
     if (options.directory) {

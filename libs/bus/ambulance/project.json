@@ -1,0 +1,33 @@
+{
+  "name": "ambulance",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/bus/ambulance/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/bus/ambulance",
+        "tsConfig": "libs/bus/ambulance/tsconfig.lib.json",
+        "packageJson": "libs/bus/ambulance/package.json",
+        "main": "libs/bus/ambulance/src/index.ts",
+        "assets": ["libs/bus/ambulance/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

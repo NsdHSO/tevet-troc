@@ -1,3 +1,4 @@
+import { ambulancePlugin } from '@tevet-troc/ambulance';
 import { swaggerPlugin } from '@tevet-troc/swagger';
 import { hospitalPlugin } from '@tevet-troc/hospital';
 import { homePlugin } from '@tevet-troc/home';
@@ -11,6 +12,7 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   await swaggerPlugin.SwaggerPlugin.swaggerPlugin(fastify);
   await homePlugin.HomePlugin.homePlugin(fastify);
   await hospitalPlugin.HospitalPlugin.hospitalPlugin(fastify);
+  await ambulancePlugin.AmbulancePlugin.ambulancePlugin(fastify);
 
   fastify.ready(() => {
     console.log(fastify.printRoutes());
