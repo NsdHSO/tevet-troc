@@ -1,11 +1,10 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
-import {<%= variableCamelCase %>Schemas}from '../../schema';
-
+import { <%= name %>Response } from '@tevet-troc/models'
 export default function (app: FastifyInstance) {
     app.post('/', {
         schema: {
-            response: <%= variableCamelCase %>Schemas.Response.<%= name %>Response
+            response:<%= name %>Response
         }
     }, async (req: FastifyRequest, reply) => {
         try {

@@ -11,8 +11,8 @@
       "description": "data-base-entity generator"
     },
     "add-model-infra": {
-      "factory": "./generators/add-model-infra/generators/add-model-infra",
-      "schema": "./generators/add-model-infra/generators/schema.json",
+      "factory": "./generators/add-model-infra/add-model-infra",
+      "schema": "./generators/add-model-infra/schema.json",
       "description": "add-model-infra generator"
     }
   }

@@ -9,6 +9,7 @@ import {
 import * as path from 'path';
 import { EntityGeneratorSchema } from './schema';
 import dataBaseEntityGenerator from '../data-base-entity/data-base-entity';
+import addModelInfraGenerator from '../add-model-infra/add-model-infra';
 
 // Constants
 const BASE_PATH = 'libs/bus';
@@ -50,20 +51,12 @@ export async function indexGenerator(
 
   // Add the new plugin import and registration to app.ts
   await updateAppFile(tree, localOptions);
-  //
-  //  // Update the database config file to include the new entity
-  //  updateDbConfig(tree, localOptions.name);
-
-  //  // Move the entity file to models/src/lib/
-  //  moveEntityToModels(tree, localOptions);
-  //
-  //  // Update models/src/index.ts to include the entity export
-  //  updateModelsIndexFile(tree, localOptions);
 
   await dataBaseEntityGenerator(tree, {
-    directory: '',
+    directory: localOptions.directory,
     name: localOptions.variableCamelCase,
   });
+  await addModelInfraGenerator(tree, { ...localOptions });
   // Format files
   await formatFiles(tree);
 }
@@ -134,85 +127,5 @@ async function updateAppFile(
   tree.write(APP_FILE_PATH, fileContent);
 }
 
-function moveEntityToModels(
-  tree: Tree,
-  {
-    variableCamelCase,
-    variable,
-  }: { variableCamelCase: string; variable: string }
-): void {
-  const sourcePath = `libs/bus/${variable}/src/lib/infrastructure/dao/${variableCamelCase}.entity.ts`;
-  const destinationPath = `libs/models/src/lib/entities/${variableCamelCase}.entity.ts`;
-
-  if (tree.exists(sourcePath)) {
-    const content = tree.read(sourcePath, 'utf-8') as string;
-
-    // Write the file to the new location
-    tree.write(destinationPath, content);
-
-    // Delete the original entity file
-    tree.delete(sourcePath);
-  } else {
-    console.warn(`⚠️ Entity file not found: ${sourcePath}`);
-  }
-}
-
-function updateModelsIndexFile(
-  tree: Tree,
-  { variableCamelCase }: { variableCamelCase: string }
-): void {
-  const indexPath = 'libs/models/src/index.ts';
-  const entityExport = `export * from './lib/entities/${variableCamelCase}.entity';\n`;
-
-  if (tree.exists(indexPath)) {
-    let content = tree.read(indexPath, 'utf-8') as string;
-
-    // Avoid duplicate exports
-    if (!content.includes(entityExport.trim())) {
-      content += entityExport;
-      tree.write(indexPath, content);
-    }
-  } else {
-    // Create index.ts if it doesn't exist
-    tree.write(indexPath, entityExport);
-  }
-}
-
-function updateDbConfig(tree: Tree, entityName: string): void {
-  const dbConfigPath = 'libs/utils/src/lib/data-base/db.config.ts';
-
-  if (!tree.exists(dbConfigPath)) {
-    console.warn(
-      `⚠️ ${dbConfigPath} not found, skipping database config update.`
-    );
-    return;
-  }
-
-  let fileContent = tree.read(dbConfigPath, 'utf-8') as string;
-  const entityImport = `import { ${entityName}Entity } from '@tevet-troc/models';\n`;
-
-  // Ensure import exists
-  if (!fileContent.includes(entityImport.trim())) {
-    fileContent = entityImport + fileContent;
-  }
-
-  // Regex to find the entities array inside `registerDb`
-  const entitiesRegex = /entities:\s*\[([\s\S]*?)\]/;
-  const match = fileContent.match(entitiesRegex);
-
-  if (match) {
-    const existingEntities = match[1].trim();
-    const newEntities = existingEntities
-      ? `${existingEntities}, ${entityName}Entity`
-      : `${entityName}Entity`;
-
-    fileContent = fileContent.replace(
-      entitiesRegex,
-      `entities: [${newEntities}]`
-    );
-  }
-
-  tree.write(dbConfigPath, fileContent);
-}
 
 export default indexGenerator;

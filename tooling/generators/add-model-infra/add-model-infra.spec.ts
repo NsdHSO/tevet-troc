@@ -1,12 +1,15 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nx/devkit';
+import { readProjectConfiguration, Tree } from '@nx/devkit';
 
 import { addModelInfraGenerator } from './add-model-infra';
 import { AddModelInfraGeneratorSchema } from './schema';
 
 describe('add-model-infra generator', () => {
   let tree: Tree;
-  const options: AddModelInfraGeneratorSchema = { name: 'test' };
+  const options: AddModelInfraGeneratorSchema = {
+    name: 'test',
+    directory: 'test',
+  };
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();

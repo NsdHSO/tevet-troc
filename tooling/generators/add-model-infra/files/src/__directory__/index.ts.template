@@ -1,0 +1,4 @@
+export * from './schema/<%= variableCamelCase %>Schema';
+export * from './model/models';
+export * from './model/http';
+export * from './model/repository';
