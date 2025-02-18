@@ -9,6 +9,11 @@
       "factory": "./generators/data-base-entity/data-base-entity",
       "schema": "./generators/data-base-entity/schema.json",
       "description": "data-base-entity generator"
+    },
+    "add-model-infra": {
+      "factory": "./generators/add-model-infra/generators/add-model-infra",
+      "schema": "./generators/add-model-infra/generators/schema.json",
+      "description": "add-model-infra generator"
     }
   }
 }
