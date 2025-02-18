@@ -1,5 +1,9 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
+import {
+  httpResponseBuilder,
+  isErrorObject,
+  ResponseObject,
+} from '@tevet-troc/http-response';
 import {
   FilterByHospital,
   FilterTypeHospital,
@@ -24,7 +28,7 @@ export default function (app: FastifyInstance) {
       reply
     ) => {
       try {
-        app.log.info(`Register Get all Hospital ${req.query}`);
+        app.log.info(`Register Get all Hospital ${JSON.stringify(req.query)}`);
         const { fields, filterBy } = req.query;
         const filterByParsed =
           parseFilterParams<keyof Omit<Partial<HospitalEntity>, 'id'>>(
@@ -42,7 +46,9 @@ export default function (app: FastifyInstance) {
         app.log.error(
           `Error when Updated Hospital is register ${JSON.stringify(error)}`
         );
-        reply.code(error.code);
+        if (isErrorObject(error)) {
+          reply.code(error.code);
+        }
         return error;
       }
     }
