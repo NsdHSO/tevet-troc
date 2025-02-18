@@ -1,6 +1,5 @@
 import { Repository } from 'typeorm';
-import { AmbulanceEntity } from '@tevet-troc/models';
-import { IAmbulanceRepository } from '../../applications';
+import { AmbulanceEntity, IAmbulanceRepository } from '@tevet-troc/models';
 
 export default function (
   db: Repository<AmbulanceEntity>
