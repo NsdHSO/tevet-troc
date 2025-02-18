@@ -1,22 +1,25 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
-import { hospitalSchemas } from '../../schema';
-import { HospitalEntity } from '@tevet-troc/models';
+import {
+  FilterByHospital,
+  FilterTypeHospital,
+  HospitalAllResponse,
+  HospitalEntity,
+} from '@tevet-troc/models';
 import { parseFilterParams } from '@tevet-troc/utils';
-import { FilterTypeHospital } from '../../schema/hospitalSchema/params';
 
 export default function (app: FastifyInstance) {
   app.get(
     '/',
     {
       schema: {
-        response: hospitalSchemas.Response.HospitalAllResponse,
-        querystring: hospitalSchemas.Params.FilterByHospital,
-      }
+        response: HospitalAllResponse,
+        querystring: FilterByHospital,
+      },
     },
     async (
       req: FastifyRequest<{
-        Querystring:FilterTypeHospital;
+        Querystring: FilterTypeHospital;
       }>,
       reply
     ) => {

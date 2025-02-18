@@ -1,5 +1,5 @@
-import { HospitalBodyType } from '../infrastructure/http/schema/hospitalSchema/bodies';
-import { HospitalEntity } from '@tevet-troc/models';
+import { HospitalBodyType } from '../schema/hospitalSchema/bodies';
+import { HospitalEntity } from '../../../entities/hospital';
 
 export interface IHospitalHttp {
   create: (payload: Partial<HospitalBodyType>) => Promise<string>;

@@ -1,4 +1,4 @@
-import { Type, Static } from '@sinclair/typebox';
+  import { Type, Static } from '@sinclair/typebox';
 
 // Define Hospital Schema
 export const HospitalSchema = Type.Object({

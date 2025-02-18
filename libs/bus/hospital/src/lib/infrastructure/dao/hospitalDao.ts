@@ -1,6 +1,5 @@
 import { Repository } from 'typeorm';
-import { HospitalEntity } from '@tevet-troc/models';
-import { IHospitalRepository } from '../../applications';
+import { HospitalEntity, IHospitalRepository } from '@tevet-troc/models';
 import { httpResponseBuilder } from '@tevet-troc/http-response';
 
 export default function (db: Repository<HospitalEntity>): IHospitalRepository {

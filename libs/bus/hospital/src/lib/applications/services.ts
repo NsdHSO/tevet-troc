@@ -1,6 +1,9 @@
-import { IHospitalHttp, IHospitalRepository } from './index';
-import { HospitalBodyType } from '../infrastructure/http/schema/hospitalSchema/bodies';
-import { HospitalEntity } from '@tevet-troc/models';
+import {
+  HospitalEntity,
+  IHospitalHttp,
+  IHospitalRepository,
+  HospitalBodyType
+} from '@tevet-troc/models';
 
 function getAllHospital(
   repository: IHospitalRepository,

@@ -1,8 +1,8 @@
 import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import hospitalDao from '../dao/hospitalDao';
-import { HospitalEntity } from '@tevet-troc/models';
-import { IHospitalHttp, hospitalApplicationService } from '../../applications';
+import { HospitalEntity, IHospitalHttp } from '@tevet-troc/models';
+import { hospitalApplicationService } from '../../applications';
 import { DataSource } from 'typeorm';
 
 declare module 'fastify' {
