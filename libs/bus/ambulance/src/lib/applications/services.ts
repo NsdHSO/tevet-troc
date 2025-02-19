@@ -20,7 +20,7 @@ function getPrepareForSave(
 ): Partial<AmbulanceEntity> {
   return {
     hospitalId: hospitalId, // This is required, no default needed
-    vehicleNumber: (ambulanceData.vehicleNumber).toUpperCase(), // This is required, no default needed
+    vehicleNumber: ambulanceData.vehicleNumber.toUpperCase(), // This is required, no default needed
     model: ambulanceData.model, // This is required, no default needed
     make: ambulanceData.make ?? 'Unknown', // Default if not provided
     year: ambulanceData.year ?? new Date().getFullYear(), // Default to current year
@@ -48,6 +48,34 @@ function getPrepareForSave(
   };
 }
 
+async function getAllAmbulance(
+  repository: IAmbulanceRepository,
+  hospitalService: IHospitalHttp,
+  filterBy: {
+    query: Array<keyof AmbulanceEntity>;
+    filterBy: { [K in keyof Omit<AmbulanceEntity, 'id'>]?: any };
+  }
+): Promise<Partial<AmbulanceEntity>[] | string> {
+  const hospital = await hospitalService.getAll({
+    filterBy: { name: filterBy.filterBy.hospitalId },
+    query: ['id'],
+  });
+
+  if (!hospital) {
+    return 'Hospital not found';
+  }
+
+  const localFilter = {
+    ...filterBy,
+    filterBy: {
+      ...filterBy.filterBy,
+      hospitalId: hospital[0].id,
+
+    },
+  };
+  return await repository.getAll(localFilter);
+}
+
 export function ambulanceApplicationService(
   ambulanceRepository: IAmbulanceRepository
 ): IAmbulanceHttp {
@@ -71,5 +99,7 @@ export function ambulanceApplicationService(
 
       return ambulanceRepository.create(prepareForSave as any);
     },
+    getAll: (hospitalService: IHospitalHttp, filterBy) =>
+      getAllAmbulance(ambulanceRepository, hospitalService, filterBy),
   };
 }

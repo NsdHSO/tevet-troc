@@ -17,13 +17,19 @@ export default function (
         return await db
           .save(createAmbulance)
           .then(() => 'Ambulance created')
-          .catch(() => {
-            throw 'Ambulance not created due to database error.';
+          .catch((e) => {
+            throw `Ambulance not created due to database error. ${e}`;
           });
       } catch (error) {
         console.error('Unexpected error:', error);
         throw httpResponseBuilder.Conflict(error);
       }
+    },
+    async getAll(filters){
+      return await db.find({
+        select: filters.query,
+        where: { ...filters.filterBy } as any,
+      });
     },
   };
 }

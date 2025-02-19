@@ -1,7 +1,20 @@
-import { Type } from '@sinclair/typebox';
-import { HttpCodeW } from '@tevet-troc/http-response';
+import { Static, Type } from '@sinclair/typebox';
 
-// Define the Header schema
-export const AmbulanceParams = {
-  [HttpCodeW.OK]: Type.Object({ message: Type.String(), code: Type.String() }),
-};
+export const FilterByAmbulance = Type.Object({
+  fields: Type.Optional(
+    Type.String({
+      pattern: '^(?!,)([^,]+,)*[^,]+$',
+      examples: ['age, bread'],
+      description: 'Comma-separated list of fields without a trailing comma',
+    })
+  ),
+  filterBy: Type.Optional(
+    Type.String({
+      pattern: '^(?!,)([^,]+,)*[^,]+$',
+      examples: ['age=2, bread=something'],
+      description: 'key=value',
+    })
+  ),
+});
+
+export type FilterTypeAmbulance = Static<typeof FilterByAmbulance>;

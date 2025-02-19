@@ -2,8 +2,8 @@ import { Static, Type } from '@sinclair/typebox';
 import { AmbulanceStatus, AmbulanceType } from '../../../../enums';
 
 // Define the Ambulance schema using TypeBox
-export const AmbulanceBody = Type.Object({
-  hospitalName: Type.String(),
+export const AmbulanceBodySchema = Type.Object({
+  hospitalName: Type.Optional(Type.String()),
   vehicleNumber: Type.String(),
   model: Type.String(),
   make: Type.Optional(Type.String()), // Optional string
@@ -35,4 +35,4 @@ export const AmbulanceBody = Type.Object({
 });
 
 // Create a TypeBox type from the schema
-export type AmbulanceBodyStatic = Static<typeof AmbulanceBody>;
+export type AmbulanceBodyStatic = Static<typeof AmbulanceBodySchema>;

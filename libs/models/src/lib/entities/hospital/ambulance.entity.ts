@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 import { AmbulanceStatus, AmbulanceType } from '../../enums';
+import { customAlphabet } from 'nanoid';
 
 @Entity('ambulance')
 export class AmbulanceEntity extends BaseEntity {
@@ -9,6 +10,12 @@ export class AmbulanceEntity extends BaseEntity {
 
   @Column()
   hospitalId: string; // Foreign key
+
+  @Column({
+    unique: true,
+    type: 'int',
+  })
+  ambulanceIc!: string;
 
   @Column({ unique: true }) // Vehicle number should likely be unique
   vehicleNumber: string;
@@ -83,4 +90,10 @@ export class AmbulanceEntity extends BaseEntity {
 
   @Column({ nullable: true })
   notes: string; // Add notes for maintenance or other information
+
+  @BeforeInsert()
+  generateId(): void {
+    const nanoid = customAlphabet('0123456789', 10);
+    this.ambulanceIc = nanoid(); // Generates an 10-character string
+  }
 }

@@ -1,13 +1,14 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
-import { AmbulanceBody, AmbulanceBodyStatic } from '@tevet-troc/models';
+import { AmbulanceBodySchema, AmbulanceBodyStatic, CreateAmbulanceResponse } from '@tevet-troc/models';
 
 export default function (app: FastifyInstance): void {
   app.post(
     '/',
     {
       schema: {
-        body: AmbulanceBody,
+        body: AmbulanceBodySchema,
+        response: CreateAmbulanceResponse
       },
     },
     async (req: FastifyRequest<{ Body: AmbulanceBodyStatic }>, reply) => {

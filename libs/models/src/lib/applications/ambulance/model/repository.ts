@@ -1,5 +1,11 @@
 import { AmbulanceBodyStatic } from '../schema/ambulanceSchema';
+import { AmbulanceEntity } from '../../../entities/hospital/ambulance.entity';
 
 export interface IAmbulanceRepository {
   create(payload: Partial<AmbulanceBodyStatic>): Promise<string>;
+
+  getAll: (filterBy?: {
+    query: Array<keyof AmbulanceEntity>;
+    filterBy: { [K in keyof Omit<AmbulanceEntity, 'id'>]?: any };
+  }) => Promise<Partial<AmbulanceEntity>[]>;
 }
