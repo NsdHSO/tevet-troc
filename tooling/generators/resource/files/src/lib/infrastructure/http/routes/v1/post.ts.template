@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import { <%= name %>Response } from '@tevet-troc/models'
-export default function (app: FastifyInstance) {
+export default function (app: FastifyInstance): void {
     app.post('/', {
         schema: {
             response:<%= name %>Response

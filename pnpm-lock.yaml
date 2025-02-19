@@ -31,6 +31,12 @@ dependencies:
   '@sinclair/typebox':
     specifier: ^0.34.16
     version: 0.34.16
+  ajv:
+    specifier: ^8.17.1
+    version: 8.17.1
+  ajv-formats:
+    specifier: ^3.0.1
+    version: 3.0.1(ajv@8.17.1)
   axios:
     specifier: ^1.6.0
     version: 1.7.9

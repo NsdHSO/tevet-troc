@@ -8,7 +8,7 @@ import {
 function getAllHospital(
   repository: IHospitalRepository,
   filterBy: {
-    query: Array<keyof Omit<HospitalEntity, 'id'>>;
+    query: Array<keyof HospitalEntity>;
     filterBy: { [K in keyof Omit<HospitalEntity, 'id'>]?: any };
   }
 ) {

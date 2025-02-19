@@ -1,13 +1,18 @@
 import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import ambulanceDao from '../dao/ambulanceDao';
-import { AmbulanceEntity, IAmbulanceHttp } from '@tevet-troc/models';
+import {
+  AmbulanceEntity,
+  IAmbulanceHttp,
+  IHospitalHttp,
+} from '@tevet-troc/models';
 import { ambulanceApplicationService } from '../../applications';
 import { DataSource } from 'typeorm';
 
 declare module 'fastify' {
   interface FastifyInstance {
     ambulanceApplicationService: IAmbulanceHttp;
+    hospitalApplicationService: IHospitalHttp;
     orm: DataSource;
   }
 }
