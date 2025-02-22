@@ -2,6 +2,8 @@ import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 import { AmbulanceStatus, AmbulanceType } from '../../enums';
 import { customAlphabet } from 'nanoid';
+import { LocationEntity } from './location.entity';
+import { CarEntity } from '../infrastucture';
 
 @Entity('ambulance')
 export class AmbulanceEntity extends BaseEntity {
@@ -20,8 +22,8 @@ export class AmbulanceEntity extends BaseEntity {
   @Column({ unique: true }) // Vehicle number should likely be unique
   vehicleNumber: string;
 
-  @Column()
-  model: string;
+  @Column(() => CarEntity)
+  carDetails: CarEntity;
 
   @Column({ nullable: true })
   make: string; // Add make of the ambulance
@@ -46,14 +48,11 @@ export class AmbulanceEntity extends BaseEntity {
   })
   status: AmbulanceStatus;
 
-  @Column({ nullable: true })
-  currentLocationLatitude: number;
+  @Column(() => LocationEntity)
+  location: LocationEntity;
 
   @Column({ nullable: true })
-  currentLocationLongitude: number;
-
-  @Column({ nullable: true })
-  mission: string; // Description of the current mission/task
+  mission: string;
 
   @Column({
     type: 'jsonb',
@@ -93,7 +92,7 @@ export class AmbulanceEntity extends BaseEntity {
 
   @BeforeInsert()
   generateId(): void {
-    const nanoid = customAlphabet('0123456789', 10);
+    const nanoid = customAlphabet('0123456789', 7);
     this.ambulanceIc = nanoid(); // Generates an 10-character string
   }
 }

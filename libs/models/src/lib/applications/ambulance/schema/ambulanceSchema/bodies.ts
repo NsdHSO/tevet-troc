@@ -1,11 +1,23 @@
 import { Static, Type } from '@sinclair/typebox';
-import { AmbulanceStatus, AmbulanceType } from '../../../../enums';
+import {
+  AmbulanceStatus,
+  AmbulanceType,
+  CarMake,
+  CarModel,
+} from '../../../../enums';
 
+export const CarSchema = Type.Object({
+  make: Type.Enum(CarMake), // e.g., "Mercedes-Benz"
+  model: Type.Enum(CarModel), // e.g., "Sprinter"
+  year: Type.Integer(), // Manufacturing year
+  color: Type.String(),
+  mileage: Type.Optional(Type.Number()), // Optional, distance in km/miles
+});
 // Define the Ambulance schema using TypeBox
 export const AmbulanceBodySchema = Type.Object({
   hospitalName: Type.Optional(Type.String()),
   vehicleNumber: Type.String(),
-  model: Type.String(),
+  carDetails: Type.Optional(CarSchema),
   make: Type.Optional(Type.String()), // Optional string
   year: Type.Optional(Type.Number()),
   capacity: Type.Optional(Type.Number()),

@@ -10,3 +10,5 @@ export * from './room-type.enum';
 export * from './staff-role-type.enum';
 export * from './ambulance-type.enum';
 export * from './ambulance-status-type.enum';
+export * from './car-make.enum';
+export * from './car-model.enum';

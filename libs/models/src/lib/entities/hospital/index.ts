@@ -17,3 +17,6 @@ export * from './medicalRecord.entity';
 export * from './inventory.entity';
 export * from './supplier.entity';
 export * from './purchaseOrder.entity';
+export * from './emergency.entity';
+export * from './location.entity';
+export * from './patientInfo.entity';

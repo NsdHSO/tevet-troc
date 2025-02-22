@@ -3,6 +3,8 @@ import {
   AmbulanceEntity,
   AmbulanceStatus,
   AmbulanceType,
+  CarMake,
+  CarModel,
   IAmbulanceHttp,
   IAmbulanceRepository,
   IHospitalHttp,
@@ -21,14 +23,24 @@ function getPrepareForSave(
   return {
     hospitalId: hospitalId, // This is required, no default needed
     vehicleNumber: ambulanceData.vehicleNumber.toUpperCase(), // This is required, no default needed
-    model: ambulanceData.model, // This is required, no default needed
+    carDetails: {
+      color: ambulanceData.carDetails.color ?? 'white',
+      isAmbulance: true,
+      licensePlate: ambulanceData.vehicleNumber.toUpperCase() ?? '',
+      make: ambulanceData.carDetails.make ?? CarMake.MERCEDES_BENZ,
+      mileage: ambulanceData.carDetails.mileage ?? 0.0,
+      model: ambulanceData.carDetails.model ?? CarModel.SPRINTER,
+      year: ambulanceData.year ?? new Date().getFullYear(),
+    },
     make: ambulanceData.make ?? 'Unknown', // Default if not provided
     year: ambulanceData.year ?? new Date().getFullYear(), // Default to current year
     capacity: ambulanceData.capacity ?? 4, // Default capacity
     type: ambulanceData.type ?? AmbulanceType.BASIC_LIFE_SUPPORT, // Default AmbulanceType
     status: ambulanceData.status ?? AmbulanceStatus.AVAILABLE, // Default AmbulanceStatus
-    currentLocationLatitude: ambulanceData.currentLocationLatitude ?? 0,
-    currentLocationLongitude: ambulanceData.currentLocationLongitude ?? 0,
+    location: {
+      latitude: ambulanceData.currentLocationLatitude ?? 0,
+      longitude: ambulanceData.currentLocationLongitude ?? 0,
+    },
     mission: ambulanceData.mission ?? 'None',
     passengers: ambulanceData.passengers ?? [],
     driverName: ambulanceData.driverName ?? 'Unknown',
@@ -70,7 +82,6 @@ async function getAllAmbulance(
     filterBy: {
       ...filterBy.filterBy,
       hospitalId: hospital[0].id,
-
     },
   };
   return await repository.getAll(localFilter);
