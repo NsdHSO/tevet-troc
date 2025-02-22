@@ -1,6 +1,15 @@
-import { IEmergencyHttp, IEmergencyRepository } from '@tevet-troc/models';
+import {
+  EmergencyEntity,
+  IEmergencyHttp,
+  IEmergencyRepository,
+} from '@tevet-troc/models';
+
 export function emergencyApplicationService(
   emergencyRepository: IEmergencyRepository
 ): IEmergencyHttp {
-  return {};
+  return {
+    async getAll(): Promise<EmergencyEntity[]> {
+      return await emergencyRepository.getAll();
+    },
+  };
 }
