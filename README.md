@@ -10,4 +10,11 @@ To generate a new entity, run the following command:
 * Registering the new entity plugin inside your application, ensuring it is integrated into the backend system.
 
 ```bash
+pnpm resource
+
+```bash
+pnpm model
+
+
+```bash
 pnpm entity
