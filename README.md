@@ -11,10 +11,11 @@ To generate a new entity, run the following command:
 
 ```bash
 pnpm resource
-
+```
 ```bash
 pnpm model
-
+```
 
 ```bash
 pnpm entity
+```
