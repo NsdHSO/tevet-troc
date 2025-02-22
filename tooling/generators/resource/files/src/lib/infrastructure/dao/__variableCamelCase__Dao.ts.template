@@ -1,7 +1,8 @@
 import { Repository } from 'typeorm';
 import { <%= name %>Entity, I<%= name %>Repository  } from '@tevet-troc/models';
+import { FastifyInstance } from 'fastify';
 
-export default function (db: Repository<<%= name %>Entity>): I<%= name %>Repository {
+export default function (db: Repository<<%= name %>Entity>,fastify: FastifyInstance): I<%= name %>Repository {
     return {
 
     };
