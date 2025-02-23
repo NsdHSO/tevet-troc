@@ -13,10 +13,11 @@ export async function swaggerPlugin(app: FastifyInstance) {
           name: 'Hospital',
           description: 'Hospital routes',
         }, // Define the 'hospital' parent tag
-      ],
-    },
+      ]
+    }
   });
   await app.register(import('@fastify/swagger-ui'), {
     routePrefix: '/documentation',
+
   });
 }

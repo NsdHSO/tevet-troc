@@ -14,8 +14,8 @@ export const EmergencyObject = Type.Object({
   }), // Embedded location details
   ambulance: Type.Optional(
     Type.Object({
-      id: Type.String(),
       vehicleNumber: Type.String(),
+      ambulanceIc: Type.String(),
     })
   ), // Embedded ambulance details, optional
 });

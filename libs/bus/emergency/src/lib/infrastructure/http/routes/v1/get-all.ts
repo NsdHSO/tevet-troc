@@ -5,6 +5,11 @@ import { EmergencyResponse } from '@tevet-troc/models';
 export default function (app: FastifyInstance): void {
   app.get(
     '/',
+    {
+      schema: {
+        response: EmergencyResponse,
+      },
+    },
     async (req: FastifyRequest, reply) => {
       try {
         app.log.info(`Registered Emergency`);
