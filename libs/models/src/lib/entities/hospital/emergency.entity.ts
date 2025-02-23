@@ -10,8 +10,7 @@ import { BaseEntity } from '../base.entity';
 import { AmbulanceEntity } from './ambulance.entity';
 import { customAlphabet } from 'nanoid';
 import { LocationEntity } from './location.entity';
-import { EmergencySeverity, EmergencyStatus } from '../../enums';
-import { EmergencyType } from '../../enums/emergency-type.enum';
+import { EmergencySeverity, EmergencyStatus, EmergencyType } from '../../enums';
 
 @Entity('emergency')
 export class EmergencyEntity extends BaseEntity {
@@ -46,7 +45,6 @@ export class EmergencyEntity extends BaseEntity {
   @ManyToOne(() => AmbulanceEntity, { nullable: true })
   @JoinColumn({ name: 'idAmbulance' })
   ambulance?: AmbulanceEntity;
-
 
   @Column({
     type: 'enum',
