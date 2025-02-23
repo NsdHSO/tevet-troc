@@ -9,8 +9,8 @@ export const EmergencyObject = Type.Object({
   emergencyType: Type.Optional(Type.String()), // Type of emergency (optional)
   notes: Type.Optional(Type.String()), // Any notes (optional)
   location: Type.Object({
-    emergencyLatitude: Type.Number(),
-    emergencyLongitude: Type.Number(),
+    latitude: Type.Number(),
+    longitude: Type.Number(),
   }), // Embedded location details
   ambulance: Type.Optional(
     Type.Object({

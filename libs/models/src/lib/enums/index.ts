@@ -12,3 +12,7 @@ export * from './ambulance-type.enum';
 export * from './ambulance-status-type.enum';
 export * from './car-make.enum';
 export * from './car-model.enum';
+export * from './emergency-severity.enum';
+export * from './emergency-status.enum';
+export * from './emergency-type.enum';
+

@@ -14,7 +14,8 @@ declare module 'fastify' {
 export default fp(async (fastify: FastifyInstance) => {
   try {
     const emergencyRepository = emergencyDao(
-      fastify.orm.getRepository(EmergencyEntity)
+      fastify.orm.getRepository(EmergencyEntity),
+      fastify
     );
     const emergencyService = emergencyApplicationService(emergencyRepository);
     fastify.decorate('emergencyApplicationService', emergencyService);

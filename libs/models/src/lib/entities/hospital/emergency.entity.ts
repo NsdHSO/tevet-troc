@@ -10,6 +10,8 @@ import { BaseEntity } from '../base.entity';
 import { AmbulanceEntity } from './ambulance.entity';
 import { customAlphabet } from 'nanoid';
 import { LocationEntity } from './location.entity';
+import { EmergencySeverity, EmergencyStatus } from '../../enums';
+import { EmergencyType } from '../../enums/emergency-type.enum';
 
 @Entity('emergency')
 export class EmergencyEntity extends BaseEntity {
@@ -24,11 +26,19 @@ export class EmergencyEntity extends BaseEntity {
   @Column()
   description: string;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: EmergencyStatus,
+    default: EmergencyStatus.PENDING, // Default value
+  })
+  status!: EmergencyStatus;
 
-  @Column()
-  severity: string;
+  @Column({
+    type: 'enum',
+    enum: EmergencySeverity,
+    default: EmergencySeverity.MEDIUM, // Default value
+  })
+  severity!: EmergencySeverity;
 
   @Column({ nullable: true })
   reportedBy?: number; // User ID
@@ -37,8 +47,13 @@ export class EmergencyEntity extends BaseEntity {
   @JoinColumn({ name: 'idAmbulance' })
   ambulance?: AmbulanceEntity;
 
-  @Column({ nullable: true })
-  emergencyType?: string;
+
+  @Column({
+    type: 'enum',
+    enum: EmergencyType,
+    default: EmergencyType.UNKNOWN, // Default value
+  })
+  incidentType?: EmergencyType;
 
   @Column({
     type: 'text',
