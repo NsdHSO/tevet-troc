@@ -1,12 +1,17 @@
-import { Type } from '@sinclair/typebox';
+import { Static, Type } from '@sinclair/typebox';
+import {
+  EmergencySeverity,
+  EmergencyStatus,
+  EmergencyType,
+} from '../../../../enums';
 
 export const EmergencyObject = Type.Object({
-  emergencyIc: Type.String(), // Emergency unique code
+  emergencyIc: Type.Optional(Type.String()), // Emergency unique code
   description: Type.String(), // Description of the emergency
-  status: Type.String(), // Status of the emergency
-  severity: Type.String(), // Severity of the emergency
+  status: Type.Enum(EmergencyStatus), // Status of the emergency
+  severity: Type.Enum(EmergencySeverity), // Severity of the emergency
   reportedBy: Type.Optional(Type.Number()), // User ID who reported the emergency (optional)
-  emergencyType: Type.Optional(Type.String()), // Type of emergency (optional)
+  incidentType: Type.Optional(Type.Enum(EmergencyType)), // Type of emergency (optional)
   notes: Type.Optional(Type.String()), // Any notes (optional)
   location: Type.Object({
     latitude: Type.Number(),
@@ -21,3 +26,4 @@ export const EmergencyObject = Type.Object({
 });
 
 export const EmergencyResponseSchema = Type.Array(EmergencyObject);
+export type EmergencyBodyStatic = Static<typeof EmergencyObject>;
