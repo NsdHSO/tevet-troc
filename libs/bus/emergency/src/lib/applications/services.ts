@@ -14,7 +14,7 @@ import { httpResponseBuilder } from '@tevet-troc/http-response';
  * @param payload
  */
 function createPayload(payload: Partial<EmergencyBodyStatic>) {
-  if (!payload.description){
+  if (!payload.description) {
     throw httpResponseBuilder.BadRequest('No description given.');
   }
   return {
@@ -32,6 +32,43 @@ function createPayload(payload: Partial<EmergencyBodyStatic>) {
   };
 }
 
+export function updatePayload(
+  payload: Partial<EmergencyBodyStatic>
+): Partial<EmergencyBodyStatic> {
+  // Create a copy of the payload to avoid modifying the original
+  const updatedPayload: Partial<EmergencyBodyStatic> = { ...payload };
+
+  updatedPayload.status = payload.status || EmergencyStatus.IN_PROGRESS;
+
+  // Handle location updates - ensure both coordinates are present if updating location
+  if (updatedPayload.location) {
+    if (
+      typeof updatedPayload.location.latitude !== 'number' ||
+      typeof updatedPayload.location.longitude !== 'number'
+    ) {
+      throw new Error(
+        'Both latitude and longitude must be provided when updating location'
+      );
+    }
+  }
+
+  // Handle ambulance updates - ensure both required fields are present if updating ambulance
+  if (updatedPayload.ambulance) {
+    if (
+      !updatedPayload.ambulance.vehicleNumber ||
+      !updatedPayload.ambulance.ambulanceIc
+    ) {
+      throw new Error(
+        'Both vehicleNumber and ambulanceIc must be provided when updating ambulance'
+      );
+    }
+  }
+
+  // You might want to add additional validation or transformation logic here
+
+  return updatedPayload;
+}
+
 export function emergencyApplicationService(
   emergencyRepository: IEmergencyRepository
 ): IEmergencyHttp {
@@ -42,6 +79,11 @@ export function emergencyApplicationService(
     },
     async getAll(): Promise<EmergencyEntity[]> {
       return await emergencyRepository.getAll();
+    },
+    async update(payload: Partial<EmergencyBodyStatic>): Promise<string> {
+      const localUpdatePayload = updatePayload(payload);
+
+      return await emergencyRepository.update(localUpdatePayload);
     },
   };
 }

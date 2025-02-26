@@ -2,6 +2,7 @@ import { Repository } from 'typeorm';
 import {
   EmergencyBodyStatic,
   EmergencyEntity,
+  EmergencyStatus,
   IEmergencyRepository,
 } from '@tevet-troc/models';
 import { httpResponseBuilder } from '@tevet-troc/http-response';
@@ -25,6 +26,46 @@ export default function (
           .catch((error) => {
             fastify.log.error(`Emergency error when saved ${error}`);
             throw `Emergency not saved ${error}`;
+          });
+      } catch (error) {
+        throw httpResponseBuilder.Conflict(error);
+      }
+    },
+    async update(payload: Partial<EmergencyBodyStatic>): Promise<string> {
+      const updatedPayloadLocal = { ...payload };
+      fastify.log.info('Emergency Updated');
+      try {
+        // First we need the ID of the emergency to update
+        if (!updatedPayloadLocal.emergencyIc) {
+          throw 'Emergency ID (emergencyIc) is required for updates';
+        }
+
+        // Find the entity by emergencyIc first to get its UUID
+        const emergency = await db.findOne({
+          where: { emergencyIc: updatedPayloadLocal.emergencyIc },
+        });
+
+        if (!emergency) {
+          throw `Emergency with ID ${updatedPayloadLocal.emergencyIc} not found`;
+        }
+        // First we need the ID of the emergency to update
+        if (!updatedPayloadLocal.emergencyIc) {
+          throw 'Emergency ID (emergencyIc) is required for updates';
+        }
+        // Check if emergency is already resolved
+        if (emergency.status === EmergencyStatus.RESOLVED) {
+          throw `You can't modify this emergency because it's already resolved`;
+        }
+
+        return await db
+          .update(emergency.id, updatedPayloadLocal)
+          .then(() => {
+            fastify.log.info('Emergency Updated Saved');
+            return 'Emergency Updated';
+          })
+          .catch((error) => {
+            fastify.log.error(`Emergency error when update ${error}`);
+            throw `Emergency not update ${error}`;
           });
       } catch (error) {
         throw httpResponseBuilder.Conflict(error);

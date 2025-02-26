@@ -5,4 +5,6 @@ export interface IEmergencyRepository {
   getAll(): Promise<EmergencyEntity[]>;
 
   create(payload: Partial<EmergencyBodyStatic>): Promise<string>;
+
+  update(payload: Partial<EmergencyBodyStatic>): Promise<string>;
 }

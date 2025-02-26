@@ -9,7 +9,7 @@ export const EmergencyResponse = {
     code: Type.String(),
   }),
 };
-export const CreatedEmergencyResponse = {
+export const CreatedUpdatedEmergencyResponse = {
   [HttpCodeW.OK]: Type.Object({
     message: Type.String(),
     code: Type.String(),

@@ -7,7 +7,7 @@ import {
 } from '@tevet-troc/models';
 
 export default function (app: FastifyInstance): void {
-  app.post(
+  app.put(
     '/',
     {
       schema: {
@@ -19,7 +19,7 @@ export default function (app: FastifyInstance): void {
       try {
         app.log.info(`Registered Emergency`);
         return httpResponseBuilder.OK(
-          await app.emergencyApplicationService.create(req.body)
+          await app.emergencyApplicationService.update(req.body)
         );
       } catch (error: ResponseObject<string, number> | any) {
         app.log.error('Registered when Emergency is register', error);

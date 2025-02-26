@@ -7,9 +7,9 @@ import {
 
 export const EmergencyObject = Type.Object({
   emergencyIc: Type.Optional(Type.String()), // Emergency unique code
-  description: Type.String(), // Description of the emergency
-  status: Type.Enum(EmergencyStatus), // Status of the emergency
-  severity: Type.Enum(EmergencySeverity), // Severity of the emergency
+  description: Type.Optional(Type.String()), // Description of the emergency
+  status: Type.Optional(Type.Enum(EmergencyStatus)), // Status of the emergency
+  severity: Type.Optional(Type.Enum(EmergencySeverity)), // Severity of the emergency
   reportedBy: Type.Optional(Type.Number()), // User ID who reported the emergency (optional)
   incidentType: Type.Optional(Type.Enum(EmergencyType)), // Type of emergency (optional)
   notes: Type.Optional(Type.String()), // Any notes (optional)
