@@ -23,6 +23,8 @@ export const EmergencyObject = Type.Object({
       ambulanceIc: Type.String(),
     })
   ), // Embedded ambulance details, optional
+
+
 });
 
 export const EmergencyResponseSchema = Type.Array(EmergencyObject);

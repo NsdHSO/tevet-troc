@@ -20,7 +20,6 @@
     "@nrwl/node": "^19.8.4",
     "@nx/devkit": "20.4.2",
     "@nx/plugin": "20.4.2",
-    "@sinclair/typebox": "^0.34.16",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "axios": "^1.6.0",
@@ -34,6 +33,7 @@
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
+    "@sinclair/typebox": "^0.34.16",
     "@eslint/js": "^9.8.0",
     "@nx/esbuild": "20.4.2",
     "@nx/eslint": "20.4.2",

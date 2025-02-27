@@ -1,11 +1,15 @@
 import { Type } from '@sinclair/typebox';
 import { HttpCodeW } from '@tevet-troc/http-response';
-import { EmergencyResponseSchema } from './bodies';
+import { EmergencyObject } from './bodies';
 
-// Define the Header schema
+const MessageItemSchema = Type.Object({
+  ...EmergencyObject.properties, // Spread properties from EmergencyItemSchema
+  modificationAttempts: Type.Optional(Type.String()),
+});
+
 export const EmergencyResponse = {
   [HttpCodeW.OK]: Type.Object({
-    message: EmergencyResponseSchema,
+    message: Type.Array(MessageItemSchema),
     code: Type.String(),
   }),
 };

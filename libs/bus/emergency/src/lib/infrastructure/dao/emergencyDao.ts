@@ -54,7 +54,12 @@ export default function (
         }
         // Check if emergency is already resolved
         if (emergency.status === EmergencyStatus.RESOLVED) {
-          throw `You can't modify this emergency because it's already resolved`;
+          // Record the attempted modification
+          //TODO: this would be replace with user from token
+          emergency.recordModificationAttempt(updatedPayloadLocal, 9999);
+          return await db.save(emergency).then(() => {
+            throw `You can't modify this emergency because it's already resolved`;
+          }); // Save the updated audit trail
         }
 
         return await db
@@ -64,19 +69,25 @@ export default function (
             return 'Emergency Updated';
           })
           .catch((error) => {
-            fastify.log.error(`Emergency error when update ${error}`);
             throw `Emergency not update ${error}`;
           });
       } catch (error) {
+        fastify.log.error(`Emergency error when update ${error}`);
         throw httpResponseBuilder.Conflict(error);
       }
     },
-    async getAll(): Promise<EmergencyEntity[]> {
+    async getAll(filters): Promise<EmergencyEntity[]> {
       try {
-        return await db.find({ relations: ['ambulance'] }).catch((error) => {
-          fastify.log.error('Error fetching emergencies:', error);
-          throw `Error fetching emergencies: ${error}`;
-        });
+        return await db
+          .find({
+            relations: ['ambulance'],
+            select: filters.query,
+            where: { ...filters.filterBy } as any,
+          })
+          .catch((error) => {
+            fastify.log.error('Error fetching emergencies:', error);
+            throw `Error fetching emergencies: ${error}`;
+          });
       } catch (error) {
         fastify.log.error('Unexpected error:', error);
         throw httpResponseBuilder.Conflict(error);

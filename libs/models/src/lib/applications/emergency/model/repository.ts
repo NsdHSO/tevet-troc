@@ -2,7 +2,10 @@ import { EmergencyEntity } from '../../../entities/hospital';
 import { EmergencyBodyStatic } from '../schema/emergencySchema';
 
 export interface IEmergencyRepository {
-  getAll(): Promise<EmergencyEntity[]>;
+  getAll(filterBy?: {
+    query: Array<keyof EmergencyEntity>;
+    filterBy: { [K in keyof Omit<EmergencyEntity, 'id'>]?: any };
+  }): Promise<EmergencyEntity[]>;
 
   create(payload: Partial<EmergencyBodyStatic>): Promise<string>;
 

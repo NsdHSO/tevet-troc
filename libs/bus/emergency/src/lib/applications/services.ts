@@ -77,8 +77,8 @@ export function emergencyApplicationService(
       const localCreatePayload = createPayload(payload);
       return await emergencyRepository.create(localCreatePayload);
     },
-    async getAll(): Promise<EmergencyEntity[]> {
-      return await emergencyRepository.getAll();
+    async getAll(filterBy): Promise<EmergencyEntity[]> {
+      return await emergencyRepository.getAll(filterBy);
     },
     async update(payload: Partial<EmergencyBodyStatic>): Promise<string> {
       const localUpdatePayload = updatePayload(payload);
