@@ -13,10 +13,10 @@ export const EmergencyObject = Type.Object({
   reportedBy: Type.Optional(Type.Number()), // User ID who reported the emergency (optional)
   incidentType: Type.Optional(Type.Enum(EmergencyType)), // Type of emergency (optional)
   notes: Type.Optional(Type.String()), // Any notes (optional)
-  location: Type.Object({
+  location: Type.Optional(Type.Object({
     latitude: Type.Number(),
     longitude: Type.Number(),
-  }), // Embedded location details
+  })), // Embedded location details
   ambulance: Type.Optional(
     Type.Object({
       vehicleNumber: Type.String(),
