@@ -73,8 +73,9 @@ async function getAllAmbulance(
     query: ['id'],
   });
 
-  if (!hospital) {
-    return 'Hospital not found';
+  //Check if we have hospital
+  if (hospital.length === 0) {
+    throw httpResponseBuilder.BadRequest('Hospital does not exist');
   }
 
   const localFilter = {
