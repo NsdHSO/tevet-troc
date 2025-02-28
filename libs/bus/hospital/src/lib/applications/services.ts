@@ -1,18 +1,18 @@
 import {
+  HospitalBodyType,
   HospitalEntity,
   IHospitalHttp,
   IHospitalRepository,
-  HospitalBodyType
 } from '@tevet-troc/models';
 
-function getAllHospital(
+async function getAllHospital(
   repository: IHospitalRepository,
   filterBy: {
     query: Array<keyof HospitalEntity>;
     filterBy: { [K in keyof Omit<HospitalEntity, 'id'>]?: any };
   }
 ) {
-  return repository.getAll(filterBy);
+  return await repository.getAll(filterBy);
 }
 
 export function hospitalApplicationService(
@@ -21,7 +21,8 @@ export function hospitalApplicationService(
   return {
     create: (payload) => createHospital(hospitalRepository, payload),
     update: (payload) => updateHospital(hospitalRepository, payload),
-    getAll: (filterBy) => getAllHospital(hospitalRepository, filterBy),
+    getAll: async (filterBy) =>
+      await getAllHospital(hospitalRepository, filterBy),
   };
 }
 

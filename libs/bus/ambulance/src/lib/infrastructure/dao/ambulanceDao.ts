@@ -26,10 +26,21 @@ export default function (
       }
     },
     async getAll(filters){
-      return await db.find({
-        select: filters.query,
-        where: { ...filters.filterBy } as any,
-      });
+      try {
+        return await db
+          .find({
+            select: filters.query,
+            where: { ...filters.filterBy } as any,
+          })
+          .then((value) => value)
+          .catch((e) => {
+            throw `Ambulance not updated due to database error. ${e}`;
+          });
+      } catch (error) {
+        throw httpResponseBuilder.InternalServerError(
+          `An unexpected error occurred while updating ambulance. ${error}`
+        );
+      }
     },
   };
 }

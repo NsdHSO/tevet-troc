@@ -61,11 +61,22 @@ export default function (db: Repository<HospitalEntity>): IHospitalRepository {
         }
       }
     },
-    async getAll(filters)  {
-      return await db.find({
-        select: filters.query,
-        where: { ...filters.filterBy },
-      });
+    async getAll(filters) {
+      try {
+        return await db
+          .find({
+            select: filters.query,
+            where: { ...filters.filterBy },
+          })
+          .then((value) => value)
+          .catch((e) => {
+            throw `Hospital not updated due to database error. ${e}`;
+          });
+      } catch (error) {
+        throw httpResponseBuilder.InternalServerError(
+          `An unexpected error occurred while updating hospital. ${error}`
+        );
+      }
     },
   };
 }
