@@ -29,13 +29,18 @@ function updateModelsIndexFileInDataBase(
 
   if (tree.exists(indexPath)) {
     let content = tree.read(indexPath, 'utf-8') as string;
-
+    if (entityExport instanceof Error) {
+      throw entityExport;
+    }
     // Avoid duplicate exports
     if (!content.includes(entityExport.trim())) {
       content += entityExport;
       tree.write(indexPath, content);
     }
   } else {
+    if (entityExport instanceof Error) {
+      throw entityExport;
+    }
     // Create index.ts if it doesn't exist
     tree.write(indexPath, entityExport);
   }
