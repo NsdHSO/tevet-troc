@@ -4,7 +4,7 @@ import { <%= name %>Response } from '@tevet-troc/models'
 export default function (app: FastifyInstance): void {
     app.post('/', {
         schema: {
-            response:<%= name %>Response
+            response:<%= name %>Response,
             tags: ['<%= variable %>'],
         } as FastifySchema
     }, async (req: FastifyRequest, reply) => {
