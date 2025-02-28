@@ -1,11 +1,12 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest ,FastifySchema } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import { <%= name %>Response } from '@tevet-troc/models'
 export default function (app: FastifyInstance): void {
     app.post('/', {
         schema: {
             response:<%= name %>Response
-        }
+            tags: ['<%= variable %>'],
+        } as FastifySchema
     }, async (req: FastifyRequest, reply) => {
         try {
             app.log.info(`Registered <%= name %>`);

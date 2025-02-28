@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest, FastifySchema } from 'fastify';
 import {
   httpResponseBuilder,
   isErrorObject,
@@ -19,7 +19,8 @@ export default function (app: FastifyInstance) {
       schema: {
         response: GetAllAmbulanceResponse,
         querystring: FilterByAmbulance,
-      },
+        tags: ['ambulance'],
+      } as FastifySchema,
     },
     async (
       req: FastifyRequest<{

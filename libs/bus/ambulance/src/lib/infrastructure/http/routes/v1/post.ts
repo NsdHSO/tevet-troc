@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest, FastifySchema } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import { AmbulanceBodySchema, AmbulanceBodyStatic, CreateAmbulanceResponse } from '@tevet-troc/models';
 
@@ -8,8 +8,9 @@ export default function (app: FastifyInstance): void {
     {
       schema: {
         body: AmbulanceBodySchema,
-        response: CreateAmbulanceResponse
-      },
+        response: CreateAmbulanceResponse,
+        tags: ['ambulance'],
+      } as FastifySchema
     },
     async (req: FastifyRequest<{ Body: AmbulanceBodyStatic }>, reply) => {
       try {

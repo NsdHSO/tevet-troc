@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest, FastifySchema } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import {
   CreatedUpdatedEmergencyResponse,
@@ -13,7 +13,8 @@ export default function (app: FastifyInstance): void {
       schema: {
         response: CreatedUpdatedEmergencyResponse  ,
         body: EmergencyObject,
-      },
+        tags: ['emergency'],
+      } as FastifySchema,
     },
     async (req: FastifyRequest<{ Body: EmergencyBodyStatic }>, reply) => {
       try {

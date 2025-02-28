@@ -1,7 +1,7 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest, FastifySchema } from 'fastify';
 import { httpResponseBuilder, ResponseObject } from '@tevet-troc/http-response';
 import {
-  AmbulanceEntity, EmergencyEntity,
+  EmergencyEntity,
   EmergencyResponse,
   FilterByEmergency,
   FilterTypeEmergency,
@@ -15,7 +15,8 @@ export default function (app: FastifyInstance): void {
       schema: {
         response: EmergencyResponse,
         querystring: FilterByEmergency,
-      },
+        tags: ['emergency'],
+      } as FastifySchema,
     },
     async (
       req: FastifyRequest<{ Querystring: FilterTypeEmergency }>,
