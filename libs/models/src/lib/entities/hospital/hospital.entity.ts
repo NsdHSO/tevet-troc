@@ -10,10 +10,10 @@ export class HospitalEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true,type: 'text' })
   name: string;
 
-  @Column()
+  @Column({ type: 'text' })
   address: string;
 
   @Column({ nullable: true })

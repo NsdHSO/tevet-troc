@@ -8,7 +8,8 @@
     "model": "nx reset && nx generate @tevet-troc/tooling:add-model-infra",
     "entity": "nx reset && nx generate @tevet-troc/tooling:data-base-entity",
     "test:all": "nx reset && nx run-many -t test",
-    "test": "node --experimental-vm-modules ./node_modules/.bin/jest"
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+    "build": "nx run tevet-troc:build:production"
   },
   "private": true,
   "dependencies": {
