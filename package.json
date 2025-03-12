@@ -66,6 +66,7 @@
     "typescript-eslint": "^8.19.0",
     "verdaccio": "^5.0.4"
   },
+  "packageManager": "pnpm@8.15.4",
   "nx": {
     "includedScripts": []
   }
