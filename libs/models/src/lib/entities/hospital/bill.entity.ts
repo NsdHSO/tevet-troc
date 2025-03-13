@@ -3,7 +3,7 @@ import { BaseEntity } from '../base.entity';
 import { PaymentStatus } from '../../enums';
 
 @Entity('bill')
-export class BillEntity extends BaseEntity{
+export class BillEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 

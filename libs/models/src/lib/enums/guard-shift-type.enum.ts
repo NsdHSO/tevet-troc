@@ -3,13 +3,13 @@
  */
 export enum GuardShift {
   /** @description Day shift. */
-  DAY = "DAY",
+  DAY = 'DAY',
   /** @description Night shift. */
-  NIGHT = "NIGHT",
+  NIGHT = 'NIGHT',
   /** @description Weekend shift. */
-  WEEKEND = "WEEKEND",
+  WEEKEND = 'WEEKEND',
   /** @description Evening shift. */
-  EVENING = "EVENING",
+  EVENING = 'EVENING',
   /** @description Morning shift. */
-  MORNING = "MORNING",
+  MORNING = 'MORNING',
 }

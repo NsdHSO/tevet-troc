@@ -1,5 +1,5 @@
+import { HttpCodeW } from '@app/http-response';
 import { Static, Type } from '@sinclair/typebox';
-import { HttpCodeW } from '@tevet-troc/http-response';
 import { HospitalSchema } from './bodies';
 
 // Define the Header schema

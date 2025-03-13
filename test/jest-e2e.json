@@ -1,0 +1,25 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@app/ambulance": "<rootDir>/../libs/buss/ambulance/src",
+    "@app/ambulance/(.*)": "<rootDir>/../libs/buss/ambulance/src/$1",
+    "@app/hospital": "<rootDir>/../libs/buss/hospital/src",
+    "@app/hospital/(.*)": "<rootDir>/../libs/buss/hospital/src/$1",
+    "@app/http-response": "<rootDir>/../libs/http-response/src",
+    "@app/http-response/(.*)": "<rootDir>/../libs/http-response/src/$1",
+    "@app/models": "<rootDir>/../libs/models/src",
+    "@app/models/(.*)": "<rootDir>/../libs/models/src/$1",
+    "@app/utils": "<rootDir>/../libs/utils/src",
+    "@app/utils/(.*)": "<rootDir>/../libs/utils/src/$1",
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+    "file-type": "<rootDir>/src/__mocks__/file-type.ts"
+  },
+  "preset": "ts-jest/presets/js-with-ts-jest",
+  "extensionsToTreatAsEsm": [".ts", ".tsx", ".jsx"]
+}

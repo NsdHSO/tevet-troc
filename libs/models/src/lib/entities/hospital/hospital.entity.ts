@@ -1,8 +1,4 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 
 @Entity('hospital')
@@ -10,10 +6,10 @@ export class HospitalEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: number;
 
-  @Column({ unique: true,type: 'text' })
+  @Column({ unique: true })
   name: string;
 
-  @Column({ type: 'text' })
+  @Column()
   address: string;
 
   @Column({ nullable: true })

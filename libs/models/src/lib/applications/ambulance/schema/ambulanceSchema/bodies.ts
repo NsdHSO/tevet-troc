@@ -32,8 +32,8 @@ export const AmbulanceBodySchema = Type.Object({
       Type.Object({
         name: Type.String(),
         medicalInfo: Type.String(),
-      })
-    )
+      }),
+    ),
   ),
   driverName: Type.Optional(Type.String()),
   driverLicense: Type.Optional(Type.String()),

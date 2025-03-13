@@ -3,23 +3,23 @@
  */
 export enum DepartmentType {
   /** @description Cardiology department. */
-  CARDIOLOGY = "CARDIOLOGY",
+  CARDIOLOGY = 'CARDIOLOGY',
   /** @description Oncology department. */
-  ONCOLOGY = "ONCOLOGY",
+  ONCOLOGY = 'ONCOLOGY',
   /** @description Neurology department. */
-  NEUROLOGY = "NEUROLOGY",
+  NEUROLOGY = 'NEUROLOGY',
   /** @description Pediatrics department. */
-  PEDIATRICS = "PEDIATRICS",
+  PEDIATRICS = 'PEDIATRICS',
   /** @description Surgery department. */
-  SURGERY = "SURGERY",
+  SURGERY = 'SURGERY',
   /** @description Internal medicine department. */
-  INTERNAL_MEDICINE = "INTERNAL_MEDICINE",
+  INTERNAL_MEDICINE = 'INTERNAL_MEDICINE',
   /** @description Obstetrics and gynecology department. */
-  OBSTETRICS_GYNECOLOGY = "OBSTETRICS_GYNECOLOGY",
+  OBSTETRICS_GYNECOLOGY = 'OBSTETRICS_GYNECOLOGY',
   /** @description Ophthalmology department. */
-  OPHTHALMOLOGY = "OPHTHALMOLOGY",
+  OPHTHALMOLOGY = 'OPHTHALMOLOGY',
   /** @description Dermatology department. */
-  DERMATOLOGY = "DERMATOLOGY",
+  DERMATOLOGY = 'DERMATOLOGY',
   /** @description Urology department. */
-  UROLOGY = "UROLOGY",
+  UROLOGY = 'UROLOGY',
 }

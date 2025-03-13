@@ -1,4 +1,4 @@
-  import { Type, Static } from '@sinclair/typebox';
+import { Type, Static } from '@sinclair/typebox';
 
 // Define Hospital Schema
 export const HospitalSchema = Type.Object({
@@ -15,7 +15,9 @@ export const HospitalSchema = Type.Object({
   nonProfit: Type.Optional(Type.Boolean()),
   licenseNumber: Type.Optional(Type.String()),
   accreditation: Type.Optional(Type.String()),
-  patientSatisfactionRating: Type.Optional(Type.Number({ minimum: 0, maximum: 5 })), // Rating between 0 and 5
+  patientSatisfactionRating: Type.Optional(
+    Type.Number({ minimum: 0, maximum: 5 }),
+  ), // Rating between 0 and 5
   averageStayLength: Type.Optional(Type.Number()),
   annualBudget: Type.Optional(Type.Number()),
   owner: Type.Optional(Type.String()),

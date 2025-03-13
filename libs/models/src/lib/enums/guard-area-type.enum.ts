@@ -3,23 +3,23 @@
  */
 export enum GuardArea {
   /** @description Main entrance. */
-  MAIN_ENTRANCE = "MAIN_ENTRANCE",
+  MAIN_ENTRANCE = 'MAIN_ENTRANCE',
   /** @description Emergency room. */
-  ER = "ER",
+  ER = 'ER',
   /** @description Intensive care unit. */
-  ICU = "ICU",
+  ICU = 'ICU',
   /** @description Wards. */
-  WARDS = "WARDS",
+  WARDS = 'WARDS',
   /** @description Parking lot. */
-  PARKING_LOT = "PARKING_LOT",
+  PARKING_LOT = 'PARKING_LOT',
   /** @description Cafeteria. */
-  CAFETERIA = "CAFETERIA",
+  CAFETERIA = 'CAFETERIA',
   /** @description Pharmacy. */
-  PHARMACY = "PHARMACY",
+  PHARMACY = 'PHARMACY',
   /** @description Helipad. */
-  HELIPAD = "HELIPAD",
+  HELIPAD = 'HELIPAD',
   /** @description Laboratory. */
-  LAB = "LAB",
+  LAB = 'LAB',
   /** @description Radiology department. */
-  RADIOLOGY = "RADIOLOGY",
+  RADIOLOGY = 'RADIOLOGY',
 }

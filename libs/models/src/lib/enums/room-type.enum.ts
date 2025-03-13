@@ -3,23 +3,23 @@
  */
 export enum RoomType {
   /** @description A single occupancy room. */
-  SINGLE = "SINGLE",
+  SINGLE = 'SINGLE',
   /** @description A double occupancy room. */
-  DOUBLE = "DOUBLE",
+  DOUBLE = 'DOUBLE',
   /** @description A suite room. */
-  SUITE = "SUITE",
+  SUITE = 'SUITE',
   /** @description An intensive care unit room. */
-  ICU = "ICU",
+  ICU = 'ICU',
   /** @description An emergency room. */
-  EMERGENCY = "EMERGENCY",
+  EMERGENCY = 'EMERGENCY',
   /** @description A pediatric room. */
-  PEDIATRIC = "PEDIATRIC",
+  PEDIATRIC = 'PEDIATRIC',
   /** @description A maternity room. */
-  MATERNITY = "MATERNITY",
+  MATERNITY = 'MATERNITY',
   /** @description A surgical room. */
-  SURGICAL = "SURGICAL",
+  SURGICAL = 'SURGICAL',
   /** @description A recovery room. */
-  RECOVERY = "RECOVERY",
+  RECOVERY = 'RECOVERY',
   /** @description An isolation room. */
-  ISOLATION = "ISOLATION",
+  ISOLATION = 'ISOLATION',
 }

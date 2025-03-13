@@ -9,4 +9,4 @@ export class PatientInfoEntity {
 
   @Column({ type: 'text', nullable: true })
   medicalInfo?: string;
-  }
+}

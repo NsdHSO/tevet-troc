@@ -1,6 +1,0 @@
-import { I<%= name %>Http, I<%= name %>Repository } from '@tevet-troc/models';
-export function <%= variableCamelCase %>ApplicationService(<%= variableCamelCase %>Repository: I<%= name %>Repository): I<%= name %>Http{
-  return{
-
-  }
-}

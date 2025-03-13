@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "ambulance": {
+      "type": "library",
+      "root": "libs/buss/ambulance",
+      "entryFile": "index",
+      "sourceRoot": "libs/buss/ambulance/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/buss/ambulance/tsconfig.lib.json"
+      }
+    },
+    "hospital": {
+      "type": "library",
+      "root": "libs/buss/hospital",
+      "entryFile": "index",
+      "sourceRoot": "libs/buss/hospital/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/buss/hospital/tsconfig.lib.json"
+      }
+    },
+    "http-response": {
+      "type": "library",
+      "root": "libs/http-response",
+      "entryFile": "index",
+      "sourceRoot": "libs/http-response/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/http-response/tsconfig.lib.json"
+      }
+    },
+    "models": {
+      "type": "library",
+      "root": "libs/models",
+      "entryFile": "index",
+      "sourceRoot": "libs/models/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/models/tsconfig.lib.json"
+      }
+    },
+    "utils": {
+      "type": "library",
+      "root": "libs/utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/utils/tsconfig.lib.json"
+      }
+    }
+  }
+}

@@ -3,23 +3,23 @@
  */
 export enum Amenities {
   /** @description Television. */
-  TV = "TV",
+  TV = 'TV',
   /** @description Wireless internet. */
-  WIFI = "WIFI",
+  WIFI = 'WIFI',
   /** @description Private bathroom. */
-  BATHROOM = "BATHROOM",
+  BATHROOM = 'BATHROOM',
   /** @description Refrigerator. */
-  FRIDGE = "FRIDGE",
+  FRIDGE = 'FRIDGE',
   /** @description Microwave. */
-  MICROWAVE = "MICROWAVE",
+  MICROWAVE = 'MICROWAVE',
   /** @description Coffee maker. */
-  COFFEE_MAKER = "COFFEE_MAKER",
+  COFFEE_MAKER = 'COFFEE_MAKER',
   /** @description Sofa. */
-  SOFA = "SOFA",
+  SOFA = 'SOFA',
   /** @description Desk. */
-  DESK = "DESK",
+  DESK = 'DESK',
   /** @description Balcony. */
-  BALCONY = "BALCONY",
+  BALCONY = 'BALCONY',
   /** @description Scenic view. */
-  VIEW = "VIEW",
+  VIEW = 'VIEW',
 }

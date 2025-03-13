@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
 
 @Entity('supplier')
-export class SupplierEntity extends BaseEntity{
+export class SupplierEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
@@ -23,5 +23,4 @@ export class SupplierEntity extends BaseEntity{
 
   @Column({ nullable: true })
   address: string;
-
 }

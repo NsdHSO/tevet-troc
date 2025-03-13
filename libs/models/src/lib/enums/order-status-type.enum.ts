@@ -1,16 +1,15 @@
-
 /**
  * @description Represents the status of an order.
  */
 export enum OrderStatus {
   /** @description Order is pending. */
-  PENDING = "PENDING",
+  PENDING = 'PENDING',
   /** @description Order is being processed. */
-  PROCESSING = "PROCESSING",
+  PROCESSING = 'PROCESSING',
   /** @description Order has been shipped. */
-  SHIPPED = "SHIPPED",
+  SHIPPED = 'SHIPPED',
   /** @description Order has been received. */
-  RECEIVED = "RECEIVED",
+  RECEIVED = 'RECEIVED',
   /** @description Order is cancelled. */
-  CANCELLED = "CANCELLED",
+  CANCELLED = 'CANCELLED',
 }

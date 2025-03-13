@@ -3,17 +3,17 @@
  */
 export enum BedType {
   /** @description A single bed. */
-  SINGLE = "SINGLE",
+  SINGLE = 'SINGLE',
   /** @description A double bed. */
-  DOUBLE = "DOUBLE",
+  DOUBLE = 'DOUBLE',
   /** @description A king-size bed. */
-  KING = "KING",
+  KING = 'KING',
   /** @description A queen-size bed. */
-  QUEEN = "QUEEN",
+  QUEEN = 'QUEEN',
   /** @description A bunk bed. */
-  BUNK = "BUNK",
+  BUNK = 'BUNK',
   /** @description A crib bed. */
-  CRIB = "CRIB",
+  CRIB = 'CRIB',
   /** @description A hospital bed. */
-  HOSPITAL = "HOSPITAL",
+  HOSPITAL = 'HOSPITAL',
 }

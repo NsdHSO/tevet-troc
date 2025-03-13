@@ -1,63 +1,37 @@
-import nx from '@nx/eslint-plugin';
+// @ts-check
+import eslint from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default tseslint.config(
   {
-    files: ['**/*.json'],
-    // Override or add rules here
-    rules: {},
+    ignores: ['eslint.config.mjs'],
+  },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  eslintPluginPrettierRecommended,
+  {
     languageOptions: {
-      parser: await import('jsonc-eslint-parser'),
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      ecmaVersion: 5,
+      sourceType: 'module',
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
-  ...nx.configs['flat/base'],
-  ...nx.configs['flat/typescript'],
-  ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist'],
-  },
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
-      '@nx/enforce-module-boundaries': [
-        'error',
-        {
-          enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
-          depConstraints: [
-            {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
-            },
-          ],
-        },
-      ],
-      '@typescript-eslint/explicit-function-return-type': 'warn',  // Example
-      '@typescript-eslint/no-explicit-any': 'off', // Example
-      semi: ['error', 'always'], // You can override rules here too
-      'eol-last': ['error', 'always'], // Enforce newline at end of file
-      'no-extra-semi': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/only-throw-error': 'warn',
+      '@typescript-eslint/ no-unsafe-assignment': 'warn',
     },
   },
-  {
-    files: ['**/*.js', '**/*.jsx'], // Target specific file types
-    rules: {
-      // Override or add JavaScript-specific rules if needed
-      semi: ['error', 'always'], // You can override rules here too
-      'eol-last': ['error', 'always'], // Enforce newline at end of file
-    },
-  },
-  {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.cts',
-      '**/*.mts',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.cjs',
-      '**/*.mjs',
-    ],
-    // Override or add rules here
-    rules: {},
-  },
-];
+);

@@ -3,17 +3,17 @@
  */
 export enum StaffRole {
   /** @description Doctor. */
-  DOCTOR = "DOCTOR",
+  DOCTOR = 'DOCTOR',
   /** @description Nurse. */
-  NURSE = "NURSE",
+  NURSE = 'NURSE',
   /** @description Administrative staff. */
-  ADMIN = "ADMIN",
+  ADMIN = 'ADMIN',
   /** @description Technician. */
-  TECHNICIAN = "TECHNICIAN",
+  TECHNICIAN = 'TECHNICIAN',
   /** @description Receptionist. */
-  RECEPTIONIST = "RECEPTIONIST",
+  RECEPTIONIST = 'RECEPTIONIST',
   /** @description Cleaner. */
-  CLEANER = "CLEANER",
+  CLEANER = 'CLEANER',
   /** @description Security staff. */
-  SECURITY = "SECURITY",
+  SECURITY = 'SECURITY',
 }
