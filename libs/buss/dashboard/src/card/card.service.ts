@@ -61,7 +61,7 @@ export class CardService {
       return await this._cardRepository
         .find({
           relations: ['dashboard'],
-          select: filters?.query,
+          select: filters?.query as any,
           where: {
             ...filters?.filterBy,
           } as any,
