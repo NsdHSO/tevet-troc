@@ -5,13 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HospitalModule } from '@app/hospital';
 import { RouterModule } from '@nestjs/core';
-import { DashboardModule } from '@app/dashboard';
+import { CardModule, DashboardModule } from '@app/dashboard';
 
 @Module({
   imports: [
-    DatabaseModule, RouterModule.register([
+    DatabaseModule,
+    RouterModule.register([
       {
-        'path': 'v1',
+        path: 'v1',
         children: [
           {
             path: 'ambulance',
@@ -22,15 +23,21 @@ import { DashboardModule } from '@app/dashboard';
             module: HospitalModule,
           },
           {
-            path:'dashboard',
+            path: 'dashboard',
             module: DashboardModule,
-          }
+          },
+          {
+            path: 'card',
+            module: CardModule,
+          },
         ],
       },
-    ]), HospitalModule, AmbulanceModule,DashboardModule
+    ]),
+    HospitalModule,
+    AmbulanceModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -18,6 +18,7 @@ export class CardEntity extends BaseEntity {
     type: 'enum',
     enum: CardType,
     nullable: true,
+    default: CardType.TEXT,
   })
   cardType: CardType;
 
@@ -28,10 +29,14 @@ export class CardEntity extends BaseEntity {
     type: 'enum',
     enum: CardSize,
     nullable: true,
+    default: CardSize.MEDIUM,
   })
   size: CardSize;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+    type: 'jsonb',
+  })
   dataConfig: string; // Example: JSON string storing data configuration for the card
 
   @ManyToOne(() => DashboardEntity, (dashboard) => dashboard.cards)

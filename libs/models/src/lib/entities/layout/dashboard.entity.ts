@@ -7,7 +7,10 @@ export class DashboardEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column()
+  @Column({
+    unique: true,
+    type: 'text',
+  })
   name: string;
 
   @Column({ nullable: true })
@@ -22,6 +25,6 @@ export class DashboardEntity extends BaseEntity {
   @Column({ nullable: true })
   layoutConfig: string; // Example: JSON string storing layout configuration
 
-  @OneToMany(() => CardEntity, card => card.dashboard)
+  @OneToMany(() => CardEntity, (card) => card.dashboard)
   cards: CardEntity[];
 }
