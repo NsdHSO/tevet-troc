@@ -50,8 +50,21 @@ export class HospitalService {
     }
   }
 
-  findOne(id: string) {
-    return;
+  async findOne(id: string) {
+    try {
+      const hospitals = await this.hospitalRepository.find().catch((e) => {
+        throw `Hospital not found due to database error. ${e}`;
+      });
+
+      if (hospitals.length > 0) {
+        return hospitals.filter((hospital) =>
+          hospital.name.toLowerCase().includes(id.toLowerCase()),
+        );
+      }
+      return [];
+    } catch (error) {
+      throw httpResponseBuilder.InternalServerError(`Error ${error}`);
+    }
   }
 
   async update(updateHospitalDto: UpdateHospitalDto) {
