@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { CreateDashboardDto } from './dto/create-dashboard.dto';
 import { UpdateDashboardDto } from './dto/update-dashboard.dto';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { DashboardEntity } from '@app/models';
+import { CardEntity, DashboardEntity } from '@app/models';
 import { Repository } from 'typeorm';
 import { httpResponseBuilder } from '@app/http-response';
 import { CardService } from '@app/dashboard/card/card.service';
@@ -18,7 +18,7 @@ export class DashboardService {
     private readonly _cardService: CardService,
   ) {}
 
-  create(createDashboardDto: CreateDashboardDto) {
+  async create(createDashboardDto: CreateDashboardDto) {
     if (
       !createDashboardDto.name ||
       !createDashboardDto.cards ||
@@ -29,22 +29,73 @@ export class DashboardService {
         'Name and non-empty cards are required.',
       );
     }
+
+    try {
+      return await this.savedEntities(createDashboardDto);
+    } catch (error) {
+      this._loggerService.error('Error saving dashboard with cards:', error);
+      const err = new Error(error.message);
+      err['code'] = 409;
+      throw err;
+    }
+  }
+
+  private async savedEntities(createDashboardDto: CreateDashboardDto) {
     const dashboard = new DashboardEntity();
-    dashboard.name = createDashboardDto.name;
-    dashboard.cards = createDashboardDto.cards;
+    dashboard.name = createDashboardDto.name as string;
     dashboard.description = createDashboardDto.description || '';
     dashboard.ownerId = createDashboardDto.ownerId || 0;
     dashboard.layoutConfig = createDashboardDto.layoutConfig || '';
-    console.log(dashboard);
-    return this.saveDashboardWithCards(dashboard, dashboard.cards);
+
+    const savedDashboard = await this._dashboardRepository.save(dashboard);
+
+    const savedCards: CardEntity[] = [];
+    for (const cardData of (createDashboardDto.cards??[])) {
+      const card = await this._cardService.create({
+        ...cardData,
+        dashboardName: savedDashboard.name,
+      });
+      savedCards.push(card);
+    }
+
+    // Return dashboard without eager loading
+    savedDashboard.cards = savedCards; // Manually assign saved cards.
+
+    return savedDashboard;
   }
 
-  findAll() {
-    return `This action returns all dashboard`;
+  async findAll() {
+    try {
+      return await this._dashboardRepository.find().catch((error) => {
+        throw 'Error while retrieving dashboard' + JSON.stringify(error);
+      });
+    } catch (error) {
+      throw httpResponseBuilder.InternalServerError(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dashboard`;
+  async findOne(name: string): Promise<Partial<DashboardEntity> | null> {
+    if (name === '') {
+      return {};
+    }
+    try {
+      return await this._dashboardRepository
+        .findOneBy({ name })
+        .then((dashboard) => {
+          if (!dashboard) {
+            this._loggerService.log(`Dashboard with name: ${name} not found.`);
+            return null;
+          }
+          this._loggerService.log(`Found ${JSON.stringify(dashboard)}`);
+
+          return dashboard;
+        })
+        .catch((error) => {
+          throw 'Dashboard have some problem ' + JSON.stringify(error);
+        });
+    } catch (error) {
+      throw httpResponseBuilder.InternalServerError(error);
+    }
   }
 
   update(id: number, updateDashboardDto: UpdateDashboardDto) {
@@ -58,10 +109,7 @@ export class DashboardService {
       for (const card of cards) {
         card.dashboard = savedDashboard;
 
-        await this._cardService.create({
-          ...card,
-          dashboard: savedDashboard,
-        });
+        await this._cardService.create(card);
       }
 
       return await this._dashboardRepository

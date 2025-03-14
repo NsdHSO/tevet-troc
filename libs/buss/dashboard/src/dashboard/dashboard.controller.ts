@@ -23,14 +23,12 @@ export class DashboardController {
 
   @ApiBody({ schema: DashboardSchema as SchemaObject })
   @Post()
-  create(@Body() createDashboardDto: CreateDashboardDto) {
+  async create(@Body() createDashboardDto: CreateDashboardDto) {
     try {
-      return httpResponseBuilder.OK(
-        this.dashboardService.create(createDashboardDto),
-      );
+      return httpResponseBuilder.OK(await this.dashboardService.create(createDashboardDto))
     } catch (error) {
       this._loggerService.error(
-        `Error when Create Card ${JSON.stringify(error)}`,
+        `Error when Create Dashboard ${JSON.stringify(error)}`,
       ); // Replace app.log.error
       if (isErrorObject(error)) {
         return httpResponseBuilder.InternalServerError(error);
@@ -41,13 +39,35 @@ export class DashboardController {
   }
 
   @Get()
-  findAll() {
-    return this.dashboardService.findAll();
+  async findAll() {
+    try {
+      return httpResponseBuilder.OK(await this.dashboardService.findAll());
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Find Dashboard ${JSON.stringify(error)}`,
+      ); // Replace app.log.error
+      if (isErrorObject(error)) {
+        return httpResponseBuilder.InternalServerError(error);
+      }
+
+      return error;
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dashboardService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      return httpResponseBuilder.OK(await this.dashboardService.findOne(id));
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Find Dashboard ${JSON.stringify(error)}`,
+      ); // Replace app.log.error
+      if (isErrorObject(error)) {
+        return httpResponseBuilder.InternalServerError(error);
+      }
+
+      return error;
+    }
   }
 
   @Patch(':id')

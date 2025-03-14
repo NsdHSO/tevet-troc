@@ -1,5 +1,5 @@
+import { AmbulanceEntity } from '@app/models';
 import { AmbulanceBodyStatic } from '../schema/ambulanceSchema';
-import { AmbulanceEntity } from '../../../entities/hospital/ambulance.entity';
 
 export interface IAmbulanceRepository {
   create(payload: Partial<AmbulanceBodyStatic>): Promise<string>;
