@@ -13,7 +13,10 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
@@ -24,6 +27,12 @@
       ],
       "@app/ambulance/*": [
         "libs/buss/ambulance/src/*"
+      ],
+      "@app/dashboard": [
+        "libs/buss/dashboard/src"
+      ],
+      "@app/dashboard/*": [
+        "libs/buss/dashboard/src/*"
       ],
       "@app/hospital": [
         "libs/buss/hospital/src"

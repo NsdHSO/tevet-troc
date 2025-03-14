@@ -95,6 +95,7 @@
     ],
     "moduleNameMapper": {
       "^@app/ambulance(|/.*)$": "<rootDir>/libs/buss/ambulance/src/$1",
+      "^@app/dashboard(|/.*)$": "<rootDir>/libs/dashboard/src/$1",
       "^@app/hospital(|/.*)$": "<rootDir>/libs/hospital/src/$1",
       "^@app/http-response(|/.*)$": "<rootDir>/libs/http-response/src/$1",
       "^@app/models(|/.*)$": "<rootDir>/libs/models/src/$1",

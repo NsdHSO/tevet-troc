@@ -6,7 +6,7 @@ export type ResponseObject<K, T extends HttpCodeW = HttpCodeW.OK> = {
 };
 
 export function isErrorObject<K, T extends HttpCodeW>(
-  obj,
+  obj: any,
 ): obj is ResponseObject<K, T> {
   return 'message' in obj && 'code' in obj;
 }
