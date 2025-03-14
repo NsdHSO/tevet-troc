@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for tevet-troc on 2025-03-14T04:51:23Z
+# fly.toml app configuration file generated for tevet-troc on 2025-03-14T05:41:39Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'tevet-troc'
-primary_region = 'ams'
+primary_region = 'otp'
 
 [build]
 
