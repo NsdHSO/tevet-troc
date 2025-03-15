@@ -6,20 +6,6 @@ import {
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const allowlist = [
-  'http://localhost:4200',
-  'https://tevet-troc-client.vercel.app',
-];
-const corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // disable CORS for this request
-  }
-  callback(null, corsOptions); // callback expects two parameters: error and options
-};
-
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -30,9 +16,25 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('hospital')
     .build();
+  // Improved CORS configuration
+  const allowedOrigins = [
+    'http://localhost:4200',
+    'https://tevet-troc-client.vercel.app', // Removed trailing slash
+  ];
+
   app.enableCors({
-    origin: corsOptionsDelegate,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log('Blocked CORS for:', origin);
+        callback(null, false);
+      }
+    },
+    credentials: true,
   });
+
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
