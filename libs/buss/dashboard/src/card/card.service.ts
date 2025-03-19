@@ -68,7 +68,6 @@ export class CardService {
         })
         .then((cards) =>
           cards.map((card) => ({
-            id: card.id,
             title: card.title,
             content: card.content,
             cardType: card.cardType,
@@ -76,6 +75,8 @@ export class CardService {
             size: card.size,
             dataConfig: card.dataConfig,
             dashboardId: card.dashboard ? card.dashboard.id : null,
+            icon: card.icon,
+            iconClass: card.iconClass
           })),
         )
         .catch((error) => {
