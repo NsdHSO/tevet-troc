@@ -4,6 +4,8 @@ import { Static, Type } from '@sinclair/typebox';
 export const CardSchema = Type.Object({
   title: Type.String(),
   content: Type.String(),
+  icon: Type.String(),
+  iconClass:Type.String(),
   cardType: Type.Optional(Type.String()), // or use an enum type if you have one
   size: Type.Optional(Type.String()), // or use an enum type if you have one
   position: Type.Optional(Type.Number()),

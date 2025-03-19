@@ -66,7 +66,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           TreatmentEntity,
         ],
         migrationsRun: configService.get<string>('NODE_ENV') !== 'dev',
-        logger: 'advanced-console',
+        logger: 'debug',
       }),
     }),
   ],
