@@ -10,9 +10,7 @@ export const CreateAmbulanceResponse = {
   }),
 };
 
-export const GetAllAmbulanceResponse = {
-  [HttpCodeW.OK]: Type.Object({
-    message: Type.Array(AmbulanceBodySchema),
-    code: Type.String(),
-  }),
-};
+export const GetAllAmbulanceResponse = Type.Object({
+  message: Type.Array(AmbulanceBodySchema),
+  code: Type.String(),
+});

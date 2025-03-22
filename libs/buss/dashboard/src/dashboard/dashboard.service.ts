@@ -66,7 +66,9 @@ export class DashboardService {
 
   async findAll() {
     try {
-      return await this._dashboardRepository.find().catch((error) => {
+      return await this._dashboardRepository.find({
+        relations: ['cards'],
+      }).catch((error) => {
         throw 'Error while retrieving dashboard' + JSON.stringify(error);
       });
     } catch (error) {
@@ -100,29 +102,5 @@ export class DashboardService {
 
   update(id: number, updateDashboardDto: UpdateDashboardDto) {
     return `This action updates a #${id} dashboard`;
-  }
-
-  private async saveDashboardWithCards(dashboard: DashboardEntity, cards: any) {
-    try {
-      const savedDashboard = await this._dashboardRepository.save(dashboard);
-
-      for (const card of cards) {
-        card.dashboard = savedDashboard;
-
-        await this._cardService.create(card);
-      }
-
-      return await this._dashboardRepository
-        .findOne({
-          where: { id: savedDashboard.id },
-          relations: ['cards'],
-        })
-        .catch((e) => {
-          throw ` Error When Saving Dashboard with id ${savedDashboard.id} ${JSON.stringify(e)}`;
-        });
-    } catch (error) {
-      this._loggerService.error('Error saving dashboard with cards:', error);
-      throw httpResponseBuilder.Conflict(error);
-    }
   }
 }

@@ -76,7 +76,6 @@ export class CardService {
             dataConfig: card.dataConfig,
             dashboardId: card.dashboard ? card.dashboard.id : null,
             icon: card.icon,
-            iconClass: card.iconClass
           })),
         )
         .catch((error) => {

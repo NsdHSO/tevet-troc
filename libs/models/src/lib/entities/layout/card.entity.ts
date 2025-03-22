@@ -17,9 +17,6 @@ export class CardEntity extends BaseEntity {
   @Column({nullable: true, default:''})
   icon: string;
 
-  @Column({nullable: true, default:''})
-  iconClass: string;
-
   @Column({
     type: 'enum',
     enum: CardType,

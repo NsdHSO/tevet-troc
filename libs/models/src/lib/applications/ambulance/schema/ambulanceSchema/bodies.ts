@@ -15,7 +15,6 @@ export const CarSchema = Type.Object({
 });
 // Define the Ambulance schema using TypeBox
 export const AmbulanceBodySchema = Type.Object({
-  hospitalName: Type.Optional(Type.String()),
   hospitalId: Type.Optional(Type.String()),
   vehicleNumber: Type.String(),
   carDetails: Type.Optional(CarSchema),
