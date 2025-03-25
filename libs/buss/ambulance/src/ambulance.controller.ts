@@ -1,6 +1,5 @@
 import { httpResponseBuilder, isErrorObject } from '@app/http-response';
 import {
-  AmbulanceBodySchema,
   AmbulanceEntity,
   FilterTypeAmbulance,
   GetAllAmbulanceResponse,
@@ -21,7 +20,7 @@ import {
 import { AmbulanceService } from './ambulance.service';
 import { CreateAmbulanceDto } from './dto/create-ambulance.dto';
 import { UpdateAmbulanceDto } from './dto/update-ambulance.dto';
-import { ApiBody, ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 @Controller('')
@@ -39,8 +38,16 @@ export class AmbulanceController {
   }
 
   @ApiResponse({ schema: GetAllAmbulanceResponse as SchemaObject })
-  @ApiQuery({ name: 'fields', required: false, type: String })
-  @ApiQuery({ name: 'filterBy', required: false, type: String })
+  @ApiQuery({
+    name: 'fields',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'filterBy',
+    required: false,
+    type: String
+  })
   @Get()
   async findAll(@Query() query: FilterTypeAmbulance) {
     try {
@@ -48,8 +55,10 @@ export class AmbulanceController {
         `Register Get all Ambulance ${JSON.stringify(query)}`,
       ); // Replace app.log.info
       const { fields, filterBy } = query;
-      const filterByParsed =
-        parseFilterParams<keyof Omit<Partial<AmbulanceEntity>, 'id'>>(filterBy);
+      const filterByParsed = parseFilterParams<
+        | keyof Omit<Partial<AmbulanceEntity>, 'id'>
+        | keyof { pageSize: 10; page: 1 }
+      >(filterBy);
 
       const result = await this.ambulanceService.findAll({
         query: fields?.split(',') as Array<keyof Omit<AmbulanceEntity, 'id'>>,

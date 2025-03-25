@@ -53,7 +53,11 @@ export class AmbulanceService {
 
   async findAll(filters?: {
     query: Array<keyof AmbulanceEntity>;
-    filterBy: { [K in keyof Omit<AmbulanceEntity, 'id'>]?: any };
+    filterBy: {
+      [K in
+        | keyof Omit<AmbulanceEntity, 'id'>
+        | keyof { pageSize: number; page: number }]?: any;
+    };
   }) {
     try {
       const hospital = await this._hospitalService.findAll({
@@ -64,13 +68,27 @@ export class AmbulanceService {
       if (hospital.length === 0) {
         throw httpResponseBuilder.BadRequest('Hospital does not exist');
       }
+
+      const {
+        pageSize = 10,
+        page = 1,
+        ...whereFilters
+      } = filters?.filterBy || {};
+
+      //Check if we have hospital
+      if (pageSize<0 || page<1) {
+        throw httpResponseBuilder.BadRequest('Pagination is not valid');
+      }
+
       return await this._ambulanceRepository
         .find({
           select: filters?.query,
           where: {
-            ...filters?.filterBy,
+            ...whereFilters,
             hospitalId: hospital[0].id,
           } as any,
+          skip: (+page - 1) * +pageSize|| 0,
+          take: +pageSize,
         })
         .then((value) => value)
         .catch((e) => {
