@@ -11,6 +11,9 @@ export const CreateAmbulanceResponse = {
 };
 
 export const GetAllAmbulanceResponse = Type.Object({
-  message: Type.Array(AmbulanceBodySchema),
+  message: Type.Object({
+    data: Type.Array(AmbulanceBodySchema),
+    length: Type.String(),
+  }),
   code: Type.String(),
 });

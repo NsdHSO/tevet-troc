@@ -76,21 +76,21 @@ export class AmbulanceService {
       } = filters?.filterBy || {};
 
       //Check if we have hospital
-      if (pageSize<0 || page<1) {
+      if (pageSize<0 || page<0) {
         throw httpResponseBuilder.BadRequest('Pagination is not valid');
       }
 
       return await this._ambulanceRepository
-        .find({
+        .findAndCount({
           select: filters?.query,
           where: {
             ...whereFilters,
             hospitalId: hospital[0].id,
           } as any,
-          skip: (+page - 1) * +pageSize|| 0,
+          skip: (page? page: 1) * +pageSize || 0,
           take: +pageSize,
         })
-        .then((value) => value)
+        .then((value) => ({data:value[0], length: value[1]}))
         .catch((e) => {
           throw `Ambulance not Retrieve due to database error. ${e}`;
         });
