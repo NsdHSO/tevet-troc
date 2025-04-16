@@ -34,6 +34,12 @@
       "@app/dashboard/*": [
         "libs/buss/dashboard/src/*"
       ],
+      "@app/emergency": [
+        "libs/buss/src"
+      ],
+      "@app/emergency/*": [
+        "libs/buss/src/*"
+      ],
       "@app/hospital": [
         "libs/buss/hospital/src"
       ],

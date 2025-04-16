@@ -17,6 +17,8 @@
     "@app/buss/emergency/(.*)": "<rootDir>/../libs/buss/emergency/src/$1",
     "@app/dashboard": "<rootDir>/../libs/dashboard/src",
     "@app/dashboard/(.*)": "<rootDir>/../libs/dashboard/src/$1",
+    "@app/emergency": "<rootDir>/../libs/emergency/src",
+    "@app/emergency/(.*)": "<rootDir>/../libs/emergency/src/$1",
     "@app/hospital": "<rootDir>/../libs/buss/hospital/src",
     "@app/hospital/(.*)": "<rootDir>/../libs/buss/hospital/src/$1",
     "@app/http-response": "<rootDir>/../libs/http-response/src",

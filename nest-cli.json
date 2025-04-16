@@ -25,6 +25,15 @@
         "tsConfigPath": "libs/dashboard/tsconfig.lib.json"
       }
     },
+    "emergency": {
+      "type": "library",
+      "root": "libs/buss",
+      "entryFile": "index",
+      "sourceRoot": "libs/buss/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/buss/tsconfig.lib.json"
+      }
+    },
     "hospital": {
       "type": "library",
       "root": "libs/buss/hospital",
