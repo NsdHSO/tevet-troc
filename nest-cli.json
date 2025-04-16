@@ -27,9 +27,9 @@
     },
     "emergency": {
       "type": "library",
-      "root": "libs/buss",
+      "root": "libs/buss/emergency",
       "entryFile": "index",
-      "sourceRoot": "libs/buss/src",
+      "sourceRoot": "libs/buss/emergency/src",
       "compilerOptions": {
         "tsConfigPath": "libs/buss/tsconfig.lib.json"
       }

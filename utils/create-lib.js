@@ -35,11 +35,11 @@ const nestCliConfig = JSON.parse(fs.readFileSync(nestCliPath, 'utf8'));
 
 nestCliConfig.projects[LIB_NAME] = {
   type: 'library',
-  root: libPath,
+  root: libPath+'/'+LIB_NAME,
   entryFile: 'index',
-  sourceRoot: `${libPath}/src`,
+  sourceRoot: `${libPath}/${LIB_NAME}/src`,
   compilerOptions: {
-    tsConfigPath: `${libPath}/tsconfig.lib.json`
+    tsConfigPath: `${libPath}/${LIB_NAME}/tsconfig.lib.json`
   }
 };
 
@@ -51,8 +51,8 @@ fs.writeFileSync(nestCliPath, JSON.stringify(nestCliConfig, null, 2));
 const tsConfigPath = path.join(rootDir, 'tsconfig.json');
 const tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
 
-tsConfig.compilerOptions.paths[`@app/${LIB_NAME}`] = [`${libPath}/src`];
-tsConfig.compilerOptions.paths[`@app/${LIB_NAME}/*`] = [`${libPath}/src/*`];
+tsConfig.compilerOptions.paths[`@app/${LIB_NAME}`] = [`${libPath}/${LIB_NAME}/src`];
+tsConfig.compilerOptions.paths[`@app/${LIB_NAME}/*`] = [`${libPath}/${LIB_NAME}/src/*`];
 
 fs.writeFileSync(tsConfigPath, JSON.stringify(tsConfig, null, 2));
 

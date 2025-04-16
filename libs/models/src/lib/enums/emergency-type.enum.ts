@@ -62,3 +62,11 @@ export enum EmergencyType {
   UNKNOWN = 'UNKNOWN',
   OTHER = 'OTHER',
 }
+
+export enum ReportedBy {
+  USER ,
+  COMPUTER ,
+  OPERATOR ,
+  AUTOMATED_SYSTEM ,
+  THIRD_PARTY ,
+}

@@ -7,12 +7,10 @@ const MessageItemSchema = Type.Object({
   modificationAttempts: Type.Optional(Type.String()),
 });
 
-export const EmergencyResponse = {
-  [HttpCodeW.OK]: Type.Object({
-    message: Type.Array(MessageItemSchema),
-    code: Type.String(),
-  }),
-};
+export const EmergencyResponse = Type.Object({
+  message: Type.Array(MessageItemSchema),
+  code: Type.String(),
+});
 export const CreatedUpdatedEmergencyResponse = {
   [HttpCodeW.OK]: Type.Object({
     message: Type.String(),

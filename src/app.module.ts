@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { HospitalModule } from '@app/hospital';
 import { RouterModule } from '@nestjs/core';
 import { CardModule, DashboardModule } from '@app/dashboard';
+import { EmergencyModule } from '@app/emergency';
 
 @Module({
   imports: [
@@ -27,6 +28,10 @@ import { CardModule, DashboardModule } from '@app/dashboard';
             module: DashboardModule,
           },
           {
+            path: 'emergency',
+            module: EmergencyModule,
+          },
+          {
             path: 'card',
             module: CardModule,
           },
@@ -36,6 +41,7 @@ import { CardModule, DashboardModule } from '@app/dashboard';
     HospitalModule,
     AmbulanceModule,
     DashboardModule,
+    EmergencyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

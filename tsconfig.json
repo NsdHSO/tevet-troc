@@ -35,10 +35,10 @@
         "libs/buss/dashboard/src/*"
       ],
       "@app/emergency": [
-        "libs/buss/src"
+        "libs/buss/emergency/src"
       ],
       "@app/emergency/*": [
-        "libs/buss/src/*"
+        "libs/buss/emergency/src/*"
       ],
       "@app/hospital": [
         "libs/buss/hospital/src"
