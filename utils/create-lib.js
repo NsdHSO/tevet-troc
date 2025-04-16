@@ -13,14 +13,20 @@ if (!LIB_NAME || !NESTED_PATH) {
 
 const rootDir = path.resolve(__dirname, '..');
 const libPath = `libs/${NESTED_PATH}`;
+const targetPath = `${rootDir}/${libPath}`;
 
 // 1. Generate library
 execSync(`nest generate library ${LIB_NAME}`, { stdio: 'inherit' });
 
 // 2. Move to nested path
 const tempPath = `libs/${LIB_NAME}`;
-const targetPath = `${rootDir}/${libPath}`;
 execSync(`mkdir -p ${path.dirname(targetPath)}`);
+
+const tsConfigPathLibrary = path.join(tempPath, 'tsconfig.lib.json');
+const tsConfigPathLibraryConfig = JSON.parse(fs.readFileSync(tsConfigPathLibrary, 'utf8'));
+
+tsConfigPathLibraryConfig['extends']= '../../../tsconfig.json'
+fs.writeFileSync(tsConfigPathLibrary, JSON.stringify(tsConfigPathLibraryConfig, null, 2));
 execSync(`mv ${tempPath} ${targetPath}`);
 
 // 3. Update nest-cli.json
@@ -38,6 +44,8 @@ nestCliConfig.projects[LIB_NAME] = {
 };
 
 fs.writeFileSync(nestCliPath, JSON.stringify(nestCliConfig, null, 2));
+
+
 
 // 4. Update tsconfig.json
 const tsConfigPath = path.join(rootDir, 'tsconfig.json');
