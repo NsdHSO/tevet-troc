@@ -9,7 +9,7 @@ export const TypeORMMySqlTestingModule = (entities: any[]) =>
     type: 'postgres',
     host: process.env.MYSQL_HOST || 'localhost',
     port: 3306,
-    username: process.env.MYSQL_USERNAME || 'nest',
+    username: process.env.DB_URL || 'nest',
     password: process.env.MYSQL_PASSWORD || 'nest',
     database: process.env.MYSQL_DATABASE || 'test',
     entities: [...entities],
