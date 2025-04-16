@@ -28,6 +28,12 @@
       "@app/ambulance/*": [
         "libs/buss/ambulance/src/*"
       ],
+      "@app/buss/emergency": [
+        "libs/buss/emergency/src"
+      ],
+      "@app/buss/emergency/*": [
+        "libs/buss/emergency/src/*"
+      ],
       "@app/dashboard": [
         "libs/buss/dashboard/src"
       ],

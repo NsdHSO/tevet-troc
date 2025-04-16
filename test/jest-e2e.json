@@ -13,6 +13,8 @@
   "moduleNameMapper": {
     "@app/ambulance": "<rootDir>/../libs/buss/ambulance/src",
     "@app/ambulance/(.*)": "<rootDir>/../libs/buss/ambulance/src/$1",
+    "@app/buss/emergency": "<rootDir>/../libs/buss/emergency/src",
+    "@app/buss/emergency/(.*)": "<rootDir>/../libs/buss/emergency/src/$1",
     "@app/dashboard": "<rootDir>/../libs/dashboard/src",
     "@app/dashboard/(.*)": "<rootDir>/../libs/dashboard/src/$1",
     "@app/hospital": "<rootDir>/../libs/buss/hospital/src",

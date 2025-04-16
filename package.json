@@ -21,7 +21,8 @@
     "typeorm": "npm run build && npx typeorm -d dist/data-source.js",
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert"
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "gen:lib": "node utils/generate-libs.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -95,6 +96,7 @@
     ],
     "moduleNameMapper": {
       "^@app/ambulance(|/.*)$": "<rootDir>/libs/buss/ambulance/src/$1",
+      "^@app/buss/emergency(|/.*)$": "<rootDir>/libs/buss/emergency/src/$1",
       "^@app/dashboard(|/.*)$": "<rootDir>/libs/dashboard/src/$1",
       "^@app/hospital(|/.*)$": "<rootDir>/libs/hospital/src/$1",
       "^@app/http-response(|/.*)$": "<rootDir>/libs/http-response/src/$1",
