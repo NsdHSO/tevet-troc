@@ -87,19 +87,30 @@ export class EmergencyEntity extends BaseEntity {
     const nanoid = customAlphabet('0123456789', 10);
     this.emergencyIc = nanoid(); // Generates an 10-character string
   }
-
   recordModificationAttempt(attemptedChanges: any, userId?: number): void {
-    if (!this.modificationAttempts) {
-      this.modificationAttempts = JSON.stringify('[]');
+    let attempts : any= [];
+
+    // Handle the case where modificationAttempts is undefined, null, or invalid JSON
+    if (this.modificationAttempts) {
+      try {
+        attempts = JSON.parse(this.modificationAttempts);
+        if (!Array.isArray(attempts)) {
+          attempts = [];
+        }
+      } catch (e) {
+        // If parsing fails, start with an empty array
+        attempts = [];
+      }
     }
 
-    const attempts = JSON.parse(this.modificationAttempts);
+    // Add the new attempt
     attempts.push({
       timestamp: new Date(),
       changes: attemptedChanges,
       userId: userId || null,
     });
 
+    // Update the field with the new stringified array
     this.modificationAttempts = JSON.stringify(attempts);
   }
 }

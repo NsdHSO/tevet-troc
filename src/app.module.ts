@@ -7,9 +7,11 @@ import { HospitalModule } from '@app/hospital';
 import { RouterModule } from '@nestjs/core';
 import { CardModule, DashboardModule } from '@app/dashboard';
 import { EmergencyModule } from '@app/emergency';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     DatabaseModule,
     RouterModule.register([
       {
