@@ -13,7 +13,7 @@ export const EmergencyResponse = Type.Object({
 });
 export const CreatedUpdatedEmergencyResponse = {
   [HttpCodeW.OK]: Type.Object({
-    message: Type.String(),
+    message: MessageItemSchema,
     code: Type.String(),
   }),
 };

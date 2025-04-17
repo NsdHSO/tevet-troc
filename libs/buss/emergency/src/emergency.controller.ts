@@ -8,18 +8,21 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { EmergencyService } from './emergency.service';
 import { CreateEmergencyDto } from './dto/create-emergency.dto';
 import { UpdateEmergencyDto } from './dto/update-emergency.dto';
 import { httpResponseBuilder, isErrorObject } from '@app/http-response';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { EmergencyObject, EmergencyResponse } from '@app/models';
+import { CreatedUpdatedEmergencyResponse, EmergencyObject, EmergencyResponse } from '@app/models';
+import { FilterType } from '@app/models/lib/applications/card/CardSchema/params';
+import { parseFilterParams } from '@app/utils';
 
 @Controller('')
 export class EmergencyController {
-  constructor(private readonly emergencyService: EmergencyService) {}
+  constructor(private readonly _emergencyService: EmergencyService) {}
 
   private readonly _loggerService = new Logger(EmergencyService.name);
 
@@ -29,7 +32,7 @@ export class EmergencyController {
   async create(@Body() createEmergencyDto: CreateEmergencyDto) {
     try {
       return httpResponseBuilder.OK(
-        await this.emergencyService.create(createEmergencyDto),
+        await this._emergencyService.create(createEmergencyDto),
       );
     } catch (error) {
       this._loggerService.error(
@@ -43,26 +46,75 @@ export class EmergencyController {
     }
   }
 
+  @ApiQuery({
+    name: 'fields',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'filterBy',
+    required: false,
+    type: String,
+  })
   @Get()
-  findAll() {
-    return this.emergencyService.findAll();
+  async findAll(@Query() query: FilterType) {
+    try {
+      this._loggerService.log(`Register Get all Emergency ${JSON.stringify(query)}`); // Replace app.log.info
+      const { fields, filterBy } = query;
+      const filterByParsed =
+        parseFilterParams<keyof Omit<Partial<CreateEmergencyDto>, 'id'>>(
+          filterBy,
+        );
+
+      const result = await this._emergencyService.findAll({
+        query: fields?.split(',') as Array<
+          keyof Omit<CreateEmergencyDto, 'id'>
+        >,
+        filterBy: filterByParsed,
+      });
+
+      return httpResponseBuilder.OK(result);
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Find Emergency ${JSON.stringify(error)}`,
+      ); // Replace app.log.error
+      if (isErrorObject(error)) {
+        throw new HttpException(error, error.code);
+      }
+
+      return error;
+    }
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.emergencyService.findOne(+id);
+    return this._emergencyService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
+  @Patch(':emergencyIc')
+  @ApiBody({ schema: EmergencyObject as SchemaObject })
+  @ApiResponse({ schema: CreatedUpdatedEmergencyResponse as SchemaObject })
+  async update(
+    @Param('emergencyIc') emergencyIc: string,
     @Body() updateEmergencyDto: UpdateEmergencyDto,
   ) {
-    return this.emergencyService.update(+id, updateEmergencyDto);
+    try {
+      return httpResponseBuilder.OK(
+        await this._emergencyService.update(emergencyIc, updateEmergencyDto),
+      );
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Find Emergency ${JSON.stringify(error)}`,
+      ); // Replace app.log.error
+      if (isErrorObject(error)) {
+        throw new HttpException(error, error.code);
+      }
+      return error;
+    }
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.emergencyService.remove(+id);
+    return this._emergencyService.remove(+id);
   }
 }
