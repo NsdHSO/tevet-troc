@@ -78,63 +78,7 @@ export class EmergencyAllocationService {
         `Found ${availableAmbulances.length} available ambulances`,
       );
 
-      // Allocate emergencies to ambulances based on proximity or other criteria
-      for (const emergency of pendingEmergencies) {
-        // Skip if no more ambulances are available
-        if (availableAmbulances.length === 0) break;
-
-        // Find the closest ambulance (this is a simplified example)
-        const closestAmbulanceIndex = this.findClosestAmbulanceIndex(
-          emergency.location,
-          availableAmbulances,
-        );
-
-        if (closestAmbulanceIndex !== -1) {
-          const ambulance = availableAmbulances[closestAmbulanceIndex];
-
-          // Fetch fresh copy of the emergency to work with
-          const freshEmergency = await this._emergencyRepository.findOne({
-            where: { id: emergency.id },
-          });
-
-          if (!freshEmergency) {
-            this._loggerService.warn(
-              `Emergency ${emergency.id} no longer exists`,
-            );
-            continue;
-          }
-
-          // Update the emergency entity
-          freshEmergency.status = EmergencyStatus.IN_PROGRESS;
-
-          // Record the modification attempt
-          freshEmergency.recordModificationAttempt({
-            action: 'AMBULANCE_ASSIGNED',
-            ambulanceId: ambulance.id,
-            previousStatus: emergency.status,
-            note: 'CRON - Automate',
-          });
-
-          // Set the ambulance relation
-          freshEmergency.ambulance = ambulance;
-
-          // Save the updated emergency
-          await this._emergencyRepository.save(freshEmergency);
-
-          // Mark the ambulance as unavailable
-          await this._ambulanceRepository.update(
-            { id: ambulance.id },
-            { status: AmbulanceStatus.DISPATCHED },
-          );
-
-          // Remove this ambulance from the available list
-          availableAmbulances.splice(closestAmbulanceIndex, 1);
-
-          this._loggerService.log(
-            `Assigned ambulance ${ambulance.id} to emergency ${emergency.id} (${emergency.emergencyIc})`,
-          );
-        }
-      }
+      await this.allocateAmbulancesToEmergencies(pendingEmergencies, availableAmbulances);
       this._loggerService.log('Emergency allocation process completed');
     } catch (error) {
       this._loggerService.error(
@@ -144,6 +88,90 @@ export class EmergencyAllocationService {
       // Make sure to release the lock even if there's an error
       this._isProcessRunning = false;
     }
+  }
+  
+  /**
+   * Allocates ambulances to emergencies based on the distance from the emergency location.
+   *
+   * @param {EmergencyEntity[]} pendingEmergencies An array of emergency entities that require allocation.
+   * @param {AmbulanceEntity[]} availableAmbulances An array of available ambulance entities.
+   */
+  private async allocateAmbulancesToEmergencies(
+    pendingEmergencies: EmergencyEntity[],
+    availableAmbulances: AmbulanceEntity[],
+  ) {
+    for (const emergency of pendingEmergencies) {
+      // Skip if no more ambulances are available
+      if (availableAmbulances.length === 0) break;
+
+      // Find the closest ambulance (this is a simplified example)
+      const closestAmbulanceIndex = this.findClosestAmbulanceIndex(
+        emergency.location,
+        availableAmbulances,
+      );
+
+      if (closestAmbulanceIndex !== -1) {
+        await this.dispatchAmbulanceForEmergency(
+          availableAmbulances,
+          closestAmbulanceIndex,
+          emergency,
+        );
+      }
+    }
+  }
+  /**
+   * Dispatches an ambulance for an emergency.
+   *
+   * @param availableAmbulances - The list of available ambulances.
+   * @param closestAmbulanceIndex - The index of the closest available ambulance in the list.
+   * @param emergency - The emergency entity that requires assistance.
+   */
+  private async dispatchAmbulanceForEmergency(
+    availableAmbulances: AmbulanceEntity[],
+    closestAmbulanceIndex: number,
+    emergency: EmergencyEntity,
+  ) {
+    const ambulance = availableAmbulances[closestAmbulanceIndex];
+
+    // Fetch fresh copy of the emergency to work with
+    const freshEmergency = await this._emergencyRepository.findOne({
+      where: { id: emergency.id },
+    });
+
+    if (!freshEmergency) {
+      this._loggerService.warn(`Emergency ${emergency.id} no longer exists`);
+      return;
+    }
+
+    // Update the emergency entity
+    freshEmergency.status = EmergencyStatus.IN_PROGRESS;
+
+    // Record the modification attempt
+    freshEmergency.recordModificationAttempt({
+      action: 'AMBULANCE_ASSIGNED',
+      ambulanceId: ambulance.id,
+      previousStatus: emergency.status,
+      note: 'CRON - Automate',
+    });
+
+    // Set the ambulance relation
+    freshEmergency.ambulance = ambulance;
+
+    // Save the updated emergency
+    await this._emergencyRepository.save(freshEmergency);
+
+    // Mark the ambulance as unavailable
+    await this._ambulanceRepository.update(
+      { id: ambulance.id },
+      { status: AmbulanceStatus.DISPATCHED },
+    );
+
+    // Remove this ambulance from the available list
+    availableAmbulances.splice(closestAmbulanceIndex, 1);
+
+    this._loggerService.log(
+      `Assigned ambulance ${ambulance.id} to emergency ${emergency.id} (${emergency.emergencyIc})`,
+    );
   }
 
   /**
