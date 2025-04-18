@@ -89,7 +89,7 @@ export class EmergencyAllocationService {
       this._isProcessRunning = false;
     }
   }
-  
+
   /**
    * Allocates ambulances to emergencies based on the distance from the emergency location.
    *

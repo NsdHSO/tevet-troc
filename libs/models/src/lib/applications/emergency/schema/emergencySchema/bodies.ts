@@ -26,6 +26,15 @@ export const EmergencyObject = Type.Object({
     }),
   ), // Embedded ambulance details, optional
 });
-
+export const EmergencyCreateObject = Type.Object({
+  description: Type.Optional(Type.String()), // Description of the emergency
+  notes: Type.Optional(Type.String()), // Any notes (optional)
+  location: Type.Optional(
+    Type.Object({
+      latitude: Type.Number(),
+      longitude: Type.Number(),
+    }),
+  ), // Embedded location details
+});
 export const EmergencyResponseSchema = Type.Array(EmergencyObject);
 export type EmergencyBodyStatic = Static<typeof EmergencyObject>;

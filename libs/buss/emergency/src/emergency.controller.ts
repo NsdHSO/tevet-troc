@@ -16,7 +16,12 @@ import { UpdateEmergencyDto } from './dto/update-emergency.dto';
 import { httpResponseBuilder, isErrorObject } from '@app/http-response';
 import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { CreatedUpdatedEmergencyResponse, EmergencyObject, EmergencyResponse } from '@app/models';
+import {
+  CreatedUpdatedEmergencyResponse,
+  EmergencyCreateObject,
+  EmergencyObject,
+  EmergencyResponse,
+} from '@app/models';
 import { FilterType } from '@app/models/lib/applications/card/CardSchema/params';
 import { parseFilterParams } from '@app/utils';
 
@@ -26,7 +31,7 @@ export class EmergencyController {
 
   private readonly _loggerService = new Logger(EmergencyService.name);
 
-  @ApiBody({ schema: EmergencyObject as SchemaObject })
+  @ApiBody({ schema: EmergencyCreateObject as SchemaObject })
   @ApiResponse({ schema: EmergencyResponse as SchemaObject })
   @Post()
   async create(@Body() createEmergencyDto: CreateEmergencyDto) {
