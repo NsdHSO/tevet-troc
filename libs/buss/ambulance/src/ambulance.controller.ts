@@ -1,5 +1,6 @@
 import { httpResponseBuilder, isErrorObject } from '@app/http-response';
 import {
+  AmbulanceBodySchema,
   AmbulanceEntity,
   FilterTypeAmbulance,
   GetAllAmbulanceResponse,
@@ -20,7 +21,7 @@ import {
 import { AmbulanceService } from './ambulance.service';
 import { CreateAmbulanceDto } from './dto/create-ambulance.dto';
 import { UpdateAmbulanceDto } from './dto/update-ambulance.dto';
-import { ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 @Controller('')
@@ -30,6 +31,7 @@ export class AmbulanceController {
   constructor(private readonly ambulanceService: AmbulanceService) {}
 
   @Post()
+  @ApiBody({ schema: AmbulanceBodySchema as SchemaObject })
   create(@Body() createAmbulanceDto: CreateAmbulanceDto) {
     return this.ambulanceService.create(
       createAmbulanceDto,
@@ -46,7 +48,7 @@ export class AmbulanceController {
   @ApiQuery({
     name: 'filterBy',
     required: false,
-    type: String
+    type: String,
   })
   @Get()
   async findAll(@Query() query: FilterTypeAmbulance) {

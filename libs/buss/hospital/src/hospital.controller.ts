@@ -31,21 +31,34 @@ export class HospitalController {
 
   constructor(private readonly hospitalService: HospitalService) {}
 
-  @ApiBody({ schema: HospitalSchema as SchemaObject  })
-  @ApiResponse({ schema: hospitalResponseSchema as SchemaObject  })
+  @ApiBody({ schema: HospitalSchema as SchemaObject })
+  @ApiResponse({ schema: hospitalResponseSchema as SchemaObject })
   @Post()
-  create(@Body() createHospitalDto: CreateHospitalDto) {
-    return this.hospitalService.create(createHospitalDto);
+  async create(@Body() createHospitalDto: CreateHospitalDto) {
+    try {
+      return httpResponseBuilder.OK(
+        await this.hospitalService.create(createHospitalDto),
+      );
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Created Hospital ${JSON.stringify(error)}`,
+      );
+      if (isErrorObject(error)) {
+        throw new HttpException(error, error.code);
+      }
+
+      return error;
+    }
   }
 
   @Get(':id')
   @ApiResponse({ schema: hospitalResponseSchema as SchemaObject })
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     try {
       if (!id) {
         throw httpResponseBuilder.BadRequest(`No hospital with id ${id}`);
       }
-      return this.hospitalService.findOne(id);
+      return httpResponseBuilder.OK(await this.hospitalService.findOne(id));
     } catch (error) {
       this._loggerService.error(
         `Error when Retrieve Hospital ${JSON.stringify(error)}`,
@@ -58,7 +71,7 @@ export class HospitalController {
     }
   }
 
-  @ApiResponse({ schema: hospitalAllResponseSchema as SchemaObject  })
+  @ApiResponse({ schema: hospitalAllResponseSchema as SchemaObject })
   @Get()
   async findAll(@Query() query: FilterTypeHospital) {
     try {

@@ -60,9 +60,9 @@ export class HospitalEntity extends BaseEntity {
   @Column({ nullable: true })
   owner: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'decimal', precision: 10, scale: 6, nullable: true })
   latitude: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'decimal', precision: 10, scale: 6, nullable: true })
   longitude: number;
 }

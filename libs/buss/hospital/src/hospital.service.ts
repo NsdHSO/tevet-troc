@@ -20,8 +20,8 @@ export class HospitalService {
       return await this.hospitalRepository
         .save(hospital)
         .then(() => 'Hospital created')
-        .catch(() => {
-          throw 'Hospital not created due to database error.';
+        .catch((err) => {
+          throw `Hospital not created due to database error. ${err}`;
         });
     } catch (error) {
       console.error('Unexpected error:', error);
