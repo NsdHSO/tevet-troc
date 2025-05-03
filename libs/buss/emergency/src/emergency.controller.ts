@@ -64,7 +64,7 @@ export class EmergencyController {
   @Get()
   async findAll(@Query() query: FilterType) {
     try {
-      this._loggerService.log(`Register Get all Emergency ${JSON.stringify(query)}`); // Replace app.log.info
+      this._loggerService.log(`Get all Emergency ${JSON.stringify(query)}`); // Replace app.log.info
       const { fields, filterBy } = query;
       const filterByParsed =
         parseFilterParams<keyof Omit<Partial<CreateEmergencyDto>, 'id'>>(

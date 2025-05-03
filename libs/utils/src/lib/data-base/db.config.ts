@@ -23,7 +23,7 @@ import {
   StaffScheduleEntity,
   SupplierEntity,
   TreatmentEntity,
-} from '@app/models'; // Assuming @app/models is your entities location
+} from '@app/models';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';

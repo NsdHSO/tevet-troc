@@ -45,45 +45,52 @@ export class EmergencyService {
     filterBy?: Record<string, any>;
   }) {
     try {
-      const { query, filterBy } = params;
+      const { query, filterBy = {} } = params;
 
-      // Create query builder
-      let queryBuilder =
-        this._emergencyRepository.createQueryBuilder('emergency');
+      const pageSize = Number(filterBy.pageSize ?? 10);
+      const page = Number(filterBy.page ?? 1);
 
-      // Apply filters if they exist
-      if (filterBy && Object.keys(filterBy).length > 0) {
-        Object.entries(filterBy).forEach(([key, value]) => {
-          // Handle special cases for nested objects like location
-          if (key.includes('.')) {
-            const [parent, child] = key.split('.');
-            queryBuilder = queryBuilder.andWhere(
-              `emergency.${parent}->>'${child}' = :${key}`,
-              { [key]: value },
-            );
-          } else {
-            queryBuilder = queryBuilder.andWhere(`emergency.${key} = :${key}`, {
-              [key]: value,
-            });
-          }
-        });
+      if (pageSize < 0 || page < 0) {
+        throw httpResponseBuilder.BadRequest('Pagination is not valid');
       }
 
-      // Get results
-      const emergencies = await queryBuilder.getMany();
+      // Remove pagination keys from filters
+      const { pageSize: _, page: __, ...actualFilters } = filterBy;
 
-      // Select specific fields if requested
-      if (query && query.length > 0) {
-        return emergencies.map((emergency) => {
-          const selectedObj: any = { id: emergency.id };
-          query.forEach((field) => {
-            selectedObj[field] = emergency[field as keyof EmergencyEntity];
+      let queryBuilder = this._emergencyRepository.createQueryBuilder('emergency');
+
+      // Apply filters
+      for (const [key, value] of Object.entries(actualFilters)) {
+        if (key.includes('.')) {
+          const [parent, child] = key.split('.');
+          queryBuilder = queryBuilder.andWhere(
+            `emergency.${parent}->>'${child}' = :${key}`,
+            { [key]: value },
+          );
+        } else {
+          queryBuilder = queryBuilder.andWhere(`emergency.${key} = :${key}`, {
+            [key]: value,
           });
-          return selectedObj;
-        });
+        }
       }
 
-      return emergencies;
+      queryBuilder.skip((page - 1) * pageSize).take(pageSize);
+
+      const [emergencies, total] = await queryBuilder.getManyAndCount();
+
+      if (query && query.length > 0) {
+        const selected = emergencies.map((e) => {
+          const partial: any = { id: e.id };
+          query.forEach((field) => {
+            partial[field] = e[field as keyof typeof e];
+          });
+          return partial;
+        });
+
+        return { data: selected, length: total };
+      }
+
+      return { data: emergencies, length: total };
     } catch (error) {
       this._loggerService.error(
         `Error retrieving emergencies: ${JSON.stringify(error)}`,
@@ -93,6 +100,7 @@ export class EmergencyService {
       );
     }
   }
+
 
   findOne(id: number) {
     return `This action returns a #${id} emergency`;
