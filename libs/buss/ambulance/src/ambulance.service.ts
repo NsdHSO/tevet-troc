@@ -41,7 +41,11 @@ export class AmbulanceService {
     try {
       return await this._ambulanceRepository
         .save(createAmbulance)
-        .then(() => httpResponseBuilder.OK('Ambulance created'))
+        .then(() => {
+
+          this._loggerService.log('Ambulance created')
+          return 'Ambulance created'
+        })
         .catch((e) => {
           throw `Ambulance not created due to database error. ${e}`;
         });

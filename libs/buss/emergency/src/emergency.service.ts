@@ -50,7 +50,7 @@ export class EmergencyService {
       const pageSize = Number(filterBy.pageSize ?? 10);
       const page = Number(filterBy.page ?? 1);
 
-      if (pageSize < 0 || page < 0) {
+      if (pageSize <= 0 || page <= 0) {
         throw httpResponseBuilder.BadRequest('Pagination is not valid');
       }
 
@@ -78,19 +78,31 @@ export class EmergencyService {
 
       const [emergencies, total] = await queryBuilder.getManyAndCount();
 
+      const totalPages = Math.ceil(total / pageSize);
+
+      let data: any[] = emergencies;
+
       if (query && query.length > 0) {
-        const selected = emergencies.map((e) => {
+        data = emergencies.map((e) => {
           const partial: any = { id: e.id };
           query.forEach((field) => {
             partial[field] = e[field as keyof typeof e];
           });
           return partial;
         });
-
-        return { data: selected, length: total };
       }
 
-      return { data: emergencies, length: total };
+      return {
+        data,
+        pagination: {
+          currentPage: page,
+          pageSize,
+          totalItems: total,
+          totalPages,
+          hasNextPage: page < totalPages,
+          hasPreviousPage: page > 1,
+        },
+      };
     } catch (error) {
       this._loggerService.error(
         `Error retrieving emergencies: ${JSON.stringify(error)}`,
@@ -100,7 +112,6 @@ export class EmergencyService {
       );
     }
   }
-
 
   findOne(id: number) {
     return `This action returns a #${id} emergency`;

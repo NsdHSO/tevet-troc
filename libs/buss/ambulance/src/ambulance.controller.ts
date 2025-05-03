@@ -32,11 +32,23 @@ export class AmbulanceController {
 
   @Post()
   @ApiBody({ schema: AmbulanceBodySchema as SchemaObject })
-  create(@Body() createAmbulanceDto: CreateAmbulanceDto) {
-    return this.ambulanceService.create(
-      createAmbulanceDto,
-      createAmbulanceDto.hospitalId,
-    );
+  async create(@Body() createAmbulanceDto: CreateAmbulanceDto) {
+    try {
+      return await this.ambulanceService.create(
+        createAmbulanceDto,
+        createAmbulanceDto.hospitalId,
+      );
+    } catch (error) {
+      this._loggerService.error(
+        `Error when Create Ambulance ${JSON.stringify(error)}`,
+      ); // Replace app.log.error
+      if (isErrorObject(error)) {
+        throw new HttpException(error, error.code);
+      }
+
+      return error;
+    }
+
   }
 
   @ApiResponse({ schema: GetAllAmbulanceResponse as SchemaObject })
