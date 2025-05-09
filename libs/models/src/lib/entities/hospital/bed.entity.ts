@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
-import { BedType } from '../../enums';
+import { Bed } from '../../enums';
 
 @Entity('bed')
 export class BedEntity extends BaseEntity {
@@ -12,9 +12,9 @@ export class BedEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: BedType,
+    enum: Bed,
   })
-  type: BedType;
+  type: Bed;
 
   @Column({ nullable: true })
   isOccupied: boolean;

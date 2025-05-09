@@ -1,7 +1,7 @@
 import { Static, Type } from '@sinclair/typebox';
 import {
   AmbulanceStatus,
-  AmbulanceType,
+  Ambulance,
   CarMake,
   CarModel,
 } from '../../../../enums';
@@ -21,7 +21,7 @@ export const AmbulanceBodySchema = Type.Object({
   make: Type.Optional(Type.String()), // Optional string
   year: Type.Optional(Type.Number()),
   capacity: Type.Optional(Type.Number()),
-  type: Type.Optional(Type.Enum(AmbulanceType)), // Assuming AmbulanceType is defined elsewhere
+  type: Type.Optional(Type.Enum(Ambulance)), // Assuming AmbulanceType is defined elsewhere
   status: Type.Optional(Type.Enum(AmbulanceStatus)), // Assuming AmbulanceStatus is defined elsewhere
   currentLocationLatitude: Type.Optional(Type.Number()),
   currentLocationLongitude: Type.Optional(Type.Number()),

@@ -2,7 +2,7 @@ import { Static, Type } from '@sinclair/typebox';
 import {
   EmergencySeverity,
   EmergencyStatus,
-  EmergencyType,
+  Emergency,
 } from '../../../../enums';
 
 export const EmergencyObject = Type.Object({
@@ -11,7 +11,7 @@ export const EmergencyObject = Type.Object({
   status: Type.Optional(Type.Enum(EmergencyStatus)), // Status of the emergency
   severity: Type.Optional(Type.Enum(EmergencySeverity)), // Severity of the emergency
   reportedBy: Type.Optional(Type.Number()), // User ID who reported the emergency (optional)
-  incidentType: Type.Optional(Type.Enum(EmergencyType)), // Type of emergency (optional)
+  incidentType: Type.Optional(Type.Enum(Emergency)), // Type of emergency (optional)
   notes: Type.Optional(Type.String()), // Any notes (optional)
   location: Type.Optional(
     Type.Object({

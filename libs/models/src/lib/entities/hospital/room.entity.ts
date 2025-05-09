@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { RoomType } from '../../enums';
+import { Room } from '../../enums';
 import { BaseEntity } from '../base.entity';
 
 @Entity('room')
@@ -12,9 +12,9 @@ export class RoomEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: RoomType,
+    enum: Room,
   })
-  type: RoomType;
+  type: Room;
 
   @Column({ nullable: true })
   roomNumber: string;

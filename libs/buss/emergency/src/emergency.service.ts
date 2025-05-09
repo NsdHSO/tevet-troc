@@ -5,7 +5,7 @@ import {
   EmergencyEntity,
   EmergencySeverity,
   EmergencyStatus,
-  EmergencyType,
+  Emergency,
   ReportedBy,
 } from '@app/models';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -174,7 +174,7 @@ function generateEmergencyPayload(overrides: Partial<CreateEmergencyDto>) {
     severity: EmergencySeverity.UNKNOWN,
     reportedBy: ReportedBy.COMPUTER, // User ID
     ambulance: undefined,
-    incidentType: EmergencyType.UNKNOWN,
+    incidentType: Emergency.UNKNOWN,
     notes: '',
     modificationAttempts: [],
   };

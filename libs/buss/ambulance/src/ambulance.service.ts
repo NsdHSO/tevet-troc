@@ -3,7 +3,7 @@ import {
   AmbulanceBodyStatic,
   AmbulanceEntity,
   AmbulanceStatus,
-  AmbulanceType,
+  Ambulance,
   CarMake,
   CarModel,
 } from '@app/models';
@@ -142,7 +142,7 @@ function getPrepareForSave(
     make: ambulanceData.make ?? 'Unknown',
     year: ambulanceData.year ?? new Date().getFullYear(),
     capacity: ambulanceData.capacity ?? 4,
-    type: ambulanceData.type ?? AmbulanceType.BASIC_LIFE_SUPPORT,
+    type: ambulanceData.type ?? Ambulance.BASIC_LIFE_SUPPORT,
     status: ambulanceData.status ?? AmbulanceStatus.AVAILABLE,
     location: {
       latitude: ambulanceData.currentLocationLatitude ?? 0,

@@ -1,7 +1,7 @@
 /**
  * @description Represents the type of a department.
  */
-export enum DepartmentType {
+export enum Department {
   /** @description Cardiology department. */
   CARDIOLOGY = 'CARDIOLOGY',
   /** @description Oncology department. */

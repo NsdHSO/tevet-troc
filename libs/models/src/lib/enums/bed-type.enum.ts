@@ -1,7 +1,7 @@
 /**
  * @description Represents the type of a bed.
  */
-export enum BedType {
+export enum Bed {
   /** @description A single bed. */
   SINGLE = 'SINGLE',
   /** @description A double bed. */

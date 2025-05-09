@@ -11,7 +11,7 @@ import { BaseEntity } from '../base.entity';
 import { AmbulanceEntity } from './ambulance.entity';
 import { customAlphabet } from 'nanoid';
 import { LocationEntity } from './location.entity';
-import { EmergencySeverity, EmergencyStatus, EmergencyType } from '../../enums';
+import { EmergencySeverity, EmergencyStatus, Emergency } from '../../enums';
 
 @Entity('emergency')
 export class EmergencyEntity extends BaseEntity {
@@ -23,7 +23,7 @@ export class EmergencyEntity extends BaseEntity {
   @Column({ type: 'text' })
   emergencyIc: string;
 
-  @Column()
+  @Column({nullable:true})
   description: string;
 
   @Column({
@@ -49,10 +49,10 @@ export class EmergencyEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: EmergencyType,
-    default: EmergencyType.UNKNOWN, // Default value
+    enum: Emergency,
+    default: Emergency.UNKNOWN, // Default value
   })
-  incidentType?: EmergencyType;
+  incidentType?: Emergency;
 
   @Column({
     type: 'text',

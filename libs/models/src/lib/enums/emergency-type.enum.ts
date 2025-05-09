@@ -1,4 +1,4 @@
-export enum EmergencyType {
+export enum Emergency {
   /** 🚗 Traffic & Transport */
   CAR_ACCIDENT = 'CAR_ACCIDENT',
   MOTORCYCLE_ACCIDENT = 'MOTORCYCLE_ACCIDENT',

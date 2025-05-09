@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../base.entity';
-import { AmbulanceStatus, AmbulanceType } from '../../enums';
+import { AmbulanceStatus, Ambulance } from '../../enums';
 import { customAlphabet } from 'nanoid';
 import { LocationEntity } from './location.entity';
 import { CarEntity } from '../infrastucture';
@@ -36,10 +36,10 @@ export class AmbulanceEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: AmbulanceType,
-    default: AmbulanceType.BASIC_LIFE_SUPPORT,
+    enum: Ambulance,
+    default: Ambulance.BASIC_LIFE_SUPPORT,
   })
-  type: AmbulanceType;
+  type: Ambulance;
 
   @Column({
     type: 'enum',

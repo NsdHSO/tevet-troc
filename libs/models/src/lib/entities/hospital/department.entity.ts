@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { DepartmentType } from '../../enums';
+import { Department } from '../../enums';
 import { BaseEntity } from '../base.entity';
 
 @Entity('department')
@@ -12,9 +12,9 @@ export class DepartmentEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: DepartmentType,
+    enum: Department,
   })
-  name: DepartmentType;
+  name: Department;
 
   @Column({ nullable: true })
   floor: number;

@@ -1,7 +1,7 @@
 /**
  * @description Represents the type of a room.
  */
-export enum RoomType {
+export enum Room {
   /** @description A single occupancy room. */
   SINGLE = 'SINGLE',
   /** @description A double occupancy room. */

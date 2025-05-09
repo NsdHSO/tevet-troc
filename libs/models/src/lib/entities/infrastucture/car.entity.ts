@@ -6,6 +6,7 @@ export class CarEntity {
   @Column({
     type: 'enum',
     enum: CarMake,
+    enumName: 'ambulance_car_details_make_enum', // important!
     default: CarMake.MERCEDES_BENZ,
   })
   make!: CarMake;
@@ -13,6 +14,7 @@ export class CarEntity {
   @Column({
     type: 'enum',
     enum: CarModel,
+    enumName: 'ambulance_car_details_model_enum', // important!
     default: CarModel.SPRINTER,
   })
   model!: CarModel; // Restricted to predefined models
